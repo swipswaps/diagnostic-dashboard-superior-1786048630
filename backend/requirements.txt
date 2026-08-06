@@ -1,0 +1,5 @@
+Flask==3.0.0
+flask-cors==4.0.0
+flask-sse==0.3.0
+sqlite3
+gunicorn==21.2.0

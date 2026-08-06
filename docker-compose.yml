@@ -1,15 +1,22 @@
-version: '3'
+version: '3.8'
 services:
   backend:
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: diagnostic-backend
     ports:
-      - "5000:5000"
-    volumes:
-      - ./data:/data
+      - "5001:5001"
     environment:
       - DB_PATH=/data/diagnostics.db
+      - BACKEND_PORT=5001
+    volumes:
+      - ./data:/data
+      - ./backend:/app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 30s
+    restart: unless-stopped

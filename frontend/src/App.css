@@ -1,0 +1,29 @@
+.app { display: flex; flex-direction: column; min-height: 100vh; padding: 1rem; max-width: 1400px; margin: 0 auto; width: 100%; }
+.header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #2a2a3a; flex-wrap: wrap; gap: 0.5rem; }
+.header h1 { font-size: 1.5rem; font-weight: 600; }
+.status-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: 20px; background: #1a1a2a; font-size: 0.85rem; }
+.status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.status-dot.online { background: #4ade80; box-shadow: 0 0 8px #4ade8066; }
+.status-dot.offline { background: #f87171; box-shadow: 0 0 8px #f8717166; }
+.status-dot.checking { background: #fbbf24; box-shadow: 0 0 8px #fbbf2466; }
+.main { flex: 1; display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; padding: 1.5rem 0; }
+@media (max-width: 768px) { .main { grid-template-columns: 1fr; } }
+.card { background: #14141f; border-radius: 12px; padding: 1.5rem; border: 1px solid #2a2a3a; }
+.card h2 { font-size: 1.1rem; margin-bottom: 1rem; color: #a0a0b0; }
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th { text-align: left; padding: 0.5rem; color: #8888aa; border-bottom: 1px solid #2a2a3a; font-weight: 500; }
+td { padding: 0.5rem; border-bottom: 1px solid #1a1a2a; }
+tr:hover td { background: #1a1a2a; }
+.status-success { color: #4ade80; }
+.status-failure { color: #f87171; }
+.status-error { color: #fbbf24; }
+.loading, .error { padding: 1rem; text-align: center; }
+.error { color: #f87171; }
+.log-container { background: #0a0a0f; border-radius: 8px; padding: 0.75rem; max-height: 300px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.8rem; line-height: 1.6; white-space: pre-wrap; word-break: break-all; }
+.log-line { padding: 0.1rem 0; border-bottom: 1px solid #11111a; color: #88aacc; }
+.log-line:last-child { border-bottom: none; }
+.log-placeholder { color: #555566; text-align: center; padding: 2rem; }
+.footer { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-top: 1px solid #2a2a3a; font-size: 0.8rem; color: #666688; }
+.refresh-btn { background: #2a2a3a; border: none; color: #e0e0e0; padding: 0.3rem 0.8rem; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+.refresh-btn:hover { background: #3a3a4a; }
