@@ -12,7 +12,6 @@ interface Diagnostic {
 }
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5001';
-const WS_BASE = import.meta.env.VITE_WS_URL || 'ws://localhost:5001';
 
 function App() {
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
@@ -21,7 +20,7 @@ function App() {
   const [logs, setLogs] = useState<string[]>([]);
   const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
   const [fallbackMode, setFallbackMode] = useState(false);
-  const wsRef = useRef<WebSocket | null>(null);
+  const eventSourceRef = useRef<EventSource | null>(null);
   const logContainerRef = useRef<HTMLDivElement>(null);
 
   const checkBackend = async () => {
@@ -64,22 +63,25 @@ function App() {
     }
   };
 
-  const connectWebSocket = () => {
-    if (wsRef.current?.readyState === WebSocket.OPEN) return;
-    const ws = new WebSocket(`${WS_BASE}/logs`);
-    ws.onopen = () => setLogs(prev => [...prev, '🔌 Connected to log stream']);
-    ws.onmessage = (event) => {
+  // ---- Server-Sent Events for real-time logs ----
+  const connectSSE = () => {
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
+    }
+    const es = new EventSource(`${API_BASE}/logs`);
+    es.onopen = () => setLogs(prev => [...prev, '🔌 Connected to log stream (SSE)']);
+    es.onmessage = (event) => {
       setLogs(prev => [...prev, event.data]);
       if (logContainerRef.current) {
         logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
       }
     };
-    ws.onclose = () => {
-      setLogs(prev => [...prev, '🔌 Log stream disconnected – reconnecting...']);
-      setTimeout(connectWebSocket, 3000);
+    es.onerror = () => {
+      setLogs(prev => [...prev, '❌ Log stream error – reconnecting...']);
+      es.close();
+      setTimeout(connectSSE, 3000);
     };
-    ws.onerror = () => setLogs(prev => [...prev, '❌ Log stream error']);
-    wsRef.current = ws;
+    eventSourceRef.current = es;
   };
 
   useEffect(() => {
@@ -90,11 +92,11 @@ function App() {
         .then(data => localStorage.setItem('diagnostics_cache', JSON.stringify(data)))
         .catch(() => {});
     });
-    connectWebSocket();
+    connectSSE();
     const interval = setInterval(checkBackend, 30000);
     return () => {
       clearInterval(interval);
-      wsRef.current?.close();
+      eventSourceRef.current?.close();
     };
   }, []);
 
@@ -148,7 +150,7 @@ function App() {
           )}
         </section>
         <section className="card logs-card">
-          <h2>📜 Real‑time Logs</h2>
+          <h2>📜 Real‑time Logs (SSE)</h2>
           <div className="log-container" ref={logContainerRef}>
             {logs.length === 0 ? (
               <div className="log-placeholder">Waiting for logs...</div>
@@ -161,7 +163,7 @@ function App() {
         </section>
       </main>
       <footer className="footer">
-        <span>Built with ❤️ – {fallbackMode ? 'Fallback mode active' : 'Connected to backend'}</span>
+        <span>Built with ❤️ – {fallbackMode ? 'Fallback mode active' : 'Connected to backend (SSE)'}</span>
         <button onClick={() => { fetchDiagnostics(); }} className="refresh-btn">⟳ Refresh</button>
       </footer>
     </div>
