@@ -1,0 +1,9 @@
+Starting backend on port 5001, DB: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/data/diagnostics.db
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.172:5001
+Press CTRL+C to quit
+127.0.0.1 - - [06/Aug/2026 16:47:51] "GET /health HTTP/1.1" 404 -
