@@ -26,7 +26,7 @@ function App() {
 
   const checkBackend = async () => {
     try {
-      const resp = await fetch(`${API_BASE}/health`);
+      const resp = await fetch(`${API_BASE}/api/health`);
       if (resp.ok) {
         setBackendStatus('online');
         setFallbackMode(false);
