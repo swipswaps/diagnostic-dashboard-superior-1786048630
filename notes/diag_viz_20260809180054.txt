@@ -1,0 +1,129 @@
+=== diag_viz_20260809180054.sh — 20260809180054 UTC ===
+
+PROJECT_ROOT: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo
+OWNER_REPO:   swipswaps/diagnostic-dashboard-superior-1786048630
+
+=== PHASE 1: Flask process and port audit ===
+
+--- pgrep -a python3 ---
+1829784 python3 app.py
+
+--- ss -tlnp (port 5001) ---
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess                              
+LISTEN 0      128          0.0.0.0:5001      0.0.0.0:*    users:(("python3",pid=1829784,fd=3))
+
+--- flask.log (last 40 lines) ---
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.172:5000
+Press CTRL+C to quit
+127.0.0.1 - - [06/Aug/2026 16:12:37] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [06/Aug/2026 16:12:37] "GET /static/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [06/Aug/2026 16:12:37] "GET /api/diagnostics HTTP/1.1" 200 -
+127.0.0.1 - - [06/Aug/2026 16:12:37] "GET /favicon.ico HTTP/1.1" 404 -
+
+=== PHASE 2: HTTP health checks ===
+
+--- curl -v http://127.0.0.1:5001/ (index) ---
+*   Trying 127.0.0.1:5001...
+* Connected to 127.0.0.1 (127.0.0.1) port 5001
+* using HTTP/1.x
+> GET / HTTP/1.1
+> Host: 127.0.0.1:5001
+> User-Agent: curl/8.15.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Server: Werkzeug/3.1.8 Python/3.14.6
+< Date: Sun, 09 Aug 2026 18:00:54 GMT
+< Content-Type: text/html; charset=utf-8
+< Content-Length: 3503
+< Access-Control-Allow-Origin: *
+< Connection: close
+< 
+{ [3503 bytes data]
+* shutting down connection #0
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Diagnostic Dashboard</title>
+<style>body{font-family:sans-serif;margin:20px}table{border-collapse:collapse;width:100%;font-size:.8em}th,td{border:1px solid #ddd;padding:6px;text-align:left}th{background:#f2f2f2}.tab{display:inline-block;padding:8px 16px;margin:4px;cursor:pointer;background:#eee;border-radius:4px}.tab.active{background:#007bff;color:#fff}.tab-content{margin-top:20px}select{padding:6px;margin-bottom:10px}.log{background:#f4f4f4;padding:10px;border-radius:4px;max-height:400px;overflow-y:auto;font-family:monospace}</style></head>
+<body><h1>🔬 Diagnostic Dashboard</h1><div id="tabs"><span class="tab active" data-tab="events">📋 Events</span><span class="tab" data-tab="errorblocks">🐞 Errors</span><span class="tab" data-tab="stalls">🚨 Stalls</span><span class="tab" data-tab="heals">🔧 Heals</span><span class="tab" data-tab="files">📁 Files</span><span class="tab" data-tab="alltables">📊 All Tables</span><span class="tab" data-tab="logs">📜 Live Logs</span></div><div id="tab-content"></div>
+<script>
+const TAB_MAP={events:'/api/events?limit=300',errorblocks:'/api/error_blocks?limit=200',stalls:'/api/stalls?limit=200',heals:'/api/heals?limit=200',files:'/api/files?limit=200'};
+let currentTab='events';
+function renderTable(data,title){if(!Array.isArray(data)||!data.length)return `<div>No data for ${title}.</div>`;const cols=Object.keys(data[0]);let html=`<h3>${title}</h3><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;data.forEach(row=>{html+=`<tr>${cols.map(c=>`<td>${row[c]??''}</td>`).join('')}</tr>`});html+='</tbody></table>';return html;}
+async function fetchData(endpoint){try{const res=await fetch(endpoint);if(!res.ok)throw new Error('HTTP '+res.status);return await res.json()}catch(e){return{error:e.message}}}
+async function loadTab(tab){currentTab=tab;const container=document.getElementById('tab-content');container.innerHTML='Loading...';
+if(tab==='logs'){container.innerHTML=`<div class="log" id="log-container">Connecting SSE...</div>`;const evtSource=new EventSource('/logs');const logDiv=document.getElementById('log-container');evtSource.onmessage=e=>{logDiv.innerHTML+=e.data+'<br>';logDiv.scrollTop=logDiv.scrollHeight};evtSource.onerror=()=>logDiv.innerHTML+='⚠️ SSE error – reconnecting...<br>';return}
+if(tab==='alltables'){const diag=await fetchData('/api/diagnostics');if(diag.tables&&diag.tables.length){let html=`<select id="table-select">${diag.tables.map(t=>`<option value="${t}">${t}</option>`).join('')}</select><div id="table-data"></div>`;container.innerHTML=html;const sel=document.getElementById('table-select');sel.onchange=async function(){const data=await fetchData(`/api/table/${this.value}?limit=200`);document.getElementById('table-data').innerHTML=renderTable(data,`Table: ${this.value}`)};sel.onchange()}else{container.innerHTML='No tables found.'};return}
+const endpoint=TAB_MAP[tab];if(!endpoint){container.innerHTML='Unknown tab.';return}const data=await fetchData(endpoint);if(data.error){container.innerHTML=`<div style="color:red">Error: ${data.error}</div>`;return}container.innerHTML=renderTable(data,tab.charAt(0).toUpperCase()+tab.slice(1))}
+document.querySelectorAll('.tab').forEach(el=>{el.addEventListener('click',function(){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');loadTab(this.dataset.tab)})});
+loadTab('events');
+</script></body></html>
+--- curl -v http://127.0.0.1:5001/viz (response headers + first 500 bytes) ---
+curl exit code: 0
+response body (first 500 bytes):
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>3D Event Visualisation (Debug)</title>
+<style>
+body{margin:0;overflow:hidden;font-family:sans-serif}
+#info{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.7);color:#fff;padding:10px;border-radius:5px;pointer-events:none;z-index:10;max-width:400px;font-size:12px}
+#legend{position:absolute;bottom:20px;left:20px;background:rgba(0,0,0,0.7);color:#fff;padding:10px;border-radius:5px;font-size:12px;pointer-events:none;z-index:10}
+#le
+response body length: 13896 bytes
+
+--- curl http://127.0.0.1:5001/api/events?limit=5 ---
+curl exit code: 0
+response (first 1000 chars):
+[{"detail":"Hub healthy before launch","event_type":"diagnostic","file_path":"autostall_fixed.py","status":"success","timestamp":"2026-08-08T20:05:11.034314+00:00"},{"detail":"Guardian exception: Command '['/usr/bin/python3', 'hub_guardian.py']' returned non-zero exit status 1.","event_type":"diagnostic","file_path":"autostall_fixed.py","status":"error","timestamp":"2026-08-08T19:49:07.276861+00:00"},{"detail":"Manual test entry for visualization","event_type":"diagnostic","file_path":"fix_api_and_data.sh","status":"info","timestamp":"2026-08-08 19:47:28"},{"detail":"Manual test entry for visualization","event_type":"diagnostic","file_path":"fix_api_and_data.sh","status":"info","timestamp":"2026-08-08 19:18:25"},{"detail":"Hub healthy before launch","event_type":"diagnostic","file_path":"autostall_fixed.py","status":"success","timestamp":"2026-08-07T14:12:42.706445+00:00"},{"detail":"Hub healthy before launch","event_type":"diagnostic","file_path":"autostall_fixed.py","status":"success
+
+=== PHASE 3: Response body analysis ===
+
+--- /viz HTML analysis ---
+[PASS] importmap found and valid JSON: ['three', 'three/addons/']
+[PASS] Three.js version in importmap: 0.160.0
+[PASS] OrbitControls referenced in HTML
+[PASS] CSS2DRenderer referenced in HTML
+[PASS] CSS2DObject referenced in HTML
+[PASS] test sphere SphereGeometry found
+[PASS] red color code found (test sphere or error color)
+[PASS] no triple single-quote artifacts in HTML response
+
+--- /api/events analysis ---
+[PASS] /api/events returned valid JSON array: 225 event(s)
+[INFO] first event keys: ['detail', 'event_type', 'file_path', 'status', 'timestamp']
+[PASS] field 'timestamp' present in event
+[PASS] field 'event_type' present in event
+[PASS] field 'status' present in event
+[PASS] field 'file_path' present in event
+[PASS] timestamp parseable as ISO8601: 2026-08-08T20:05:11.034314+00:00
+
+--- HTML structure check ---
+[PASS] '<!DOCTYPE html>' found
+[WARN] '<canvas' NOT found — may indicate truncated or wrong HTML
+[PASS] 'animate()' found
+[PASS] 'requestAnimationFrame' found
+[PASS] 'OrbitControls' found
+[PASS] 'AmbientLight' found
+[PASS] 'DirectionalLight' found
+[PASS] JS fetchData call to /api/events found
+
+--- Analysis complete ---
+[2026-08-09T18:00:54Z] [SUCCESS] body_analysis: Python analysis complete
+
+=== PHASE 4: app.py /viz route (verbatim) ===
+
+app.py size: 1892 bytes
+
+--- /viz route extraction (awk, no sed, Rule #7) ---
+
+viz route line count: unknown
+
+=== PHASE 5: JS syntax check ===
+[PASS] node --check: no syntax errors
+[2026-08-09T18:01:00Z] [SUCCESS] js_syntax: node --check passed
+
+=== END DIAGNOSTIC — 2026-08-09T18:01:00Z UTC ===
