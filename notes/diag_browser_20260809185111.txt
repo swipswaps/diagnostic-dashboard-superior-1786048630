@@ -1,0 +1,66 @@
+=== diag_browser_20260809185111 — 20260809185111 UTC ===
+
+PROJECT_ROOT: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo
+OWNER_REPO:   swipswaps/diagnostic-dashboard-superior-1786048630
+DISPLAY:      :0.0
+
+[2026-08-09T18:51:12.495932+00:00] [SUCCESS] browser_launch: headed Chromium launched
+
+--- Navigating to http://127.0.0.1:5001/viz ---
+  [CONSOLE:LOG] Events: [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object]
+  [CONSOLE:LOG] First 5 nodes: [Object, Object, Object, Object, Object]
+[2026-08-09T18:51:14.717611+00:00] [SUCCESS] page_goto: networkidle reached for http://127.0.0.1:5001/viz
+
+--- Observing for 15s (window is visible) ---
+[2026-08-09T18:51:30.755400+00:00] [SUCCESS] screenshot: saved to /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/notes/diag_browser_20260809185111.png
+[2026-08-09T18:51:31.335729+00:00] [SUCCESS] browser_close: Chromium closed
+
+=== PHASE: Playwright headed Chromium ===
+Target: http://127.0.0.1:5001/viz
+Observation window: 15s (Rule #51 fixed timeout)
+
+=== DOM STATE AFTER OBSERVATION ===
+[debug_div] Nodes: 225 | Raw: 225
+[info_div] Visualising 225 events + test sphere.
+[document_title] 3D Event Visualisation (Debug)
+[window_innerWidth] 1280
+[window_innerHeight] 800
+[webgl_check] WebGL available: WebGL 2.0 (OpenGL ES 3.0 Chromium)
+[canvas_check] canvas count: 1 | size: 1280x800 | context: webgl2
+[scene_state] {'debug': 'Nodes: 225 | Raw: 225', 'info': 'Visualising 225 events + test sphere.', 'bodyChildren': 10}
+
+[SCREENSHOT] saved: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/notes/diag_browser_20260809185111.png
+
+=== CONSOLE MESSAGES ===
+
+  -- LOG (2) --
+    [2026-08-09T18:51:14.216171+00:00] Events: [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object]
+      at http://127.0.0.1:5001/viz:50
+    [2026-08-09T18:51:14.217321+00:00] First 5 nodes: [Object, Object, Object, Object, Object]
+      at http://127.0.0.1:5001/viz:137
+
+=== PAGE ERRORS (uncaught exceptions) ===
+[PASS] no uncaught JS exceptions
+
+=== NETWORK REQUESTS ===
+Total requests: 5
+[PASS] no failed network responses (4xx/5xx)
+
+CDN responses (3):
+  [200] https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js
+  [200] https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS2DRenderer.js
+  [200] https://unpkg.com/three@0.160.0/build/three.module.js
+
+API responses (1):
+  [200] http://127.0.0.1:5001/api/events?limit=200
+
+=== DIAGNOSTIC SUMMARY ===
+Canvas present:       PASS
+No JS errors:         PASS
+Debug div populated:  PASS
+WebGL:                WebGL available: WebGL 2.0 (OpenGL ES 3.0 Chromium)
+Debug div text:       Nodes: 225 | Raw: 225
+Info div text:        Visualising 225 events + test sphere.
+
+=== END BROWSER DIAGNOSTIC — 2026-08-09T18:51:31.348196+00:00 ===
+[2026-08-09T18:51:31Z] [SUCCESS] playwright_run: complete
