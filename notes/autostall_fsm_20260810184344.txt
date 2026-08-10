@@ -1,0 +1,81 @@
+=== autostall FSM verification — 20260810184344 UTC ===
+Script: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_verbose.py
+
+=== autostall_verbose.py starting ===
+[2026-08-10T18:43:44.440121+00:00] [SUCCESS] schema: Tables ensured with source_db
+
+=== STATIC AUDIT (gdparse) ===
+  Discovering .gd files...
+  Found 110 .gd files.
+
+  [1/110] Scanning TelemetryLogger.gd... FAIL
+[PARSE ERROR] godot_project/TelemetryLogger.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [2/110] Scanning plugin.gd... FAIL
+[PARSE ERROR] godot_project/addons/gd_repair/plugin.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [3/110] Scanning validate_scene.gd... FAIL
+[PARSE ERROR] godot_project/addons/gd_repair/validate_scene.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [4/110] Scanning godot-sqlite.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot-sqlite/godot-sqlite.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [5/110] Scanning aero_atmosphere_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_atmosphere_3d/aero_atmosphere_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [6/110] Scanning aero_water_atmosphere_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_atmosphere_3d/aero_water_atmosphere_3d/aero_water_atmosphere_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [7/110] Scanning aero_body_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_body_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [8/110] Scanning aero_buoyancy_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_buoyancy_3d/aero_buoyancy_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [9/110] Scanning aero_buoyancy_mesh_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_buoyancy_3d/aero_buoyancy_mesh_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [10/110] Scanning aero_buoyancy_sphere_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_buoyancy_3d/aero_buoyancy_sphere_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [11/110] Scanning aero_influencer_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_influencer_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [12/110] Scanning aero_cyclic_propeller_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_mover_3d/aero_cyclic_propeller_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [13/110] Scanning aero_mover_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_mover_3d/aero_mover_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [14/110] Scanning aero_propeller_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_mover_3d/aero_propeller_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [15/110] Scanning aero_rotor_hinge_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_mover_3d/aero_rotor_hinge_3d/aero_rotor_hinge_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [16/110] Scanning aero_surface_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_surface_3d/aero_surface_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [17/110] Scanning aero_surface_config.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_surface_3d/aero_surface_config.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [18/110] Scanning manual_aero_surface_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_surface_3d/manual_aero_surface_3d/manual_aero_surface_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [19/110] Scanning manual_aero_surface_config.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_surface_3d/manual_aero_surface_3d/manual_aero_surface_config.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [20/110] Scanning aero_jet_thruster_3d.gd... FAIL
+[PARSE ERROR] godot_project/addons/godot_aerodynamic_physics/core/aero_influencer_3d/aero_thruster_3d/aero_jet_thruster_3d.gd (no line number)
+  Cannot open file '--': No such file or directory
+  [21/110] Scanning aero_thruster_3d.gd...
+=== FSM STATE SUMMARY ===
+OPENING_ANIM emissions: 0
+0
+DIAGNOSIS emissions:    0
+0
+LANDED emissions:       0
+0
+GAME_OVER emissions:    0
+0
+FSM transition line:    none
