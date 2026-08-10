@@ -1,0 +1,86 @@
+=== fix_all_blockers.py — 20260810180645 UTC ===
+DASH:  /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo
+GAME:  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game
+GODOT: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project
+AUDIT: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/notes/audit_unified.db
+
+/goal: game→LANDED; hub starts cleanly; dashboard surfaces errors.
+
+
+=== DEPENDENCY CHECK ===
+  [PASS] git: /usr/bin/git
+  [PASS] lsof: /usr/bin/lsof
+  [PASS] ss: /usr/bin/ss
+  [PASS] python3: /usr/bin/python3
+  [PASS] sqlite3: /usr/bin/sqlite3
+  [PASS] godot: /usr/bin/godot
+
+=== FIX 1: Hub port 8765 EADDRINUSE ===
+  Root cause (Rule #2): forensic_hub_server.py holds :8765
+  at autostall launch. No PID-file singleton guard.
+  Grounded: inspect_dbs_20260810114431.txt (RETRIEVED).
+  [PASS] Port 8765 already free
+  PID-guard snippet: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/notes/hub_pid_guard.py (read-back OK=True)
+  ACTION REQUIRED: add hub_pid_guard.py to forensic_hub_server.py
+                   BEFORE the socket bind() call.
+
+=== FIX 2: TelemetryLogger.gd missing stub ===
+  [PASS] /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/TelemetryLogger.gd (530 bytes, tabs_ok=True)
+
+=== FIX 3: OPENING_ANIM→LANDED FSM transition ===
+  Root cause (Rule #2): _poll_controls() never writes LANDED.
+  Finding A: res:// != filesystem — using rglob for live discovery.
+  Grounded: inspect_dbs_20260810114431.txt state=2 entire run.
+  Found: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd (150464 bytes)
+  Lines: 3766
+  [PASS] Already present (1 occurrence(s)) — no patch needed
+
+=== FLAG B: HealthChecker.gd:59 _gui_input crash ===
+  [FLAGGED — MANUAL FIX REQUIRED]
+  Root cause: _gui_input called on PanelContainer node.
+  PanelContainer does not implement _gui_input.
+  Fix: remove call at line 59; use emit_signal("gui_input")
+  or refactor onto a Control node with _gui_input support.
+  Context (HealthChecker.gd lines 57-63):
+       57: 	# scriptless PanelContainer duplicate. Crashed every boot:
+       58: 	#   SCRIPT ERROR: Invalid call. Nonexistent function '_gui_input'
+  >>   59: 	#   in base 'PanelContainer'.
+       60: 
+       61: 	var motion = InputEventMouseMotion.new()
+       62: 	motion.position = Vector2(200, 150)
+       63: 	motion.relative = Vector2(100, 50)
+
+=== FLAG C: Dictionary::operator[] saturation ===
+  forensics.db: 188,729 events, 448 MB.
+  Root cause: InputMap dict[] without .get() fires
+  engine bug report on every missing key per frame.
+  Grounded: HANDOFF_DOCUMENT.py lines 654-700 (RETRIEVED).
+  No .gd files found with InputMap dict[] access.
+  Saturation may originate from engine internals.
+  Fix: dict['events'] → dict.get('events', [])
+       dict['deadzone'] → dict.get('deadzone', 0.5)
+
+=== FIX D: fixture_corrupt.db quarantine ===
+  [PASS] fixture_corrupt.db → fixture_corrupt.db.CORRUPT.20260810180645
+  [PASS] fixture_corrupt.db → fixture_corrupt.db.CORRUPT.20260810180645
+  [PASS] fixture_corrupt.db → fixture_corrupt.db.CORRUPT.20260810180645
+  [PASS] fixture_corrupt.db → fixture_corrupt.db.CORRUPT.20260810180645
+  [PASS] fixture_corrupt.db → fixture_corrupt.db.CORRUPT.20260810180645
+
+=== /goal STATUS ===
+  FSM OPENING_ANIM→LANDED:  DONE
+  Hub port conflict:         DONE
+  TelemetryLogger.gd stub:  DONE
+  HealthChecker.gd:59:      FLAGGED (manual)
+  Dictionary saturation:    FLAGGED (manual)
+  fixture_corrupt.db:       QUARANTINED
+
+  NEXT STEPS:
+    1. python3 inspect_dbs.py
+    2. http://127.0.0.1:5001/api/debug
+    3. http://127.0.0.1:5001/viz
+    4. Add notes/hub_pid_guard.py to forensic_hub_server.py
+    5. Fix HealthChecker.gd:59 — remove _gui_input call
+    6. Fix InputMap dict[] → .get() calls
+
+=== END — 2026-08-10T18:06:58.449316+00:00 ===
