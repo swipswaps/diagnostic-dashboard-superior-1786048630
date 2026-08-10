@@ -1,0 +1,194 @@
+=== _physics_process / _deployment_timer diagnostic — 20260810183250 UTC ===
+Lines in build_terrain.gd: 3766
+
+=== 1: _physics_process signature line ===
+1981:func _physics_process(delta) -> void:
+
+=== 2: Lines 1488-1540 (OPENING_ANIM block in _physics_process) ===
+ 1488: 		_show_notification("FATAL – ground impact")
+ 1489: 
+ 1490: 
+ 1491: func _get_current_descent_rate() -> float:
+ 1492: 	if _game_state == GameState.FREEFALL:
+ 1493: 		return 1.2
+ 1494: 	if _game_state == GameState.OPENING_ANIM:
+ 1495: 		return 0.3
+ 1496: 	if _game_state != GameState.DIAGNOSIS:
+ 1497: 		return 0.0
+ 1498: 	if _reserve_done or _flare_done:
+ 1499: 		return DESCENT_RATE_GOOD
+ 1500: 	match _malfunction:
+ 1501: 		MalfunctionType.BAG_LOCK:
+ 1502: 			return DESCENT_RATE_BAGLOCK
+ 1503: 		MalfunctionType.GOOD:
+ 1504: 			return DESCENT_RATE_GOOD
+ 1505: 		_:
+ 1506: 			return DESCENT_RATE_NORMAL
+ 1507: 
+ 1508: 
+ 1509: # ------------------------------------------------------------------
+ 1510: # CFD wind update (called every physics frame)
+ 1511: # Ref: Derived from logarithmic wind profile theory (https://en.wikipedia.org/wiki/Logarithmic_wind_profile)
+ 1512: # ------------------------------------------------------------------
+ 1513: func _update_cfd_wind(delta: float) -> void:
+ 1514: 	var altitude_m = _current_altitude * 0.3048
+ 1515: 	var wind_speed_at_alt = _wind_base_speed * (1.0 + 0.1 * log(1.0 + altitude_m / 10.0))
+ 1516: 	_wind_gust_time += delta
+ 1517: 	if _wind_gust_time > randf_range(5.0, 10.0):
+ 1518: 		_wind_gust_time = 0.0
+ 1519: 		_wind_current_gust = randf_range(-_wind_turbulence, _wind_turbulence)
+ 1520: 	var final_speed = max(0.0, wind_speed_at_alt + _wind_current_gust)
+ 1521: 	var wind_rad := deg_to_rad(_wind_base_direction)
+ 1522: 	var wind_vec = Vector3(sin(wind_rad), 0, cos(wind_rad)) * (final_speed * 0.514444)
+ 1523: 	if _game_state == GameState.DIAGNOSIS:
+ 1524: 		_velocity_vec += wind_vec * delta * 0.5
+ 1525: 	elif _game_state == GameState.FREEFALL:
+ 1526: 		# Body drifts ~30% of canopy drift — smaller cross-section in freefall.
+ 1527: 		# Ref: USPA BSR body-position standards (general knowledge).
+ 1528: 		_character.position += wind_vec * delta * 0.3
+ 1529: 	elif _game_state == GameState.OPENING_ANIM:
+ 1530: 		# Canopy rides the air mass fully — primary landing-spot offset driver.
+ 1531: 		# wind_vec already in m/s (kts * 0.514444 applied above).
+ 1532: 		# Ref: https://docs.godotengine.org/en/stable/classes/class_node3d.html
+ 1533: 		# (general knowledge — not retrieved this session)
+ 1534: 		_character.position += wind_vec * delta
+ 1535: 	# Throttle: was ~60 lines/s; now 1 line per 5 seconds.
+ 1536: 	_wind_log_timer -= delta
+ 1537: 	if _wind_log_timer <= 0.0:
+ 1538: 		_wind_log_timer = 5.0
+ 1539: 		print("[WIND] speed ", final_speed, " kts  dir ",
+ 1540: 			_wind_base_direction, "°  gust ", _wind_current_gust,
+
+=== 3: Lines 2130-2165 (second OPENING_ANIM block) ===
+ 2130: 		# to OPENING_ANIM. Screenshots 11:24:47-11:25:57 showed the altimeter
+ 2131: 		# panel falling 5142->4175 ft while HUD Label0 stayed at 6044 ft.
+ 2132: 		# They are now in _update_hud_readouts(), called unconditionally from
+ 2133: 		# the common path below.
+ 2134: 		_check_decision_altitude()
+ 2135: 		# Capture flight screenshot every 5 seconds (R085 ensures during flight)
+ 2136: 		if _screenshot_save_timer > 0:
+ 2137: 			_screenshot_save_timer -= delta
+ 2138: 		if _screenshot_save_timer <= 0.0:
+ 2139: 			ScreenshotLibrary.save_flight_screenshot()
+ 2140: 			_screenshot_save_timer = 5.0
+ 2141: 	if _game_state == GameState.OPENING_ANIM or _game_state == GameState.DIAGNOSIS:
+ 2142: 		print("[VERBATIM] DIAGNOSIS turning block executed")
+ 2143: 		print("[DIAG] _turn_input = ", _turn_input)
+ 2144: 		var turn_dir = Vector3.RIGHT * _turn_input * _turn_force
+ 2145: 		_velocity_vec += turn_dir * delta
+ 2146: 		if _velocity_vec.length() > 0.5:
+ 2147: 			var angle = atan2(_velocity_vec.x, _velocity_vec.z)
+ 2148: 			# _character.rotation = Vector3(0, angle, 0)  # removed to match plane behaviour
+ 2149: 
+ 2150: 
+ 2151: # ------------------------------------------------------------------
+ 2152: # Process loop (pattern state, heading, bearing, screenshot, mission check)
+ 2153: # ------------------------------------------------------------------
+ 2154: func _process(delta) -> void:
+ 2155: 	if _hud_labels.size() < 8:
+ 2156: 		return
+ 2157: 	_poll_controls()
+ 2158: 	if _game_state == GameState.GAME_OVER:
+ 2159: 		return
+ 2160: 	_frame_count += 1
+ 2161: 	if _frame_count == 2:
+ 2162: 		var ts = Time.get_datetime_string_from_system().replace(":", "").replace("-", "")
+ 2163: 		var spath = (
+ 2164: 			ProjectSettings.globalize_path("res://")
+ 2165: 			+ "../audit_logs/screenshots/v314_"
+
+=== 4: _deployment_timer — all surrounding context (±5 lines each hit) ===
+      125: var _canopy_instance: Node3D
+      126: var _canopy_material: StandardMaterial3D
+      127: var _canopy_deployed: bool = false
+      128: var _headless_auto_jump: bool = false  # set by IN_PLANE headless patch; consumed in _poll_controls
+      129: var _headless_auto_deploy: bool = false  # set when headless jump fires; consumed in FREEFALL _poll_controls
+>>>   130: var _deployment_timer
+      131: var _screenshot_save_timer: float = 0.0
+      132: const DEPLOY_TIME: float = 1.2
+      133: 
+      134: # ------------------------------------------------------------------
+      135: # Scoring, leaderboard, achievements, missions, etc.
+
+      867: 		print("[VERBATIM] EXIT _deploy_canopy early=already_deployed_or_no_canopy")
+      868: 		return
+      869: 	_canopy_deployed = true
+      870: 	_canopy_instance.visible = true
+      871: 	_canopy_instance.scale = Vector3.ZERO
+>>>   872: 	_deployment_timer = 2.0  # changed from DEPLOY_TIME to give canopy time to open
+      873: 	_game_state = GameState.OPENING_ANIM
+      874: 	print("[VERBATIM] Parachute deployment started — state=OPENING_ANIM")
+      875: 
+      876: 	if not _replay_playing:
+      877: 		_replay_recording.clear()
+
+     1835: 	_reserve_done = false
+     1836: 	_flare_done = false
+     1837: 	_safe_landing = false
+     1838: 	_decision_altitude_warning_shown = false
+     1839: 	_canopy_deployed = false
+>>>  1840: 	_deployment_timer = 0.0
+     1841: 	_score = 0
+     1842: 	_cam_angle_idx = 0
+     1843: 	_camera.position = Vector3(0.0, 2.0, 3.0)
+     1844: 	_camera.rotation = Vector3(deg_to_rad(-10.0), 0.0, 0.0)
+     1845: 	if _canopy_instance:
+
+
+=== 5: _deploy_canopy function (full) ===
+func _deploy_canopy() -> void:
+
+=== 6: Lines 860-910 (_deploy_canopy body with _deployment_timer set) ===
+  860: 			return found
+  861: 	return null
+  862: 
+  863: 
+  864: func _deploy_canopy() -> void:
+  865: 	print("[VERBATIM] ENTER _deploy_canopy gate=none")
+  866: 	if _canopy_deployed or not _canopy_instance:
+  867: 		print("[VERBATIM] EXIT _deploy_canopy early=already_deployed_or_no_canopy")
+  868: 		return
+  869: 	_canopy_deployed = true
+  870: 	_canopy_instance.visible = true
+  871: 	_canopy_instance.scale = Vector3.ZERO
+  872: 	_deployment_timer = 2.0  # changed from DEPLOY_TIME to give canopy time to open
+  873: 	_game_state = GameState.OPENING_ANIM
+  874: 	print("[VERBATIM] Parachute deployment started — state=OPENING_ANIM")
+  875: 
+  876: 	if not _replay_playing:
+  877: 		_replay_recording.clear()
+  878: 		_replay_recording.append({"action": "deploy", "time": Time.get_ticks_msec()})
+  879: 	print("[VERBATIM] EXIT _deploy_canopy ok=true")
+  880: 
+  881: 
+  882: # ------------------------------------------------------------------
+  883: # Procedural fallback canopy (blue dome)
+  884: # Ref: https://docs.godotengine.org/en/stable/classes/class_spheremesh.html
+  885: # ------------------------------------------------------------------
+  886: func _create_procedural_canopy() -> void:
+  887: 	print("[VERBATIM] ENTER _create_procedural_canopy gate=none")
+  888: 	_canopy_instance = MeshInstance3D.new()
+  889: 	var sphere_mesh := SphereMesh.new()
+  890: 	sphere_mesh.radius = 0.6
+  891: 	sphere_mesh.height = 1.0
+  892: 	sphere_mesh.radial_segments = 32
+  893: 	sphere_mesh.rings = 16
+  894: 	_canopy_instance.mesh = sphere_mesh
+  895: 	_canopy_instance.scale = Vector3(0.18, 0.12, 0.18)
+  896: 	_character.add_child(_canopy_instance)
+  897: 	_canopy_instance.position = Vector3(0, 3.2, 0)
+  898: 	_canopy_material = StandardMaterial3D.new()
+  899: 	_canopy_material.albedo_color = Color(0.0, 0.6, 1.0)
+  900: 	_canopy_instance.material_override = _canopy_material
+  901: 	_canopy_instance.visible = false
+  902: 	print("[VERBATIM] Procedural dome canopy created")
+  903: 	print("[VERBATIM] EXIT _create_procedural_canopy ok=true")
+  904: 
+  905: 
+  906: # ------------------------------------------------------------------
+  907: # Arm animation (pull down) – gated with skeleton and bone index checks
+  908: # Ref: https://docs.godotengine.org/en/stable/classes/class_quaternion.html
+  909: # Ref: https://docs.godotengine.org/en/stable/classes/class_skeleton3d.html#class-skeleton3d-method-set-bone-pose-rotation
+  910: # ------------------------------------------------------------------
+
+=== END — 2026-08-10T18:32:50Z UTC ===
