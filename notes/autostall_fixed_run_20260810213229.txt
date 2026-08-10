@@ -1,0 +1,3444 @@
+=== autostall_fixed.py run — 20260810213229 UTC ===
+Script: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_fixed.py
+Timeout: 120s
+
+[2026-08-10T21:32:29.831675+00:00] [success] hub_preflight: Hub healthy before launch
+[HUB] Checking hub health...
+[HUB] Hub is already healthy.
+[DISPLAY] Using existing display: :0.0
+[ENV] Using DISPLAY=:0.0
+[PATCH] Auto‑start patch already applied.
+[SETUP] godot binary: /usr/bin/godot
+[SETUP] project dir:  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project
+[RUN] /usr/bin/godot --path godot_project --verbose
+[RUN] stall threshold: 30.0s   timeout: 0s
+[ENV] GODOT_HEADLESS=1 (for auto‑start detection only)
+========================================================================
+[DB] Using table: files_to_fix
+WorkerThreadPool: 4 threads, 1 max low-priority.
+Godot Engine v4.6.3.stable.fedora.7d41c59c4 - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+Unrecognized output string "misc2" in mapping:
+030000008a2e0000dd10000011010000,Hand Held Legend GC Ultimate,a:b0,b:b2,back:b17,dpdown:b5,dpleft:b6,dpright:b7,dpup:b4,guide:b18,leftshoulder:b10,leftstick:b8,lefttrigger:a3,leftx:a0,lefty:a1,misc1:b19,misc2:b24,paddle1:b13,paddle2:b12,rightshoulder:b11,rightstick:b9,righttrigger:a4,rightx:a2,righty:a5,start:b16,x:b1,y:b3,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+030000000d0f0000ab01000011010000,Horipad Steam,a:b0,b:b1,back:b10,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b6,leftstick:b13,lefttrigger:a5,leftx:a0,lefty:a1,misc2:b2,paddle1:b19,paddle2:b18,paddle3:b15,paddle4:b5,rightshoulder:b7,rightstick:b14,righttrigger:a4,rightx:a2,righty:a3,start:b11,x:b3,y:b4,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+050000000d0f00009601000091000000,Horipad Steam,a:b0,b:b1,back:b10,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b6,leftstick:b13,lefttrigger:a5,leftx:a0,lefty:a1,misc2:b2,paddle1:b19,paddle2:b18,paddle3:b15,paddle4:b5,rightshoulder:b7,rightstick:b14,righttrigger:a4,rightx:a2,righty:a3,start:b11,x:b3,y:b4,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+030000007e0500006920000011010000,Nintendo Switch 2 Pro Controller,a:b0,b:b1,back:b14,dpdown:b8,dpleft:b10,dpright:b9,dpup:b11,guide:b16,leftshoulder:b12,leftstick:b15,lefttrigger:b13,leftx:a0,lefty:a1~,misc1:b17,misc2:b20,paddle1:b18,paddle2:b19,rightshoulder:b4,rightstick:b7,righttrigger:b5,rightx:a2,righty:a3~,start:b6,x:b2,y:b3,platform:Linux,
+SDL: Init OK!
+Using "default" pen tablet driver...
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+CORE API HASH: 2475187701
+EDITOR API HASH: 3867286884
+SceneTreeFTI: traversal method DEFAULT
+Loading resource: res://TelemetryLogger.gd
+Loading resource: res://scripts/SqliteDb.gd
+Loading resource: res://autoloads/HealthChecker.gd
+Loading resource: res://scripts/HubManager.gd
+Loading resource: res://scripts/DatabaseGuard.gd
+Loading resource: res://scripts/ResourceThrottle.gd
+Loading resource: res://scripts/PerformanceMonitor.gd
+Loading resource: res://addons/godot_aerodynamic_physics/core/singletons/aero_units.gd
+Loading resource: res://scripts/SqliteWatchdog.gd
+Loading resource: res://scripts/StructuredLogger.gd
+Loading resource: res://scripts/InputManager.gd
+Loading resource: res://scripts/GameIntegrity.gd
+Loading resource: res://scripts/altimeter_hud.gd
+Loading resource: res://scripts/forensic_hud.gd
+Loading resource: res://scripts/audit.gd
+Loading resource: res://scripts/wind_field.gd
+Loading resource: res://autoloads/CursorManager.gd
+Loading resource: res://autoloads/Gamification.gd
+Loading resource: res://autoloads/forensic_panel.gd
+Loaded system CA certificates
+Loading resource: res://scenes/main.tscn
+Loading resource: res://scripts/build_terrain.gd
+Loading resource: res://assets/terrain/black_env.tres
+[VERBATIM] SqliteDb.gd _ready() called
+[VERBATIM] SqliteDb.gd _ready() called
+[VERBATIM] SqliteDb.gd _ready() called
+[VERBATIM] SqliteDb: _ready started
+[VERBATIM] DB OPEN OK /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db
+[VERBATIM] DB OPEN OK /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db
+[HealthChecker] Control hierarchy dumped to DB in 0ms
+[VERBATIM] DatabaseGuard.gd _ready() called
+[VERBATIM] DatabaseGuard: _ready ok=true
+[VERBATIM] ResourceThrottle.gd _ready() called
+[VERBATIM] ResourceThrottle: table ensured
+[VERBATIM] ResourceThrottle: _ready ok=true
+[VERBATIM] SqliteWatchdog.gd _ready() called
+[VERBATIM] SqliteWatchdog.gd _ready() called
+[VERBATIM] SqliteWatchdog.gd _ready() called
+[VERBATIM] Watchdog: _ready started
+[VERBATIM] Watchdog: started, polling user://screenshots/
+[VERBATIM] Watchdog: scan disabled — single-launch screenshot mode
+[VERBATIM] Watchdog: _ready completed
+[StructuredLogger] WARN: could not open /home/owner/.local/share/godot/app_userdata/Parachute Landing Pattern v314/logs/godot_logs.jsonl — stdout only
+[StructuredLogger] sentry_available=false
+[VERBATIM] 2026-08-10T17:32:31 GameIntegrity autoload initialized
+[VERBATIM] 2026-08-10T17:32:31 Log file: /home/owner/.local/share/godot/app_userdata/Parachute Landing Pattern v314/game_integrity.log
+[ALTIMETER] ready: layer=1 visible=true panel.pos=(50.0, 200.0) panel.size=(200.0, 100.0) panel.visible=true
+[AUDIT] _ready: ENTER
+[HUD_DIAG] _ready called
+[HUD_DIAG] is_processing_input()=true is_inside_tree()=true frame=0 process_mode=0
+[AUDIT] _resolve_hub_url: ENTER
+[AUDIT] _build_ui: ENTER
+[AUDIT] _load_saved_position: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _mklabel: ENTER
+[AUDIT] _poll_fast: ENTER
+[AUDIT] _poll_slow: ENTER
+Wind field loaded:
+  Grid: 31 x 31 x 21
+  Spacing: 10.0 m
+  Bounds: (0.0, 0.0, 0.0) to (300.0, 300.0, 200.0)
+  Velocities: 20181 vectors
+[FPANEL] ready. Toggle: F3 / F9 / ` / T (polled in _process, not _input)
+[FPANEL_DIAG] is_inside_tree()=true process_mode=0 frame=0 layer=100 visible=false
+[CAMERA] Loaded plane camera distance from DB: 215.0
+[INIT] Press SPACE to start
+[DIAG] _ready: ENTER
+[VERBATIM] 2026-08-10T17:32:31 ENTER _ready gate=none
+[VERBATIM] Baked colours loaded: 50331648
+[VERBATIM] Terrain: 1024 vertex-colour, colour=baked_colours_4096.bin, verts: 1048576
+[VERBATIM] Runways: placeholder positions disabled pending georef
+[DEBUG] _character position after set: (100.0, 1828.8, -100.0)
+[DEBUG] _character global_position: (100.0, 1828.8, -100.0)
+[VERBATIM] ENTER _load_character gate=none
+Loading resource: res://assets/characters/parachutist.fbx
+Loading resource: res://.godot/imported/parachutist.fbx-4e97eacb181e599e676b61e7205a47ee.scn
+[VERBATIM] FBX loaded
+[DEBUG] FBX instance visible: true
+[DEBUG] FBX instance added. Node: parachutist:<Node3D#39460013657>
+[DEBUG] Instance position: (0.0, 0.0, 0.0)
+[DEBUG] Instance scale: (1.0, 1.0, 1.0)
+[DEBUG] Instance visible: true
+[DEBUG] _character position: (100.0, 1828.8, -100.0)
+[VERBATIM] Left arm bone found index 8
+[VERBATIM] Right arm bone found index 32
+[VERBATIM] _setup_anim_player: clips=["Take 001", "mixamo_com"]
+[VERBATIM] _setup_anim_player: deferring play of mixamo_com
+[VERBATIM] RESET animation not available – using fallback
+[VERBATIM] EXIT _load_character ok=true
+[DIAG] _ready: character loaded
+[VERBATIM] [VERBATIM] Creating plane node...
+Loading resource: res://scripts/plane.gd
+[VERBATIM] [VERBATIM] Plane script attached
+Loading resource: res://assets/aircraft/cesna_airplane.glb
+Loading resource: res://.godot/imported/cesna_airplane.glb-0df84a10403a8c08167e1e07258c4378.scn
+Loading resource: res://assets/aircraft/cesna_airplane_2.png
+Loading resource: res://.godot/imported/cesna_airplane_2.png-a0ae2ab0bf25959dd0beafc4e856bc3b.s3tc.ctex
+Loading resource: res://assets/aircraft/cesna_airplane_0.png
+Loading resource: res://.godot/imported/cesna_airplane_0.png-e0456c27d48acd63e1dd01ab23117de6.s3tc.ctex
+Loading resource: res://assets/aircraft/cesna_airplane_1.png
+Loading resource: res://.godot/imported/cesna_airplane_1.png-40e4f0bad9835f0987c7e03e2e3ca5b0.s3tc.ctex
+[VERBATIM] Cessna model loaded. visible=true scale=(15.0, 15.0, 15.0)
+[VERBATIM] [VERBATIM] Plane created at altitude 6000
+[DIAG] _ready: plane created, _plane_node=FlyingPlane:<CharacterBody3D#39594231400>
+[DEBUG] Plane position: (0.0, 1828.8, 0.0)
+[DEBUG] Camera position: (0.0, 1892.337, -205.3974)
+[DIAG] _ready: camera positioned
+[VERBATIM] Camera attached to root, following plane
+[VERBATIM] Drop zone created
+[VERBATIM] ENTER _load_faa_obstacles gate=none
+[VERBATIM] _load_faa_obstacles read_bytes=9568
+[VERBATIM] _load_faa_obstacles obstacle_count=41
+[VERBATIM] FAA obstacles loaded: 41
+[VERBATIM] EXIT _load_faa_obstacles ok=true placed=41
+[VERBATIM] HUD created
+[DIAG] _ready: HUD created, _hud_labels size=8
+[VERBATIM] Initial heading set to 0.0
+[VERBATIM] ENTER _setup_pip_overlay gate=none
+Loading resource: res://scripts/pip_draggable.gd
+[PIP] _ready: size=(320.0, 240.0) position=(10.0, 10.0)
+[VERBATIM] PiP canopy path=res://assets/canopy/parachute_sanitized.glb
+Loading resource: res://assets/canopy/parachute_sanitized.glb
+Loading resource: res://.godot/imported/parachute_sanitized.glb-5999240e51474abb946895cc5af216d6.scn
+[VERBATIM] main canopy attached offset=(0,2.5,0) path=res://assets/canopy/parachute_sanitized.glb
+[CANOPYSYNC] main canopy attached HIDDEN, awaiting deploy
+[VERBATIM] EXIT _setup_pip_overlay ok=true
+[VERBATIM] ENTER _init_achievements gate=none
+[VERBATIM] Unlocked achievements: ["first_jump", "malfunction_ace"]
+[VERBATIM] EXIT _init_achievements ok=true
+[VERBATIM] ENTER _init_mission gate=none
+[VERBATIM] Mission updated: Training
+[VERBATIM] EXIT _init_mission ok=true
+[VERBATIM] ENTER _init_leaderboard gate=none
+[VERBATIM] EXIT _init_leaderboard ok=true
+[VERBATIM] ENTER _init_controller gate=none
+[VERBATIM] EXIT _init_controller ok=true
+[VERBATIM] ENTER _init_sentry gate=none
+[VERBATIM] Sentry not configured
+[VERBATIM] EXIT _init_sentry ok=true
+Loading resource: res://assets/canopy/parachute_sanitized.glb
+Loading resource: res://.godot/imported/parachute_sanitized.glb-5999240e51474abb946895cc5af216d6.scn
+[VERBATIM] Clean GLB loaded from: res://assets/canopy/parachute_sanitized.glb
+[VERBATIM] ENTER _randomize_malfunction gate=none
+[VERBATIM] Canopy visuals updated for LINE TWISTS
+[VERBATIM] EXIT _randomize_malfunction ok=true
+[VERBATIM] Initial malfunction: LINE TWISTS
+[VERBATIM] Game ready – press SPACE at ~4000 ft to deploy
+[VERBATIM] ARM GATE: Left arm rotation = (1.570796, 1.570796, 0.0)
+[VERBATIM] ARM GATE: Right arm rotation = (1.570796, -1.570796, 0.0)
+[VERBATIM] ARM GATE: Arms are lowered
+[VERBATIM] ... EXIT _ready ok=true
+[DIAG] _ready: EXIT
+[FPANEL] _process() alive, frame=0
+[ALTIMETER] update_altitude FIRST CALL: alt_ft=6000.00035219727
+[ARMTEL] rest captured L_idx=8 R_idx=32 restL=(-0.010452, -0.001063, 0.101151, 0.994816) restR=(-0.010455, 0.001063, -0.101149, 0.994816)
+[AXISSOLVE] bones OK on attempt 1  hips=0 head=5 foot=57 toe=59 handL=10 handR=34
+[ANIMDIAG] current='' is_playing=false speed_scale=1.0 active=true process_mode=1 list=["Take 001", "mixamo_com"]
+[AXISSOLVE] up=(-0.000073, 0.999984, -0.005653) forward=(0.009652, 0.005654, 0.999937) right=(-0.999953, -0.000019, 0.009652)
+[AXISSOLVE] orthogonality up.dot(fwd)=-0.000000028871 (want ~0); desired hand dir (fwd+down)=(0.006877, -0.703098, 0.71106)
+[AXISSOLVE_HDR] side,label,angle_deg,d_forward,d_up,d_right
+[AXISSOLVE] L lever=(0.550191, 0.000049, 0.0) len=0.5501914024353 axis_global=(0.000063, -0.711076, -0.703115) AXIS_LOCAL_APPLIED=(0.703115, -0.0, 0.711076)
+[AXISSOLVE],L,SOLVED,15.0,0.10050402581692,-0.10069465637207,0.01971686445177
+[AXISSOLVE],L,+X,15.0,-0.00098592438735,-0.14239792525768,0.01873648166656
+[AXISSOLVE],L,-X,15.0,0.00062396959402,0.14239744842052,0.01875631324947
+[AXISSOLVE],L,+Y,15.0,0.00000001184914,0.0000001191442,0.00000000010565
+[AXISSOLVE],L,-Y,15.0,0.00000000745011,-0.00000000004212,0.00000000007191
+[AXISSOLVE],L,+Z,15.0,0.14221015572548,-0.00080531829735,0.02012093178928
+[AXISSOLVE],L,-Z,15.0,-0.14257210493088,0.00080472708214,0.01737180165946
+[AXISSOLVE],L,SOLVED,60.0,0.33424305915833,-0.336934030056,0.27832999825478
+[AXISSOLVE],L,+X,60.0,-0.00534905865788,-0.47647625207901,0.27504971623421
+[AXISSOLVE],L,-X,60.0,0.00003785827721,0.4764678478241,0.27511608600616
+[AXISSOLVE],L,+Y,60.0,0.00000007145006,0.00000011880724,0.00000000068096
+[AXISSOLVE],L,-Y,60.0,0.00000008500235,-0.00000011969176,0.00000000082924
+[AXISSOLVE],L,+Z,60.0,0.47379446029663,-0.00269782519899,0.27968221902847
+[AXISSOLVE],L,-Z,60.0,-0.47910553216934,0.00268949149176,0.27048355340958
+[AXISSOLVE] R lever=(-0.550191, -0.000048, 0.0) len=0.5501914024353 axis_global=(-0.000061, 0.711076, 0.703115) AXIS_LOCAL_APPLIED=(0.703115, 0.0, -0.711076)
+[AXISSOLVE],R,SOLVED,15.0,0.10086593776941,-0.10069417953491,-0.01777581125498
+[AXISSOLVE],R,+X,15.0,-0.00062398682348,-0.14239744842052,-0.01875607483089
+[AXISSOLVE],R,-X,15.0,0.00098590110429,0.14239792525768,-0.01873677968979
+[AXISSOLVE],R,+Y,15.0,0.00000003352552,-0.00000000018954,0.00000000032362
+[AXISSOLVE],R,-Y,15.0,-0.00000005587586,0.0000000003159,-0.00000000053936
+[AXISSOLVE],R,+Z,15.0,-0.14221015572548,0.00080531829735,-0.02012087218463
+[AXISSOLVE],R,-Z,15.0,0.14257207512856,-0.00080472690752,-0.01737192086875
+[AXISSOLVE],R,SOLVED,60.0,0.33955377340317,-0.33692640066147,-0.27183523774147
+[AXISSOLVE],R,+X,60.0,-0.00003805011875,-0.47646844387054,-0.27511510252953
+[AXISSOLVE],R,-X,60.0,0.00534880580381,0.47647559642792,-0.27505052089691
+[AXISSOLVE],R,+Y,60.0,0.00000007584908,0.00000023799356,0.00000000071469
+[AXISSOLVE],R,-Y,60.0,-0.00000019370299,0.00000000109512,-0.00000000186978
+[AXISSOLVE],R,+Z,60.0,-0.47379460930824,0.00269723008387,-0.27968180179596
+[AXISSOLVE],R,-Z,60.0,0.47910526394844,-0.0026900859084,-0.27048382163048
+[ELBOWSOLVE] L reference=pull_dir
+[ELBOWSOLVE] L fore_idx=9 lever=(0.276145, 0.000024, 0.0) len=0.27614459395409 d_want=(0.000062, -0.703115, 0.711076) ELBOW_AXIS_LOCAL=(0.703115, 0.0, 0.711077)
+[ELBOWSOLVE_HDR] side,angle_deg,dist_before,dist_after,delta_want_negative,along_pulldir_want_positive
+[ELBOWSOLVE],L,30.0,0.5501914024353,0.53144437074661,-0.01874703168869,0.13781696557999
+[ELBOWSOLVE],L,75.0,0.5501914024353,0.436498016119,-0.1136933863163,0.26533415913582
+[ELBOWSOLVE] R reference=pull_dir
+[ELBOWSOLVE] R fore_idx=33 lever=(-0.276145, -0.000024, 0.0) len=0.27614462375641 d_want=(0.000061, -0.703115, 0.711076) ELBOW_AXIS_LOCAL=(0.703115, 0.0, -0.711076)
+[ELBOWSOLVE_HDR] side,angle_deg,dist_before,dist_after,delta_want_negative,along_pulldir_want_positive
+[ELBOWSOLVE],R,30.0,0.5501914024353,0.53144431114197,-0.01874709129333,0.13832128047943
+[ELBOWSOLVE],R,75.0,0.5501914024353,0.43649789690971,-0.11369350552559,0.26812392473221
+[AXISSOLVE] solved L=true R=true - axes now APPLIED live, pose restored
+[ARMTEL_HDR] t,side,held,dt,force,tension,damping,accel,vel,pull,deg,anim_pos,elbow_deg,hold_t
+[CONTROLS] ---- InputMap audit and repair ----
+[CONTROLS] deploy  action_existed=true  keys_before=[]  wanted=Space  added=true
+[CONTROLS] turnleft  action_existed=true  keys_before=[]  wanted=Q  added=true
+[CONTROLS] turnright  action_existed=true  keys_before=[]  wanted=E  added=true
+[CONTROLS] camera_cycle  action_existed=true  keys_before=[]  wanted=C  added=true
+[CONTROLS] cutaway  action_existed=true  keys_before=[]  wanted=X  added=true
+[CONTROLS] reserve  action_existed=true  keys_before=[]  wanted=V  added=true
+[CONTROLS] flare  action_existed=true  keys_before=[]  wanted=F  added=true
+[CONTROLS] togglehud  action_existed=true  keys_before=[]  wanted=H  added=true
+[CONTROLS] flightcheck  action_existed=true  keys_before=[]  wanted=G  added=true
+[CONTROLS] restart  action_existed=true  keys_before=[]  wanted=R  added=true
+[CONTROLS] j  action_existed=true  keys_before=["J"]  wanted=J  added=false
+[CONTROLS] pause  action_existed=true  keys_before=[]  wanted=Escape  added=true
+[CONTROLS] ---- 11 binding(s) added ----
+[CANOPYSYNC] transition at state=0 deployed=false visible=false
+[PIPLIVE] SubViewport now shares the main World3D
+[PIPLIVE] hid 2 standalone PiP prop(s); camera kept
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.9964, 1853.8, 2.399997)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (0.0, 1892.337, -205.3974) to (799.9964, 1917.337, -202.9974)
+[DIAG] _physics_process: IN_PLANE returning
+[HubManager] Hub already running (env) - skipping startup
+[FPANEL] Adopted existing pip container
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.9856, 1853.8, 4.799971)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.9964, 1917.337, -202.9974) to (799.9856, 1917.337, -200.5974)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.9676, 1853.8, 7.199903)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.9856, 1917.337, -200.5974) to (799.9676, 1917.337, -198.1974)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.9424, 1853.8, 9.59977)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.9676, 1917.337, -198.1974) to (799.9424, 1917.337, -195.7976)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.91, 1853.8, 11.99955)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.9424, 1917.337, -195.7976) to (799.91, 1917.337, -193.3978)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.8704, 1853.8, 14.39922)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.91, 1917.337, -193.3978) to (799.8704, 1917.337, -190.9981)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.8236, 1853.8, 16.79877)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.8704, 1917.337, -190.9981) to (799.8236, 1917.337, -188.5986)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.7696, 1853.8, 19.19816)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.8236, 1917.337, -188.5986) to (799.7696, 1917.337, -186.1992)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[VERBATIM] Entering BASE
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.7084, 1853.8, 21.59738)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.7696, 1917.337, -186.1992) to (799.7084, 1917.337, -183.8)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.64, 1853.8, 23.9964)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.7084, 1917.337, -183.8) to (799.64, 1917.337, -181.401)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.5645, 1853.8, 26.39521)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.64, 1917.337, -181.401) to (799.5645, 1917.337, -179.0022)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.4816, 1853.8, 28.79378)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.5645, 1917.337, -179.0022) to (799.4816, 1917.337, -176.6036)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.3917, 1853.8, 31.19209)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.4816, 1917.337, -176.6036) to (799.3917, 1917.337, -174.2053)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.2945, 1853.8, 33.59012)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.3917, 1917.337, -174.2053) to (799.2945, 1917.337, -171.8072)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.1901, 1853.8, 35.98785)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.2945, 1917.337, -171.8072) to (799.1901, 1917.337, -169.4095)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (799.0786, 1853.8, 38.38526)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.1901, 1917.337, -169.4095) to (799.0786, 1917.337, -167.0121)
+[DIAG] _physics_process: IN_PLANE returning
+[VERBATIM] _setup_anim_player: playing mixamo_com pos=0.0
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[VERBATIM] Screenshot saved: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/../audit_logs/screenshots/v314_20260810T173304.png
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:1552: 0x469702b8: Perform PSA-based ECDH/FFDH computation.
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (798.9598, 1853.8, 40.78231)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (799.0786, 1917.337, -167.0121) to (798.9598, 1917.337, -164.615)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (798.8339, 1853.8, 43.17901)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (798.9598, 1917.337, -164.615) to (798.8339, 1917.337, -162.2184)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (798.7007, 1853.8, 45.57531)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (798.8339, 1917.337, -162.2184) to (798.7007, 1917.337, -159.8221)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (798.5604, 1853.8, 47.97121)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (798.7007, 1917.337, -159.8221) to (798.5604, 1917.337, -157.4261)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_client.c:1950: 0x469702b8: Switch to handshake keys for inbound traffic
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:0403: 0x469702b8: mbedtls_ssl_tls13_process_certificate_verify() returned 0 (-0x0000)
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_client.c:2642: 0x469702b8: Switch to handshake traffic keys for outbound traffic
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:1235: 0x469702b8: Switch to application keys for inbound traffic
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:1238: 0x469702b8: Switch to application keys for outbound traffic
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (798.4129, 1853.8, 50.36667)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (798.5604, 1917.337, -157.4261) to (798.4129, 1917.337, -155.0307)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (798.2582, 1853.8, 52.76168)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (798.4129, 1917.337, -155.0307) to (798.2582, 1917.337, -152.6357)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (798.0964, 1853.8, 55.15621)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (798.2582, 1917.337, -152.6357) to (798.0964, 1917.337, -150.2411)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (797.9273, 1853.8, 57.55025)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (798.0964, 1917.337, -150.2411) to (797.9273, 1917.337, -147.8471)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (797.751, 1853.8, 59.94377)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (797.9273, 1917.337, -147.8471) to (797.751, 1917.337, -145.4536)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:1552: 0x4626d168: Perform PSA-based ECDH/FFDH computation.
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (797.5676, 1853.8, 62.33675)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (797.751, 1917.337, -145.4536) to (797.5676, 1917.337, -143.0606)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_client.c:1950: 0x4626d168: Switch to handshake keys for inbound traffic
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:0403: 0x4626d168: mbedtls_ssl_tls13_process_certificate_verify() returned 0 (-0x0000)
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_client.c:2642: 0x4626d168: Switch to handshake traffic keys for outbound traffic
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:1235: 0x4626d168: Switch to application keys for inbound traffic
+/builddir/build/BUILD/mbedtls-3.6.6-build/mbedtls-3.6.6/library/ssl_tls13_generic.c:1238: 0x4626d168: Switch to application keys for outbound traffic
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (797.377, 1853.8, 64.72916)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (797.5676, 1917.337, -143.0606) to (797.377, 1917.337, -140.6682)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (797.1793, 1853.8, 67.121)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (797.377, 1917.337, -140.6682) to (797.1793, 1917.337, -138.2764)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (796.9743, 1853.8, 69.51223)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (797.1793, 1917.337, -138.2764) to (796.9743, 1917.337, -135.8851)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (796.7622, 1853.8, 71.90284)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (796.9743, 1917.337, -135.8851) to (796.7622, 1917.337, -133.4945)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (796.5429, 1853.8, 74.2928)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (796.7622, 1917.337, -133.4945) to (796.5429, 1917.337, -131.1046)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (796.3164, 1853.8, 76.68209)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (796.5429, 1917.337, -131.1046) to (796.3164, 1917.337, -128.7153)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (796.0828, 1853.8, 79.07069)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (796.3164, 1917.337, -128.7153) to (796.0828, 1917.337, -126.3267)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (795.842, 1853.8, 81.45858)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (796.0828, 1917.337, -126.3267) to (795.842, 1917.337, -123.9388)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (795.5941, 1853.8, 83.84573)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (795.842, 1917.337, -123.9388) to (795.5941, 1917.337, -121.5516)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (795.3389, 1853.8, 86.23214)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (795.5941, 1917.337, -121.5516) to (795.3389, 1917.337, -119.1652)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (795.0767, 1853.8, 88.61776)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (795.3389, 1917.337, -119.1652) to (795.0767, 1917.337, -116.7796)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (794.8073, 1853.8, 91.00259)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (795.0767, 1917.337, -116.7796) to (794.8073, 1917.337, -114.3948)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (794.5306, 1853.8, 93.3866)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (794.8073, 1917.337, -114.3948) to (794.5306, 1917.337, -112.0108)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (794.2469, 1853.8, 95.76977)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (794.5306, 1917.337, -112.0108) to (794.2469, 1917.337, -109.6276)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[VERBATIM] Real wind loaded: SE 4.34488 kts
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (793.9561, 1853.8, 98.15207)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (794.2469, 1917.337, -109.6276) to (793.9561, 1917.337, -107.2453)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (793.658, 1853.8, 100.5335)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (793.9561, 1917.337, -107.2453) to (793.658, 1917.337, -104.8639)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (793.3528, 1853.8, 102.914)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (793.658, 1917.337, -104.8639) to (793.3528, 1917.337, -102.4833)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (793.0405, 1853.8, 105.2936)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (793.3528, 1917.337, -102.4833) to (793.0405, 1917.337, -100.1038)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (792.7211, 1853.8, 107.6722)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (793.0405, 1917.337, -100.1038) to (792.7211, 1917.337, -97.72511)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (792.3945, 1853.8, 110.0499)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (792.7211, 1917.337, -97.72511) to (792.3945, 1917.337, -95.34743)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (792.0608, 1853.8, 112.4266)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (792.3945, 1917.337, -95.34743) to (792.0608, 1917.337, -92.97075)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (791.7199, 1853.8, 114.8023)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (792.0608, 1917.337, -92.97075) to (791.7199, 1917.337, -90.59507)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (791.3719, 1853.8, 117.1769)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (791.7199, 1917.337, -90.59507) to (791.3719, 1917.337, -88.22044)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (791.0168, 1853.8, 119.5505)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (791.3719, 1917.337, -88.22044) to (791.0168, 1917.337, -85.84685)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (790.6547, 1853.8, 121.923)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (791.0168, 1917.337, -85.84685) to (790.6547, 1917.337, -83.47434)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (790.2853, 1853.8, 124.2944)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (790.6547, 1917.337, -83.47434) to (790.2853, 1917.337, -81.10293)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (789.9089, 1853.8, 126.6647)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (790.2853, 1917.337, -81.10293) to (789.9089, 1917.337, -78.73264)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (789.5253, 1853.8, 129.0339)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (789.9089, 1917.337, -78.73264) to (789.5253, 1917.337, -76.36348)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (789.1347, 1853.8, 131.4019)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (789.5253, 1917.337, -76.36348) to (789.1347, 1917.337, -73.99548)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (788.7369, 1853.8, 133.7687)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (789.1347, 1917.337, -73.99548) to (788.7369, 1917.337, -71.62868)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (788.3321, 1853.8, 136.1343)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (788.7369, 1917.337, -71.62868) to (788.3321, 1917.337, -69.26308)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (787.9201, 1853.8, 138.4987)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (788.3321, 1917.337, -69.26308) to (787.9201, 1917.337, -66.8987)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (787.5011, 1853.8, 140.8618)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (787.9201, 1917.337, -66.8987) to (787.5011, 1917.337, -64.53557)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (787.075, 1853.8, 143.2237)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (787.5011, 1917.337, -64.53557) to (787.075, 1917.337, -62.17369)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[VERBATIM] Wind updated: 12.5 kts @ 240.0°
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (786.6417, 1853.8, 145.5842)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (787.075, 1917.337, -62.17369) to (786.6417, 1917.337, -59.81313)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (786.2015, 1853.8, 147.9435)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (786.6417, 1917.337, -59.81313) to (786.2015, 1917.337, -57.45386)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (785.7541, 1853.8, 150.3014)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (786.2015, 1917.337, -57.45386) to (785.7541, 1917.337, -55.09592)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (785.2996, 1853.8, 152.658)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (785.7541, 1917.337, -55.09592) to (785.2996, 1917.337, -52.73933)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (784.8381, 1853.8, 155.0132)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (785.2996, 1917.337, -52.73933) to (784.8381, 1917.337, -50.38412)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (784.3696, 1853.8, 157.367)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (784.8381, 1917.337, -50.38412) to (784.3696, 1917.337, -48.03032)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (783.8939, 1853.8, 159.7194)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (784.3696, 1917.337, -48.03032) to (783.8939, 1917.337, -45.67792)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (783.4113, 1853.8, 162.0704)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (783.8939, 1917.337, -45.67792) to (783.4113, 1917.337, -43.32695)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (782.9215, 1853.8, 164.4199)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (783.4113, 1917.337, -43.32695) to (782.9215, 1917.337, -40.97746)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (782.4247, 1853.8, 166.7679)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (782.9215, 1917.337, -40.97746) to (782.4247, 1917.337, -38.62944)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (781.9209, 1853.8, 169.1144)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (782.4247, 1917.337, -38.62944) to (781.9209, 1917.337, -36.28291)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (781.41, 1853.8, 171.4594)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (781.9209, 1917.337, -36.28291) to (781.41, 1917.337, -33.93791)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (780.8922, 1853.8, 173.8029)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (781.41, 1917.337, -33.93791) to (780.8922, 1917.337, -31.59447)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (780.3672, 1853.8, 176.1448)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (780.8922, 1917.337, -31.59447) to (780.3672, 1917.337, -29.25256)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (779.8353, 1853.8, 178.4851)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (780.3672, 1917.337, -29.25256) to (779.8353, 1917.337, -26.91226)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (779.2963, 1853.8, 180.8238)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (779.8353, 1917.337, -26.91226) to (779.2963, 1917.337, -24.57356)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (778.7504, 1853.8, 183.1609)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (779.2963, 1917.337, -24.57356) to (778.7504, 1917.337, -22.2365)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (778.1974, 1853.8, 185.4963)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (778.7504, 1917.337, -22.2365) to (778.1974, 1917.337, -19.90108)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (777.6374, 1853.8, 187.83)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (778.1974, 1917.337, -19.90108) to (777.6374, 1917.337, -17.56732)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (777.0704, 1853.8, 190.1621)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (777.6374, 1917.337, -17.56732) to (777.0704, 1917.337, -15.23526)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (776.4964, 1853.8, 192.4924)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (777.0704, 1917.337, -15.23526) to (776.4964, 1917.337, -12.90491)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (775.9154, 1853.8, 194.8211)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (776.4964, 1917.337, -12.90491) to (775.9154, 1917.337, -10.57628)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (775.3275, 1853.8, 197.1479)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (775.9154, 1917.337, -10.57628) to (775.3275, 1917.337, -8.24942)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (774.7325, 1853.8, 199.473)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (775.3275, 1917.337, -8.24942) to (774.7325, 1917.337, -5.924316)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (774.1306, 1853.8, 201.7963)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (774.7325, 1917.337, -5.924316) to (774.1306, 1917.337, -3.601028)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (773.5218, 1853.8, 204.1178)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (774.1306, 1917.337, -3.601028) to (773.5218, 1917.337, -1.279541)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (772.9059, 1853.8, 206.4375)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (773.5218, 1917.337, -1.279541) to (772.9059, 1917.337, 1.0401)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (772.2831, 1853.8, 208.7552)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (772.9059, 1917.337, 1.0401) to (772.2831, 1917.337, 3.35788)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (771.6534, 1853.8, 211.0711)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (772.2831, 1917.337, 3.35788) to (771.6534, 1917.337, 5.673782)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (771.0167, 1853.8, 213.3851)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (771.6534, 1917.337, 5.673782) to (771.0167, 1917.337, 7.987793)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (770.3731, 1853.8, 215.6972)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (771.0167, 1917.337, 7.987793) to (770.3731, 1917.337, 10.29988)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (769.7225, 1853.8, 218.0074)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (770.3731, 1917.337, 10.29988) to (769.7225, 1917.337, 12.61003)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (769.0651, 1853.8, 220.3156)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (769.7225, 1917.337, 12.61003) to (769.0651, 1917.337, 14.91821)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (768.4006, 1853.8, 222.6218)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (769.0651, 1917.337, 14.91821) to (768.4006, 1917.337, 17.22441)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (767.7293, 1853.8, 224.926)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (768.4006, 1917.337, 17.22441) to (767.7293, 1917.337, 19.52861)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (767.0511, 1853.8, 227.2281)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (767.7293, 1917.337, 19.52861) to (767.0511, 1917.337, 21.83078)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (766.366, 1853.8, 229.5283)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (767.0511, 1917.337, 21.83078) to (766.366, 1917.337, 24.13091)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (765.674, 1853.8, 231.8263)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (766.366, 1917.337, 24.13091) to (765.674, 1917.337, 26.42897)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (764.975, 1853.8, 234.1223)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (765.674, 1917.337, 26.42897) to (764.975, 1917.337, 28.72495)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (764.2692, 1853.8, 236.4162)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (764.975, 1917.337, 28.72495) to (764.2692, 1917.337, 31.01881)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (763.5565, 1853.8, 238.7079)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (764.2692, 1917.337, 31.01881) to (763.5565, 1917.337, 33.31055)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (762.837, 1853.8, 240.9975)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (763.5565, 1917.337, 33.31055) to (762.837, 1917.337, 35.60014)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (762.1105, 1853.8, 243.2849)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (762.837, 1917.337, 35.60014) to (762.1105, 1917.337, 37.88757)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (761.3773, 1853.8, 245.5702)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (762.1105, 1917.337, 37.88757) to (761.3773, 1917.337, 40.17281)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (760.6371, 1853.8, 247.8532)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (761.3773, 1917.337, 40.17281) to (760.6371, 1917.337, 42.45583)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (759.8901, 1853.8, 250.134)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (760.6371, 1917.337, 42.45583) to (759.8901, 1917.337, 44.73662)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (759.1363, 1853.8, 252.4125)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (759.8901, 1917.337, 44.73662) to (759.1363, 1917.337, 47.01515)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (758.3757, 1853.8, 254.6888)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (759.1363, 1917.337, 47.01515) to (758.3757, 1917.337, 49.29143)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (757.6082, 1853.8, 256.9628)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (758.3757, 1917.337, 49.29143) to (757.6082, 1917.337, 51.56541)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (756.8339, 1853.8, 259.2344)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (757.6082, 1917.337, 51.56541) to (756.8339, 1917.337, 53.83708)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (756.0528, 1853.8, 261.5038)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (756.8339, 1917.337, 53.83708) to (756.0528, 1917.337, 56.1064)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (755.2648, 1853.8, 263.7707)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (756.0528, 1917.337, 56.1064) to (755.2648, 1917.337, 58.37337)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (754.4702, 1853.8, 266.0353)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (755.2648, 1917.337, 58.37337) to (754.4702, 1917.337, 60.63799)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (753.6686, 1853.8, 268.2975)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (754.4702, 1917.337, 60.63799) to (753.6686, 1917.337, 62.90019)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (752.8604, 1853.8, 270.5573)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (753.6686, 1917.337, 62.90019) to (752.8604, 1917.337, 65.15999)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (752.0453, 1853.8, 272.8147)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (752.8604, 1917.337, 65.15999) to (752.0453, 1917.337, 67.41734)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (751.2234, 1853.8, 275.0696)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (752.0453, 1917.337, 67.41734) to (751.2234, 1917.337, 69.67226)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (750.3949, 1853.8, 277.322)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (751.2234, 1917.337, 69.67226) to (750.3949, 1917.337, 71.92467)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (749.5596, 1853.8, 279.572)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (750.3949, 1917.337, 71.92467) to (749.5596, 1917.337, 74.17461)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (748.7175, 1853.8, 281.8194)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (749.5596, 1917.337, 74.17461) to (748.7175, 1917.337, 76.42204)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[VERBATIM] Wind updated: 12.5 kts @ 240.0°
+[LABELDUMP_HDR] idx,name,parent_path,script,text
+[LABELDUMP],0,WindLabel,/root/Main/PiPLayer,none,WIND: 12.5 kts @ 240°
+[LABELDUMP],1,@Label@108,/root/Main/@CanvasLayer@96,none,>>> CLICK WINDOW THEN PRESS KEYS: Q/E turn; C FC check; X cutaway; V reserve; F flare; R restart; C cycle views; H toggle HUD <<<
+[LABELDUMP],2,@Label@107,/root/Main/@CanvasLayer@96,none,Mission: Training | Target Score: 500
+[LABELDUMP],3,@Label@106,/root/Main/@CanvasLayer@96,none,
+[LABELDUMP],4,@Label@104,/root/Main/@CanvasLayer@96,none,EP: Press J or SPACE to exit aircraft
+[LABELDUMP],5,@Label@103,/root/Main/@CanvasLayer@96,none,MALF: --
+[LABELDUMP],6,@Label@102,/root/Main/@CanvasLayer@96,none,LEG: BASE
+[LABELDUMP],7,@Label@101,/root/Main/@CanvasLayer@96,none,TURN: --
+[LABELDUMP],8,@Label@100,/root/Main/@CanvasLayer@96,none,BRG: -45°
+[LABELDUMP],9,@Label@99,/root/Main/@CanvasLayer@96,none,HDG: 0°
+[LABELDUMP],10,@Label@98,/root/Main/@CanvasLayer@96,none,SPD: --
+[LABELDUMP],11,@Label@97,/root/Main/@CanvasLayer@96,none,ALT: 6000 ft (IN PLANE)
+[LABELDUMP],12,@Label@39,/root/ForensicPanel/@PanelContainer@37/@VBoxContainer@38,none,FORENSIC PANEL
+[LABELDUMP],13,@Label@24,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,t: --:--:--
+[LABELDUMP],14,@Label@22,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,control_health: (loading...)
+[LABELDUMP],15,@Label@21,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,Controls
+[LABELDUMP],16,@Label@18,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,Citations
+[LABELDUMP],17,@Label@15,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,Top strategies (UCB1)
+[LABELDUMP],18,@Label@13,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,Level - / XP - / Streak -
+[LABELDUMP],19,@Label@12,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,status: (starting)
+[LABELDUMP],20,@Label@10,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,hub: http://127.0.0.1:8765
+[LABELDUMP],21,@Label@9,/root/ForensicHUD/@CanvasLayer@6/@PanelContainer@7/@VBoxContainer@8,none,FORENSIC HUB
+[LABELDUMP],22,@Label@5,/root/AltimeterHUD/@Panel@2/@VBoxContainer@3,none,VARIO: 0.00 m/s
+[LABELDUMP],23,@Label@4,/root/AltimeterHUD/@Panel@2/@VBoxContainer@3,none,ALT: 6000 ft
+[LABELDUMP] total Label nodes in tree: 24
+[LABELDUMP] _hud_labels.size()=8
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[PIPLIVE] eye=(100.0, 1830.5, -100.0) state=0 deployed=false framing=aircraft/sky
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (747.8687, 1853.8, 284.0643)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (748.7175, 1917.337, 76.42204) to (747.8687, 1917.337, 78.66692)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (747.0131, 1853.8, 286.3066)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (747.8687, 1917.337, 78.66692) to (747.0131, 1917.337, 80.90923)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (746.1508, 1853.8, 288.5463)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (747.0131, 1917.337, 80.90923) to (746.1508, 1917.337, 83.14897)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (745.2818, 1853.8, 290.7835)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (746.1508, 1917.337, 83.14897) to (745.2818, 1917.337, 85.38612)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (744.4061, 1853.8, 293.018)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (745.2818, 1917.337, 85.38612) to (744.4061, 1917.337, 87.62068)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (743.5237, 1853.8, 295.2499)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (744.4061, 1917.337, 87.62068) to (743.5237, 1917.337, 89.85255)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (742.6346, 1853.8, 297.4792)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (743.5237, 1917.337, 89.85255) to (742.6346, 1917.337, 92.0818)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (741.7388, 1853.8, 299.7057)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (742.6346, 1917.337, 92.0818) to (741.7388, 1917.337, 94.30836)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (740.8364, 1853.8, 301.9296)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (741.7388, 1917.337, 94.30836) to (740.8364, 1917.337, 96.53224)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (739.9272, 1853.8, 304.1507)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (740.8364, 1917.337, 96.53224) to (739.9272, 1917.337, 98.75337)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (739.0115, 1853.8, 306.3691)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (739.9272, 1917.337, 98.75337) to (739.0115, 1917.337, 100.9718)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (738.0891, 1853.8, 308.5848)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (739.0115, 1917.337, 100.9718) to (738.0891, 1917.337, 103.1875)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (737.16, 1853.8, 310.7977)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (738.0891, 1917.337, 103.1875) to (737.16, 1917.337, 105.4003)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (736.2242, 1853.8, 313.0078)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (737.16, 1917.337, 105.4003) to (736.2242, 1917.337, 107.6104)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (735.2819, 1853.8, 315.215)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (736.2242, 1917.337, 107.6104) to (735.2819, 1917.337, 109.8176)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (734.3329, 1853.8, 317.4194)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (735.2819, 1917.337, 109.8176) to (734.3329, 1917.337, 112.0221)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (733.3774, 1853.8, 319.621)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (734.3329, 1917.337, 112.0221) to (733.3774, 1917.337, 114.2236)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (732.4152, 1853.8, 321.8197)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (733.3774, 1917.337, 114.2236) to (732.4152, 1917.337, 116.4223)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (731.4465, 1853.8, 324.0155)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (732.4152, 1917.337, 116.4223) to (731.4465, 1917.337, 118.6181)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (730.4711, 1853.8, 326.2084)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (731.4465, 1917.337, 118.6181) to (730.4711, 1917.337, 120.811)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (729.4893, 1853.8, 328.3983)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (730.4711, 1917.337, 120.811) to (729.4893, 1917.337, 123.001)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (728.5008, 1853.8, 330.5853)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (729.4893, 1917.337, 123.001) to (728.5008, 1917.337, 125.1879)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (727.5057, 1853.8, 332.7693)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (728.5008, 1917.337, 125.1879) to (727.5057, 1917.337, 127.372)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (726.5042, 1853.8, 334.9503)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (727.5057, 1917.337, 127.372) to (726.5042, 1917.337, 129.553)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (725.496, 1853.8, 337.1283)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (726.5042, 1917.337, 129.553) to (725.496, 1917.337, 131.731)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (724.4814, 1853.8, 339.3033)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (725.496, 1917.337, 131.731) to (724.4814, 1917.337, 133.9059)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (723.4602, 1853.8, 341.4752)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (724.4814, 1917.337, 133.9059) to (723.4602, 1917.337, 136.0778)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (722.4326, 1853.8, 343.644)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (723.4602, 1917.337, 136.0778) to (722.4326, 1917.337, 138.2467)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (721.3984, 1853.8, 345.8098)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (722.4326, 1917.337, 138.2467) to (721.3984, 1917.337, 140.4124)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (720.3577, 1853.8, 347.9724)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (721.3984, 1917.337, 140.4124) to (720.3577, 1917.337, 142.5751)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (719.3105, 1853.8, 350.1319)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (720.3577, 1917.337, 142.5751) to (719.3105, 1917.337, 144.7346)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (718.2569, 1853.8, 352.2883)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (719.3105, 1917.337, 144.7346) to (718.2569, 1917.337, 146.8909)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (717.1968, 1853.8, 354.4415)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (718.2569, 1917.337, 146.8909) to (717.1968, 1917.337, 149.0441)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (716.1302, 1853.8, 356.5915)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (717.1968, 1917.337, 149.0441) to (716.1302, 1917.337, 151.1941)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (715.0573, 1853.8, 358.7383)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (716.1302, 1917.337, 151.1941) to (715.0573, 1917.337, 153.3409)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (713.9778, 1853.8, 360.8818)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (715.0573, 1917.337, 153.3409) to (713.9778, 1917.337, 155.4845)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (712.892, 1853.8, 363.0221)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (713.9778, 1917.337, 155.4845) to (712.892, 1917.337, 157.6247)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (711.7997, 1853.8, 365.1591)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (712.892, 1917.337, 157.6247) to (711.7997, 1917.337, 159.7618)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (710.701, 1853.8, 367.2929)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (711.7997, 1917.337, 159.7618) to (710.701, 1917.337, 161.8956)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (709.5959, 1853.8, 369.4233)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (710.701, 1917.337, 161.8956) to (709.5959, 1917.337, 164.026)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (708.4845, 1853.8, 371.5505)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (709.5959, 1917.337, 164.026) to (708.4845, 1917.337, 166.1531)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (707.3666, 1853.8, 373.6743)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (708.4845, 1917.337, 166.1531) to (707.3666, 1917.337, 168.2769)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (706.2424, 1853.8, 375.7946)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (707.3666, 1917.337, 168.2769) to (706.2424, 1917.337, 170.3973)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (705.1119, 1853.8, 377.9117)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (706.2424, 1917.337, 170.3973) to (705.1119, 1917.337, 172.5143)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (703.975, 1853.8, 380.0253)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (705.1119, 1917.337, 172.5143) to (703.975, 1917.337, 174.628)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (702.8317, 1853.8, 382.1355)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (703.975, 1917.337, 174.628) to (702.8317, 1917.337, 176.7382)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (701.6821, 1853.8, 384.2423)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (702.8317, 1917.337, 176.7382) to (701.6821, 1917.337, 178.845)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (700.5262, 1853.8, 386.3456)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (701.6821, 1917.337, 178.845) to (700.5262, 1917.337, 180.9483)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (699.3641, 1853.8, 388.4455)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (700.5262, 1917.337, 180.9483) to (699.3641, 1917.337, 183.0481)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (698.1956, 1853.8, 390.5418)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (699.3641, 1917.337, 183.0481) to (698.1956, 1917.337, 185.1445)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (697.0208, 1853.8, 392.6346)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (698.1956, 1917.337, 185.1445) to (697.0208, 1917.337, 187.2373)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (695.8398, 1853.8, 394.7239)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (697.0208, 1917.337, 187.2373) to (695.8398, 1917.337, 189.3266)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (694.6525, 1853.8, 396.8097)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (695.8398, 1917.337, 189.3266) to (694.6525, 1917.337, 191.4123)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (693.4589, 1853.8, 398.8918)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (694.6525, 1917.337, 191.4123) to (693.4589, 1917.337, 193.4945)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (692.2592, 1853.8, 400.9704)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (693.4589, 1917.337, 193.4945) to (692.2592, 1917.337, 195.573)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (691.0531, 1853.8, 403.0454)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (692.2592, 1917.337, 195.573) to (691.0531, 1917.337, 197.648)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (689.8409, 1853.8, 405.1167)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (691.0531, 1917.337, 197.648) to (689.8409, 1917.337, 199.7194)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (688.6224, 1853.8, 407.1844)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (689.8409, 1917.337, 199.7194) to (688.6224, 1917.337, 201.7871)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (687.3978, 1853.8, 409.2484)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (688.6224, 1917.337, 201.7871) to (687.3978, 1917.337, 203.8511)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (686.1669, 1853.8, 411.3088)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (687.3978, 1917.337, 203.8511) to (686.1669, 1917.337, 205.9115)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[VERBATIM] Wind updated: 12.5 kts @ 240.0°
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (684.9299, 1853.8, 413.3654)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (686.1669, 1917.337, 205.9115) to (684.9299, 1917.337, 207.9681)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (683.6868, 1853.8, 415.4184)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (684.9299, 1917.337, 207.9681) to (683.6868, 1917.337, 210.021)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (682.4374, 1853.8, 417.4676)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (683.6868, 1917.337, 210.021) to (682.4374, 1917.337, 212.0702)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (681.1819, 1853.8, 419.513)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (682.4374, 1917.337, 212.0702) to (681.1819, 1917.337, 214.1156)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (679.9203, 1853.8, 421.5546)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (681.1819, 1917.337, 214.1156) to (679.9203, 1917.337, 216.1573)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (678.6526, 1853.8, 423.5925)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (679.9203, 1917.337, 216.1573) to (678.6526, 1917.337, 218.1951)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (677.3788, 1853.8, 425.6266)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (678.6526, 1917.337, 218.1951) to (677.3788, 1917.337, 220.2292)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (676.0989, 1853.8, 427.6568)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (677.3788, 1917.337, 220.2292) to (676.0989, 1917.337, 222.2594)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (674.8129, 1853.8, 429.6831)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (676.0989, 1917.337, 222.2594) to (674.8129, 1917.337, 224.2858)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (673.5208, 1853.8, 431.7056)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (674.8129, 1917.337, 224.2858) to (673.5208, 1917.337, 226.3083)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (672.2227, 1853.8, 433.7242)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (673.5208, 1917.337, 226.3083) to (672.2227, 1917.337, 228.3269)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (670.9185, 1853.8, 435.739)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (672.2227, 1917.337, 228.3269) to (670.9185, 1917.337, 230.3416)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (669.6082, 1853.8, 437.7498)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (670.9185, 1917.337, 230.3416) to (669.6082, 1917.337, 232.3524)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (668.2919, 1853.8, 439.7566)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (669.6082, 1917.337, 232.3524) to (668.2919, 1917.337, 234.3593)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (666.9697, 1853.8, 441.7595)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (668.2919, 1917.337, 234.3593) to (666.9697, 1917.337, 236.3621)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (665.6414, 1853.8, 443.7584)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (666.9697, 1917.337, 236.3621) to (665.6414, 1917.337, 238.3611)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (664.3071, 1853.8, 445.7534)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (665.6414, 1917.337, 238.3611) to (664.3071, 1917.337, 240.356)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (662.9669, 1853.8, 447.7443)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (664.3071, 1917.337, 240.356) to (662.9669, 1917.337, 242.3469)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (661.6207, 1853.8, 449.7311)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (662.9669, 1917.337, 242.3469) to (661.6207, 1917.337, 244.3338)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (660.2685, 1853.8, 451.714)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (661.6207, 1917.337, 244.3338) to (660.2685, 1917.337, 246.3166)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (658.9104, 1853.8, 453.6927)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (660.2685, 1917.337, 246.3166) to (658.9104, 1917.337, 248.2954)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (657.5463, 1853.8, 455.6674)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (658.9104, 1917.337, 248.2954) to (657.5463, 1917.337, 250.2701)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (656.1764, 1853.8, 457.638)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (657.5463, 1917.337, 250.2701) to (656.1764, 1917.337, 252.2407)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (654.8005, 1853.8, 459.6045)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (656.1764, 1917.337, 252.2407) to (654.8005, 1917.337, 254.2071)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (653.4188, 1853.8, 461.5668)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (654.8005, 1917.337, 254.2071) to (653.4188, 1917.337, 256.1694)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (652.0311, 1853.8, 463.525)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (653.4188, 1917.337, 256.1694) to (652.0311, 1917.337, 258.1276)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (650.6376, 1853.8, 465.479)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (652.0311, 1917.337, 258.1276) to (650.6376, 1917.337, 260.0817)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (649.2382, 1853.8, 467.4288)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (650.6376, 1917.337, 260.0817) to (649.2382, 1917.337, 262.0314)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (647.8331, 1853.8, 469.3744)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (649.2382, 1917.337, 262.0314) to (647.8331, 1917.337, 263.9771)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (646.422, 1853.8, 471.3158)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (647.8331, 1917.337, 263.9771) to (646.422, 1917.337, 265.9185)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (645.0051, 1853.8, 473.253)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (646.422, 1917.337, 265.9185) to (645.0051, 1917.337, 267.8556)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (643.5825, 1853.8, 475.1858)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (645.0051, 1917.337, 267.8556) to (643.5825, 1917.337, 269.7885)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (642.1541, 1853.8, 477.1144)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (643.5825, 1917.337, 269.7885) to (642.1541, 1917.337, 271.7171)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (640.7198, 1853.8, 479.0388)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (642.1541, 1917.337, 271.7171) to (640.7198, 1917.337, 273.6414)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (639.2798, 1853.8, 480.9587)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (640.7198, 1917.337, 273.6414) to (639.2798, 1917.337, 275.5614)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (637.834, 1853.8, 482.8744)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (639.2798, 1917.337, 275.5614) to (637.834, 1917.337, 277.4771)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (636.3826, 1853.8, 484.7857)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (637.834, 1917.337, 277.4771) to (636.3826, 1917.337, 279.3884)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (634.9254, 1853.8, 486.6927)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (636.3826, 1917.337, 279.3884) to (634.9254, 1917.337, 281.2953)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (633.4624, 1853.8, 488.5953)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (634.9254, 1917.337, 281.2953) to (633.4624, 1917.337, 283.1979)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (631.9938, 1853.8, 490.4935)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (633.4624, 1917.337, 283.1979) to (631.9938, 1917.337, 285.0961)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (630.5195, 1853.8, 492.3873)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (631.9938, 1917.337, 285.0961) to (630.5195, 1917.337, 286.9899)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (629.0395, 1853.8, 494.2766)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (630.5195, 1917.337, 286.9899) to (629.0395, 1917.337, 288.8792)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (627.5538, 1853.8, 496.1615)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (629.0395, 1917.337, 288.8792) to (627.5538, 1917.337, 290.7642)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (626.0625, 1853.8, 498.0419)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (627.5538, 1917.337, 290.7642) to (626.0625, 1917.337, 292.6445)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (624.5656, 1853.8, 499.9178)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (626.0625, 1917.337, 292.6445) to (624.5656, 1917.337, 294.5205)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (623.063, 1853.8, 501.7893)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (624.5656, 1917.337, 294.5205) to (623.063, 1917.337, 296.392)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (621.5548, 1853.8, 503.6562)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (623.063, 1917.337, 296.392) to (621.5548, 1917.337, 298.2589)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (620.0411, 1853.8, 505.5186)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (621.5548, 1917.337, 298.2589) to (620.0411, 1917.337, 300.1213)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (618.5217, 1853.8, 507.3765)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (620.0411, 1917.337, 300.1213) to (618.5217, 1917.337, 301.9791)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (616.9968, 1853.8, 509.2297)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (618.5217, 1917.337, 301.9791) to (616.9968, 1917.337, 303.8324)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _physics_process: ENTER, state=0
+[DIAG] _physics_process: IN_PLANE branch entered
+[DIAG] _physics_process: plane position updated to (615.4664, 1853.8, 511.0784)
+[DIAG] _physics_process: checking camera follow
+[DIAG] _physics_process: plane and camera valid, updating camera
+[DIAG] _physics_process: camera moved from (616.9968, 1917.337, 303.8324) to (615.4664, 1917.337, 305.6811)
+[DIAG] _physics_process: IN_PLANE returning
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+[DIAG] _poll_controls: ENTER, state=0
+[VERBATIM] POLL: _poll_controls() entered, game_state=0
+[DIAG] _poll_controls: EXIT (IN_PLANE branch)
+
+=== FSM STATE SUMMARY ===
+OPENING_ANIM: 0
+0
+DIAGNOSIS: 0
+0
+LANDED: 0
+0
+GAME_OVER: 0
+0
+
+=== FSM TRANSITION LINES ===
+none
