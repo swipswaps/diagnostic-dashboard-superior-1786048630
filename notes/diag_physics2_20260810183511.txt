@@ -1,0 +1,198 @@
+=== _physics_process body diagnostic — 20260810183511 UTC ===
+
+=== Lines 1981-2150 (_physics_process full body) ===
+ 1981: func _physics_process(delta) -> void:
+ 1982: 	# ADDED (this session): explicit poll calls, since Godot never invokes
+ 1983: 	# ForensicHUD._input()/ForensicPanel._process() automatically.
+ 1984: 	if ForensicHUD != null and ForensicHUD.has_method("poll_forensic_hud"):
+ 1985: 		ForensicHUD.poll_forensic_hud()
+ 1986: 	if ForensicPanel != null and ForensicPanel.has_method("poll_forensic_panel"):
+ 1987: 		ForensicPanel.poll_forensic_panel()
+ 1988: 	if _character and is_instance_valid(_character):
+ 1989: 		AltimeterHUD.update_altitude(_character.global_position.y * 3.28084)
+ 1990: 	# --- Q/E turn input (checked first so it's available for all states) ---
+ 1991: 	if Input.is_key_pressed(KEY_Q):
+ 1992: 		_turn_input = -1.0
+ 1993: 	elif Input.is_key_pressed(KEY_E):
+ 1994: 		_turn_input = 1.0
+ 1995: 	else:
+ 1996: 		_turn_input = 0.0
+ 1997: 	# fix_arm_spring_v4: step the toggle spring-damper every physics frame.
+ 1998: 	# Held state is read directly from the keys here, so release is handled
+ 1999: 	# (the old edge-triggered path executed nothing on key-up).
+ 2000: 	_update_arm_physics(delta, Input.is_key_pressed(KEY_Q), Input.is_key_pressed(KEY_E))
+ 2001: 	_ensure_controls()
+ 2002: 	_log_control_presses()
+ 2003: 	_sync_main_canopy()
+ 2004: 	_pip_live_view(delta)
+ 2005: 
+ 2006: 	print("[DIAG] _physics_process: ENTER, state=", _game_state)
+ 2007: 	if _game_state == GameState.IN_PLANE:
+ 2008: 		print("[DIAG] _physics_process: IN_PLANE branch entered")
+ 2009: 		_plane_angle += _PLANE_ORBIT_SPEED * delta
+ 2010: 		if _plane_node:
+ 2011: 			_plane_node.position = Vector3(
+ 2012: 				cos(_plane_angle) * _PLANE_ORBIT_RADIUS,
+ 2013: 				_PLANE_ALTITUDE,
+ 2014: 				sin(_plane_angle) * _PLANE_ORBIT_RADIUS
+ 2015: 			)
+ 2016: 			_plane_node.rotation.y = _plane_angle + PI / 2.0
+ 2017: 			# Headless auto-start: fire SPACE on first IN_PLANE frame
+ 2018: 			# (Rule #1 grounded: this is the first rendered frame, confirmed
+ 2019: 			#  by _0283.txt showing plane position update before stall)
+ 2020: 			if OS.get_environment("GODOT_HEADLESS") == "1" or "--headless" in OS.get_cmdline_args():  # was: GODOT_HEADLESS env var — set by autostall in ALL runs. Now requires actual --headless CLI flag (not set by autostall). Restores _0036 behavior: user sees plane, presses SPACE/J manually. Ref: https://docs.godotengine.org/en/stable/classes/class_os.html
+ 2021: 				if not ProjectSettings.has_setting("_headless_space_fired"):
+ 2022: 					ProjectSettings.set_setting("_headless_space_fired", true)
+ 2023: 					Input.action_press("deploy")
+ 2024: 					Input.action_release("deploy")
+ 2025: 					_headless_auto_deploy = true
+ 2026: 					print("[VERBATIM] Headless auto-start triggered (IN_PLANE frame 1).")
+ 2027: 			print("[DIAG] _physics_process: plane position updated to ", _plane_node.position)
+ 2028: 		else:
+ 2029: 			print("[DIAG] _physics_process: plane_node is NULL")
+ 2030: 		if _hud_labels.size() > 0:
+ 2031: 			_hud_labels[0].text = "ALT: 6000 ft (IN PLANE)"
+ 2032: 		if _hud_labels.size() > 7:
+ 2033: 			_hud_labels[7].text = "EP: Press J or SPACE to exit aircraft"
+ 2034: 		# --- CAMERA FOLLOW ---
+ 2035: 		print("[DIAG] _physics_process: checking camera follow")
+ 2036: 		if is_instance_valid(_plane_node) and is_instance_valid(_camera):
+ 2037: 			print("[DIAG] _physics_process: plane and camera valid, updating camera")
+ 2038: 			var old_pos = _camera.global_position
+ 2039: 			var target = _plane_node.global_position
+ 2040: 			var offset = Vector3(0, 0, -_cam_distance)
+ 2041: 			offset = offset.rotated(Vector3.UP, _cam_azimuth)
+ 2042: 			offset = offset.rotated(Vector3.RIGHT, _cam_elevation)
+ 2043: 			_camera.global_position = target + offset
+ 2044: 			_camera.look_at(target, Vector3.UP)
+ 2045: 			print(
+ 2046: 				"[DIAG] _physics_process: camera moved from ",
+ 2047: 				old_pos,
+ 2048: 				" to ",
+ 2049: 				_camera.global_position
+ 2050: 			)
+ 2051: 		else:
+ 2052: 			print(
+ 2053: 				"[DIAG] _physics_process: camera follow skipped – plane=",
+ 2054: 				_plane_node,
+ 2055: 				" camera=",
+ 2056: 				_camera
+ 2057: 			)
+ 2058: 		print("[DIAG] _physics_process: IN_PLANE returning")
+ 2059: 		return
+ 2060: 
+ 2061: 	# Camera follows character using orbit (same as IN_PLANE)
+ 2062: 	if _character and _camera:
+ 2063: 		var target = _character.global_position
+ 2064: 		var offset = Vector3(0, 0, -_cam_distance)
+ 2065: 		offset = offset.rotated(Vector3.UP, _cam_azimuth)
+ 2066: 		offset = offset.rotated(Vector3.RIGHT, _cam_elevation)
+ 2067: 		_camera.global_position = target + offset
+ 2068: 		_camera.look_at(target, Vector3.UP)
+ 2069: 		print("[DIAG] _physics_process: camera target set to character (state: ", _game_state, ")")
+ 2070: 	_prev_descent_rate = _descent_rate
+ 2071: 	# p2 VARIO FIX: the result of _get_current_descent_rate() used to go
+ 2072: 	# into a LOCAL named `descent`; the member _descent_rate was never
+ 2073: 	# assigned, so _vario_mps = _prev_descent_rate - _descent_rate was
+ 2074: 	# 0.0 - 0.0 on every frame. Assigned BEFORE _apply_malfunction_effects()
+ 2075: 	# so that function's `_descent_rate += ...` additions survive.
+ 2076: 	_descent_rate = _get_current_descent_rate()
+ 2077: 	_apply_malfunction_effects(delta)
+ 2078: 	var descent = _descent_rate * 60.0 * delta
+ 2079: 	_character.position.y -= descent
+ 2080: 	# v11: only .y was ever written here, so the canopy had no forward
+ 2081: 	# flight at all. Horizontal glide and turning are applied below.
+ 2082: 	_update_canopy_glide(delta, descent)
+ 2083: 	if _character.position.y < 25.0:
+ 2084: 		_character.position.y = 25.0
+ 2085: 		if not _safe_landing:
+ 2086: 			ScreenshotLibrary.save_flight_screenshot()
+ 2087: 			print("[VERBATIM] FAILURE SCREENSHOT: ground impact (physics_process)")
+ 2088: 			_game_state = GameState.GAME_OVER
+ 2089: 			print("[VERBATIM] Ground impact – fatal")
+ 2090: 	_current_altitude = _character.position.y - 25.0
+ 2091: 
+ 2092: 	# p3: vario and ground speed from REAL motion, not the constant table.
+ 2093: 	var _p3_y: float = _character.global_position.y
+ 2094: 	var _p3_xz: Vector2 = Vector2(_character.global_position.x,
+ 2095: 			_character.global_position.z)
+ 2096: 	if _p3_prev_y > -99998.0 and delta > 0.0:
+ 2097: 		_vario_mps = (_p3_y - _p3_prev_y) / delta
+ 2098: 		_p3_ground_speed_ms = (_p3_xz - _p3_prev_xz).length() / delta
+ 2099: 	_p3_prev_y = _p3_y
+ 2100: 	_p3_prev_xz = _p3_xz
+ 2101: 	# p2: unconditional HUD refresh for every non-IN_PLANE state.
+ 2102: 	_update_hud_readouts()
+ 2103: 
+ 2104: 	_update_cfd_wind(delta)
+ 2105: 	_update_canopy_tilt()
+ 2106: 
+ 2107: 	if _game_state == GameState.FREEFALL:
+ 2108: 		# Freefall body turning: keyboard (Q/E) + arm-deflection yaw.
+ 2109: 		if abs(_turn_input) > 0.001:
+ 2110: 			_character.rotate_y(-_turn_input * 2.0 * delta)
+ 2111: 		# Arm yaw: R-arm > L-arm → right turn; rotate_y(-diff) = CW = right.
+ 2112: 		# 1.5 rad/s at full differential ≈ 86 deg/s.
+ 2113: 		# Ref: https://docs.godotengine.org/en/stable/classes/class_node3d.html
+ 2114: 		# (general knowledge — not retrieved this session)
+ 2115: 		var ff_diff: float = _arm_pull.get("R", 0.0) - _arm_pull.get("L", 0.0)
+ 2116: 		if absf(ff_diff) > 0.002:
+ 2117: 			_character.rotate_y(-ff_diff * 1.5 * delta)
+ 2118: 		var target_dir = -_character.global_position.normalized()
+ 2119: 		_forward_speed = move_toward(_forward_speed, _max_speed, _accel * delta)
+ 2120: 		var turn_dir = Vector3.RIGHT * _turn_input * _turn_force
+ 2121: 		_velocity_vec += turn_dir * delta
+ 2122: 		var forward_vec = target_dir * _forward_speed
+ 2123: 		_velocity_vec = _velocity_vec.move_toward(forward_vec, _accel * delta)
+ 2124: 		_character.position += _velocity_vec * delta
+ 2125: 		if _velocity_vec.length() > 0.5:
+ 2126: 			var angle = atan2(_velocity_vec.x, _velocity_vec.z)
+ 2127: 			# _character.rotation = Vector3(0, angle, 0)  # removed to match plane behaviour
+ 2128: 		# p2: the three _hud_labels writes that used to live here ran ONLY in
+ 2129: 		# FREEFALL, so the HUD froze the instant _deploy_canopy() moved state
+ 2130: 		# to OPENING_ANIM. Screenshots 11:24:47-11:25:57 showed the altimeter
+ 2131: 		# panel falling 5142->4175 ft while HUD Label0 stayed at 6044 ft.
+ 2132: 		# They are now in _update_hud_readouts(), called unconditionally from
+ 2133: 		# the common path below.
+ 2134: 		_check_decision_altitude()
+ 2135: 		# Capture flight screenshot every 5 seconds (R085 ensures during flight)
+ 2136: 		if _screenshot_save_timer > 0:
+ 2137: 			_screenshot_save_timer -= delta
+ 2138: 		if _screenshot_save_timer <= 0.0:
+ 2139: 			ScreenshotLibrary.save_flight_screenshot()
+ 2140: 			_screenshot_save_timer = 5.0
+ 2141: 	if _game_state == GameState.OPENING_ANIM or _game_state == GameState.DIAGNOSIS:
+ 2142: 		print("[VERBATIM] DIAGNOSIS turning block executed")
+ 2143: 		print("[DIAG] _turn_input = ", _turn_input)
+ 2144: 		var turn_dir = Vector3.RIGHT * _turn_input * _turn_force
+ 2145: 		_velocity_vec += turn_dir * delta
+ 2146: 		if _velocity_vec.length() > 0.5:
+ 2147: 			var angle = atan2(_velocity_vec.x, _velocity_vec.z)
+ 2148: 			# _character.rotation = Vector3(0, angle, 0)  # removed to match plane behaviour
+ 2149: 
+ 2150: 
+
+=== Lines 990-1010 (canopy scale animation if present) ===
+  990: 	# Skip when reserve is deployed — reserve appearance is set in _do_reserve.
+  991: 	if _reserve_done:
+  992: 		return
+  993: 	if not _canopy_material:
+  994: 		return
+  995: 	var mesh_child = _find_first_mesh(_canopy_instance) if _canopy_instance else null
+  996: 	match _malfunction:
+  997: 		MalfunctionType.GOOD:
+  998: 			_canopy_material.albedo_color = Color(0.2, 0.8, 0.2)
+  999: 			if _canopy_instance:
+ 1000: 				_canopy_instance.scale = Vector3(0.18, 0.12, 0.18)
+ 1001: 				_canopy_instance.rotation_degrees = Vector3.ZERO
+ 1002: 		MalfunctionType.LINE_TWISTS:
+ 1003: 			_canopy_material.albedo_color = Color(0.9, 0.5, 0.1)
+ 1004: 			if _canopy_instance:
+ 1005: 				_canopy_instance.rotation_degrees.z = 15
+ 1006: 		MalfunctionType.BAG_LOCK:
+ 1007: 			_canopy_material.albedo_color = Color(0.9, 0.2, 0.2)
+ 1008: 			if _canopy_instance:
+ 1009: 				_canopy_instance.scale = Vector3(0.5, 0.5, 0.5)
+ 1010: 		MalfunctionType.LINE_OVER:
+
+=== END — 2026-08-10T18:35:11Z UTC ===
