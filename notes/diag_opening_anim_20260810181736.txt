@@ -1,0 +1,189 @@
+=== OPENING_ANIM FSM diagnostic — 20260810181736 UTC ===
+BT: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd
+Lines: 3766
+
+=== A: All _game_state writes (non-comment) ===
+873:	_game_state = GameState.OPENING_ANIM
+1024:	print("[VERBATIM] ENTER _flight_control_check gate=_game_state=", _game_state)
+1048:	print("[VERBATIM] ENTER _do_cutaway gate=_game_state=", _game_state)
+1080:	print("[VERBATIM] ENTER _do_reserve gate=_game_state=", _game_state)
+1139:	print("[VERBATIM] ENTER _do_flare gate=_game_state=", _game_state)
+1162:	_game_state = GameState.LANDED
+1480:			_game_state = GameState.GAME_OVER
+1486:		_game_state = GameState.GAME_OVER
+1492:	if _game_state == GameState.FREEFALL:
+1494:	if _game_state == GameState.OPENING_ANIM:
+1523:	if _game_state == GameState.DIAGNOSIS:
+1525:	elif _game_state == GameState.FREEFALL:
+1529:	elif _game_state == GameState.OPENING_ANIM:
+1617:	if _game_state == GameState.IN_PLANE:
+1630:			_game_state = GameState.FREEFALL
+1649:	if _game_state == GameState.LANDED or _game_state == GameState.GAME_OVER:
+1663:	if _headless_auto_deploy and _game_state == GameState.FREEFALL and not _canopy_deployed:
+1671:	if _game_state == GameState.DIAGNOSIS or _game_state == GameState.OPENING_ANIM:
+1697:		if _game_state == GameState.IN_PLANE:
+1707:		elif _game_state == GameState.FREEFALL and not _canopy_deployed:
+1820:	_game_state = GameState.IN_PLANE
+2007:	if _game_state == GameState.IN_PLANE:
+2088:			_game_state = GameState.GAME_OVER
+2107:	if _game_state == GameState.FREEFALL:
+2141:	if _game_state == GameState.OPENING_ANIM or _game_state == GameState.DIAGNOSIS:
+2158:	if _game_state == GameState.GAME_OVER:
+2731:	if _game_state == GameState.IN_PLANE:
+2732:		_game_state = GameState.FREEFALL
+2756:		"camera_distance_plane" if _game_state == GameState.IN_PLANE else "camera_distance_freefall"
+2838:	if _game_state == GameState.FREEFALL:
+3524:	if _game_state == GameState.LANDED or _game_state == GameState.GAME_OVER:
+
+=== B: GameState.DIAGNOSIS occurrences ===
+31:	DIAGNOSIS,
+1025:	if _game_state != GameState.DIAGNOSIS and _game_state != GameState.OPENING_ANIM:
+1050:		print("[DIAG] _do_cutaway: early exit – not in DIAGNOSIS")
+1141:		print("[DIAG] _do_flare: early exit – not in DIAGNOSIS")
+1471:	if _game_state != GameState.DIAGNOSIS:
+1496:	if _game_state != GameState.DIAGNOSIS:
+1523:	if _game_state == GameState.DIAGNOSIS:
+1671:	if _game_state == GameState.DIAGNOSIS or _game_state == GameState.OPENING_ANIM:
+2141:	if _game_state == GameState.OPENING_ANIM or _game_state == GameState.DIAGNOSIS:
+2142:		print("[VERBATIM] DIAGNOSIS turning block executed")
+
+=== C: _deployment_timer occurrences ===
+130:var _deployment_timer
+872:	_deployment_timer = 2.0  # changed from DEPLOY_TIME to give canopy time to open
+1840:	_deployment_timer = 0.0
+
+=== D: _canopy_instance.scale occurrences ===
+125:var _canopy_instance: Node3D
+527:			_canopy_instance = scene.instantiate()
+528:			if _canopy_instance:
+529:				_character.add_child(_canopy_instance)
+530:				_canopy_instance.position = Vector3(0, 3.2, 0)
+531:				_canopy_instance.scale = Vector3(0.18, 0.12, 0.18)
+533:				var _mesh_child := _find_first_mesh(_canopy_instance)
+536:				_canopy_instance.visible = false
+866:	if _canopy_deployed or not _canopy_instance:
+870:	_canopy_instance.visible = true
+871:	_canopy_instance.scale = Vector3.ZERO
+888:	_canopy_instance = MeshInstance3D.new()
+894:	_canopy_instance.mesh = sphere_mesh
+895:	_canopy_instance.scale = Vector3(0.18, 0.12, 0.18)
+896:	_character.add_child(_canopy_instance)
+897:	_canopy_instance.position = Vector3(0, 3.2, 0)
+900:	_canopy_instance.material_override = _canopy_material
+901:	_canopy_instance.visible = false
+995:	var mesh_child = _find_first_mesh(_canopy_instance) if _canopy_instance else null
+999:			if _canopy_instance:
+
+=== E: OPENING_ANIM occurrences ===
+30:	OPENING_ANIM,
+873:	_game_state = GameState.OPENING_ANIM
+874:	print("[VERBATIM] Parachute deployment started — state=OPENING_ANIM")
+1025:	if _game_state != GameState.DIAGNOSIS and _game_state != GameState.OPENING_ANIM:
+1494:	if _game_state == GameState.OPENING_ANIM:
+1529:	elif _game_state == GameState.OPENING_ANIM:
+1671:	if _game_state == GameState.DIAGNOSIS or _game_state == GameState.OPENING_ANIM:
+2141:	if _game_state == GameState.OPENING_ANIM or _game_state == GameState.DIAGNOSIS:
+
+=== F: _poll_controls — first 80 lines after signature ===
+func _poll_controls() -> void:
+	print("[DIAG] _poll_controls: ENTER, state=", _game_state)
+	print("[VERBATIM] POLL: _poll_controls() entered, game_state=", _game_state)
+
+	if _game_state == GameState.IN_PLANE:
+		# Also check headless auto-jump flag (set in _physics_process;
+		# reliable across _physics_process/_process frame boundary).
+		# Ref: https://docs.godotengine.org/en/stable/classes/class_input.html
+		var _exit_pressed = (
+			Input.is_action_just_pressed("deploy")
+			or Input.is_key_pressed(KEY_J)
+			or _headless_auto_jump
+		)
+		_headless_auto_jump = false  # consume the flag
+		if _exit_pressed:
+			print("[DIAG] _poll_controls: exit aircraft triggered")
+			print("[VERBATIM] EXIT AIRCRAFT - transitioning FREEFALL")
+			_game_state = GameState.FREEFALL
+			_cam_distance = 5.0
+			if _plane_node:
+				_plane_node.visible = false
+			_character.visible = true
+			if _plane_node:
+				_character.position = _plane_node.position + Vector3(0, -2.0, 0)
+			else:
+				_character.position = Vector3(100, 1828.8, -100)
+			_show_notification("Jumped! Deploy parachute (SPACE) above 2000 ft AGL")
+			# --- Immediately switch camera to character ---
+			if is_instance_valid(_character) and is_instance_valid(_camera):
+				_camera.global_position = _character.global_position + Vector3(0, 2, 3)
+				_camera.look_at(_character.global_position, Vector3.UP)
+				print("[CAMERA] Switched to character after exit")
+				_camera.current = true  # ensure the camera becomes active
+		print("[DIAG] _poll_controls: EXIT (IN_PLANE branch)")
+		return
+
+	if _game_state == GameState.LANDED or _game_state == GameState.GAME_OVER:
+		if Input.is_action_just_pressed("restart"):
+			print("[DIAG] _poll_controls: restart pressed")
+			print("[VERBATIM] POLL: restart pressed in LANDED/GAME_OVER state")
+			_reset_game()
+		print("[DIAG] _poll_controls: EXIT (LANDED/GAME_OVER)")
+		return
+
+	print("[VERBATIM] POLL: checking deploy state=", _game_state, " canopy=", _canopy_deployed)
+	# Headless auto-deploy: fired when _headless_auto_deploy set in IN_PLANE frame 1.
+	# _deploy_canopy() requires state==FREEFALL; this flag is consumed only here,
+	# so it fires on the first FREEFALL _poll_controls() call.
+	# Ref: https://docs.godotengine.org/en/stable/classes/class_input.html
+	# (general knowledge — not retrieved this session)
+	if _headless_auto_deploy and _game_state == GameState.FREEFALL and not _canopy_deployed:
+		_headless_auto_deploy = false
+		print("[VERBATIM] Headless auto-deploy triggered (FREEFALL).")
+		_deploy_canopy()
+	if Input.is_action_just_pressed("deploy") and not _canopy_deployed:
+		print("[VERBATIM] POLL: deploy pressed - calling _deploy_canopy")
+		_deploy_canopy()
+
+	if _game_state == GameState.DIAGNOSIS or _game_state == GameState.OPENING_ANIM:
+		var turn_input := 0.0
+		if Input.is_action_pressed("turnleft"):
+			turn_input -= 1.0
+		if Input.is_action_pressed("turnright"):
+			turn_input += 1.0
+
+		if turn_input < 0.0:
+			print("[VERBATIM] POLL: turnleft pressed - left turn")
+			if not _last_frame_keys["Q"]:
+				_rotate_arm(true)
+		elif turn_input > 0.0:
+			print("[VERBATIM] POLL: turnright pressed - right turn")
+			if not _last_frame_keys["E"]:
+				_rotate_arm(false)
+
+		_turn_input = turn_input
+		# ParachuteController removed — steering via _turn_input + _arm_pull directly.
+# FIX (fix_steering_v1): _deploy_canopy() here was called every frame in
+# OPENING_ANIM/DIAGNOSIS, resetting _canopy_heading=0 each frame so the
+# canopy could never accumulate a turn. Guard was commented out; call removed.
+		# Deploy on SPACE is handled by is_action_just_pressed at line ~1585.
+
+=== G: GameState enum definition ===
+27:enum GameState {
+28-	IN_PLANE,
+29-	FREEFALL,
+30-	OPENING_ANIM,
+31-	DIAGNOSIS,
+32-	LANDED,
+33-	GAME_OVER,
+34-}
+35-var _game_state: GameState = GameState.IN_PLANE
+
+=== H: _canopy_deployed write sites ===
+869:	_canopy_deployed = true
+1069:	_canopy_deployed = false
+1114:	_canopy_deployed = true
+1699:				_canopy_deployed = false
+1703:				_canopy_deployed = true
+1839:	_canopy_deployed = false
+3525:		_canopy_deployed = false
+
+=== END DIAGNOSTIC — 2026-08-10T18:17:36Z UTC ===
