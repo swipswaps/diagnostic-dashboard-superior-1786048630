@@ -1,0 +1,2169 @@
+=== diag_terrain_quality.sh — 20260810223938 UTC ===
+=== READ-ONLY. NO GAME FILE IS MODIFIED BY THIS SCRIPT. ===
+
+host: Linux.attlocal.net
+dash_repo: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo
+owner_repo: swipswaps/diagnostic-dashboard-superior-1786048630
+
+
+############################################################
+### REPO: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game
+############################################################
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] GIT HEAD ---
+98bd004835b5759392ca765129b6cd98439201ec
+main
+./diag_terrain_quality.sh: line 247: printf: --: invalid option
+printf: usage: printf [-v var] format [arguments]
+ M audit_arms.db
+ M autostall_fixed.py
+ M godot_project/scripts/build_terrain.gd
+ M godot_project/scripts/build_terrain.gd.bak_fixed
+ M godot_project/scripts/build_terrain.gd.bak_full_merge
+ M os
+ M repair_plan.tsv
+ M run_summary.json
+ M shutil
+ M stall_report.json
+ M subprocess
+ M sys
+?? $PRIMARY_DB
+?? .env
+?? godot_project/TelemetryLogger.gd
+?? godot_project/scripts/build_terrain.gd.comp_diag_backup
+?? godot_project/scripts/build_terrain.gd.diag_backup
+?? godot_project/scripts/build_terrain.gd.diag_live_backup
+?? godot_project/scripts/build_terrain.gd.full_fix_backup
+?? time
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] build_terrain.gd IDENTITY ---
+sha256: 28469df87b774ba2b148cbb606c81100f9eac267cceb4946afb1a8a4daee75f8
+lines : 3787
+bytes : 151570
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] build_terrain.gd TERRAIN-RELEVANT LINES ---
+2:# build_terrain.gd – final, fully gated, citation‑backed parachute malfunction trainer
+126:var _canopy_material: StandardMaterial3D
+247:# _ready() – initialises terrain, character, camera, HUD, canopy, and environment
+264:	# Terrain generation (full – uses heightmap and baked colours) with fallback
+267:	var file = FileAccess.open("res://assets/terrain/heightmap_4096.raw", FileAccess.READ)
+269:		# --- Heightmap exists: generate detailed terrain ---
+274:		var _bf = FileAccess.open("res://assets/terrain/baked_colours_4096.bin", FileAccess.READ)
+284:		# Elevation: heightmap_4096.raw (NED 0.98m/px -- real elevation data).
+285:		const W = 1024
+286:		const H = 1024
+287:		const HM_SRC = 4096
+311:		var st := SurfaceTool.new()
+326:		var terrain_mesh = st.commit()
+327:		var terrain_inst := MeshInstance3D.new()
+328:		terrain_inst.mesh = terrain_mesh
+329:		var terrain_mat := StandardMaterial3D.new()
+330:		terrain_mat.vertex_color_use_as_albedo = true
+331:		terrain_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+332:		terrain_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+333:		terrain_inst.material_override = terrain_mat
+334:		add_child(terrain_inst)
+337:		# --- Heightmap missing: flat terrain fallback ---
+338:		print("[VERBATIM] WARNING: heightmap_512.raw not found – using flat terrain fallback")
+339:		var flat_mesh := PlaneMesh.new()
+341:		flat_mesh.subdivide_width = 64
+342:		flat_mesh.subdivide_depth = 64
+345:		var flat_mat := StandardMaterial3D.new()
+346:		flat_mat.albedo_color = Color(0.2, 0.5, 0.15)
+350:		print("[VERBATIM] Flat terrain fallback created")
+422:	var dz_mat := StandardMaterial3D.new()
+423:	dz_mat.albedo_color = Color(1.0, 0.8, 0.0, 0.85)
+435:	# if true: return  # REMOVED: was disabling _hud_labels population. Caused _poll_controls() gate (_hud_labels.size()<8) to block all controls. build_terrain.gd:418 fix_hud_gate.py
+532:				_canopy_material = StandardMaterial3D.new()
+647:	var mat := StandardMaterial3D.new()
+648:	mat.albedo_color = color
+838:		var mat: StandardMaterial3D = StandardMaterial3D.new()
+840:			mat.albedo_color = Color(0.8, 0.8, 0.8)
+842:			mat.albedo_color = Color(0.6, 0.5, 0.3)
+898:	_canopy_material = StandardMaterial3D.new()
+899:	_canopy_material.albedo_color = Color(0.0, 0.6, 1.0)
+998:			_canopy_material.albedo_color = Color(0.2, 0.8, 0.2)
+1003:			_canopy_material.albedo_color = Color(0.9, 0.5, 0.1)
+1007:			_canopy_material.albedo_color = Color(0.9, 0.2, 0.2)
+1011:			_canopy_material.albedo_color = Color(0.9, 0.6, 0.0)
+1013:			_canopy_material.albedo_color = Color(0.7, 0.2, 0.7)
+1107:			_canopy_material.albedo_color = Color(0.95, 0.95, 0.95)
+1923:	print("[DEBUG] _input (build_terrain) called, event=", event)
+2537:	var image = get_viewport().get_texture().get_image()
+2547:	var img = viewport.get_texture().get_image()
+2596:				var tex = ImageTexture.create_from_image(img)
+2603:					print("[VERBATIM] WARNING: ImageTexture creation failed: ", _ss_path)
+2872:# found in build_terrain.gd, so nothing is being changed blind. This walks the
+3190:# (0716.txt: six MISSING BONE lines, then ABORT). build_terrain.gd L649
+3621:# own canopy model and light (build_terrain.gd 2180-2226), so it shows a prop,
+3658:		# Walk children generically - build_terrain.gd 2195-2219 is unread.
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] GRID CONSTANTS (H1/H6 discriminator) ---
+285:		const W = 1024
+286:		const H = 1024
+340:		flat_mesh.size = Vector2(8000, 8000)
+341:		flat_mesh.subdivide_width = 64
+342:		flat_mesh.subdivide_depth = 64
+455:		lbl.custom_minimum_size = Vector2(220, 20)
+462:	_hud_bg_panel.size = Vector2(280, 210)
+646:	box.size = Vector3(width, 0.5, length)
+2290:	container.size = Vector2(320, 240)
+2310:	_pip_viewport.size = Vector2i(320, 240)
+2658:	plane_collision.shape.size = Vector3(3, 1, 10)
+2666:	trigger_collision.shape.size = Vector3(2, 2, 2)
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] project.godot RENDER SETTINGS (H4) ---
+276:renderer/rendering_method="gl_compatibility"
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] SHADER FILES (H5) ---
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/upstream_aero_check/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/upstream_aero_check/utils/vector_3d/vector_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/addons/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/addons/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/addons/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/addons/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] MATERIAL + ENVIRONMENT RESOURCES (H5) ---
+       111  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/black_env.tres
+       164  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/default_material.tres
+       141  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/green_mat.tres
+       119  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/sphere_mat.tres
+       319  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/default_drag_aoa_curve.tres
+       250  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/default_drag_at_mach_curve.tres
+       505  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/default_lift_aoa_curve.tres
+       285  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/default_sweep_drag_multiplier.tres
+      3321  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/flight_assist/flight_assist.tres
+       362  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/altitude_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/bank_angle_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/direction_pitch_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/direction_roll_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/direction_yaw_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/heading_pid.tres
+       359  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/pitch.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/roll_pid.tres
+       358  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/speed_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/core/resources/pids/yaw_pid.tres
+       209  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/demo/aircraft_examples/cessna172/Material.tres
+       237  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/demo/aircraft_examples/f14/Material.tres
+        84  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/default_bus_layout.tres
+       170  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/default_env.tres
+       319  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/default_drag_aoa_curve.tres
+       250  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/default_drag_at_mach_curve.tres
+       505  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/default_lift_aoa_curve.tres
+       285  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/default_sweep_drag_multiplier.tres
+      3321  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/flight_assist/flight_assist.tres
+       362  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/altitude_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/bank_angle_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_pitch_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_roll_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_yaw_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/heading_pid.tres
+       359  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/pitch.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/roll_pid.tres
+       358  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/speed_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/core/resources/pids/yaw_pid.tres
+       209  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/demo/aircraft_examples/cessna172/Material.tres
+       237  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/demo/aircraft_examples/f14/Material.tres
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] TEXTURE .import FLAGS (H3) ---
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/demo/aircraft_examples/cessna172/cessna172_Image.png.import ==
+21:compress/mode=0
+27:compress/normal_map=0
+29:mipmaps/generate=true
+31:roughness/mode=0
+32:roughness/src_normal=""
+33:process/channel_remap/red=0
+34:process/channel_remap/green=1
+35:process/channel_remap/blue=2
+36:process/channel_remap/alpha=3
+37:process/fix_alpha_border=true
+38:process/premult_alpha=false
+39:process/normal_map_invert_y=false
+40:process/hdr_as_srgb=false
+41:process/hdr_clamp_exposure=false
+42:process/size_limit=0
+43:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/demo/aircraft_examples/f14/f14_Image.png.import ==
+21:compress/mode=0
+27:compress/normal_map=0
+29:mipmaps/generate=true
+31:roughness/mode=0
+32:roughness/src_normal=""
+33:process/channel_remap/red=0
+34:process/channel_remap/green=1
+35:process/channel_remap/blue=2
+36:process/channel_remap/alpha=3
+37:process/fix_alpha_border=true
+38:process/premult_alpha=false
+39:process/normal_map_invert_y=false
+40:process/hdr_as_srgb=false
+41:process/hdr_clamp_exposure=false
+42:process/size_limit=0
+43:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/icon.png.import ==
+18:compress/mode=0
+24:compress/normal_map=0
+26:mipmaps/generate=false
+28:roughness/mode=0
+29:roughness/src_normal=""
+30:process/channel_remap/red=0
+31:process/channel_remap/green=1
+32:process/channel_remap/blue=2
+33:process/channel_remap/alpha=3
+34:process/fix_alpha_border=true
+35:process/premult_alpha=false
+36:process/normal_map_invert_y=false
+37:process/hdr_as_srgb=false
+38:process/hdr_clamp_exposure=false
+39:process/size_limit=0
+40:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/Aircraft/Aircraft_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_Node_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_Spatial_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_icon.png.import ==
+17:compress/mode=0
+21:compress/normal_map=0
+27:process/fix_alpha_border=true
+28:process/premult_alpha=false
+29:process/HDR_as_SRGB=false
+30:process/invert_color=false
+31:process/normal_map_invert_y=false
+34:detect_3d=true
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/battery.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=true
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=0
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/faux_asphalt/ground_asphalt_synth_12.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=true
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=0
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/fire_gradient.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=true
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=0
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/heli_pad.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=true
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=0
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_01.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_02.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_03.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_04.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_05.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_06.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_07.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_08.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_09.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_10.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_11.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_12.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_13.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_01.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_02.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_03.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_04.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_05.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_06.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game] IMAGE ASSET RESOLUTIONS (H2 discriminator) ---
+    18019146 bytes  3840x2160     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/assets/terrain/naip_texture.png
+    18019146 bytes  3840x2160     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/assets/terrain/naip_texture.png
+    18019146 bytes  3840x2160     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/assets/terrain/naip_texture.png
+     1063072 bytes  1275x4910     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/Screenshot 2026-07-11 at 11-33-26 Parachute-CFD Forensic Hub v2.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/screenshots/v314_20260630T230849.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/screenshots/v314_20260630T224811.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/screenshots/v314_20260630T224308.png
+      788070 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/assets/terrain/satellite.png
+      788070 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/assets/terrain/satellite.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/upstream_aero_check/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/addons/godot_aerodynamic_physics/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/addons/godot_aerodynamic_physics/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/icon.png
+      701317 bytes  1152x648      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/assets/boot_splash.png
+      701317 bytes  1152x648      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/assets/boot_splash.png
+      701317 bytes  1152x648      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/assets/boot_splash.png
+      647834 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/faux_asphalt/ground_asphalt_synth_12.png
+      627280 bytes  1256x400      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/planets/1/NormalMap.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/upstream_aero_check/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/addons/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/addons/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      582817 bytes  1256x400      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot-simplified-flightsim/example/textures/planets/2/NormalMap.png
+      537106 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/assets/aircraft/cesna_airplane_1.png
+      537106 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/assets/aircraft/cesna_airplane_1.png
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/upstream_aero_check/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/addons/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/addons/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/external_repos/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/upstream_aero_check/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/addons/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.bak.20260803211241/addons/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_aerodynamic_physics_cache/docs/screenshots/quadcopter.jpg
+(total image assets: 805; showing largest 40)
+
+############################################################
+### REPO: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070
+############################################################
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] GIT HEAD ---
+71e60f27d33040255c17ed5c52c09d65b0b7c66d
+main
+./diag_terrain_quality.sh: line 247: printf: --: invalid option
+printf: usage: printf [-v var] format [arguments]
+ M forensic_hub_server.py
+ M gate_log.txt
+ M godot_project/assets/terrain/baked_colours_4096.bin
+ M godot_project/scenes/main.tscn
+ M godot_project/scripts/SqliteDb.gd
+ M godot_project/scripts/build_terrain.gd
+ M notes/recover_and_push_20260802155256.txt
+ M run_summary.json
+ M stall_report.json
+?? .quarantine/
+?? 02.gd
+?? 1
+?? 1.
+?? =
+?? GameIntegrity_0002.gd
+?? GameIntegrity_2606201818.gd
+?? InputManager_0003.gd
+?? PerformanceMonitor_0002.gd
+?? SqliteDb_0002.gd
+?? SqliteWatchdog_0002.gd
+?? StructuredLogger.gd
+?? TelemetryLogger.gd
+?? [owner@192.168.1.152-20260616-173650parachute-cfd-game]$
+?? alembic.ini
+?? altimeter_hud_0002.gd
+?? apply_v5_repairs.sh.bad
+?? argparse
+?? autostall_post_revert.txtclear
+?? autostall_summary.json
+?? blosm/
+?? build_terrain_0123.gd
+?? build_terrain_patch.gd
+?? check_inputmap.gd
+?? combined_edits.json
+?? context_20260619T143131.zip
+?? debug_components_0002.gd
+?? difflib
+?? eof
+?? fu
+?? game_manager_0002.gd
+?? godot_aerodynamic_physics.zip
+?? godot_project/TelemetryLogger.gd
+?? godot_project/add_input_actions.gd
+?? godot_project/assets/aircraft/Cessna.glb
+?? godot_project/assets/aircraft/cesna_airplane_0.png
+?? godot_project/assets/aircraft/cesna_airplane_1.png
+?? godot_project/assets/aircraft/cesna_airplane_2.png
+?? godot_project/assets/aircraft/cessna172.glb
+?? godot_project/assets/aircraft/cessna172_Image.png
+?? godot_project/assets/canopy/clean.glb
+?? godot_project/assets/canopy/parachute.glb
+?? godot_project/assets/canopy/parachute_clean.glb
+?? godot_project/assets/canopy/parachute_cleaned.glb
+?? godot_project/assets/canopy/parachute_fixed.fbx
+?? godot_project/assets/canopy/parachute_fixed.glb
+?? godot_project/assets/canopy/parachute_fixed_0001.glb
+?? godot_project/assets/canopy/parachute_sanitized.glb
+?? godot_project/assets/canopy/temp.bin
+?? "godot_project/assets/characters/Hanging under canopy.fbx"
+?? godot_project/assets/characters/parachutist.fbx
+?? godot_project/assets/characters/parachutist.glb
+?? godot_project/assets/terrain/baked_colours.bin
+?? godot_project/assets/terrain/earth_mesh.glb
+?? godot_project/assets/terrain/heightmap.png
+?? godot_project/assets/terrain/naip_texture.png
+?? godot_project/assets/terrain/satellite.png
+?? godot_project/assets/terrain/terrain_data.npz
+?? godot_project/capture.gd
+?? godot_project/final_screenshot.png
+?? godot_project/scripts/HubManager.gd.broken.20260801185950
+?? godot_project/scripts/build_terrain.gd.broken.20260801185950
+?? godot_project/scripts/build_terrain_0100.gd
+?? godot_project/scripts/chunked_lod_terrain.gd
+?? godot_project/scripts/forensic_hud.gd.broken.20260801185950
+?? godot_project/scripts/forensic_hud.gd.broken_v3.20260801191734
+?? godot_project/scripts/forensic_hud.gd.broken_v3c.20260801192217
+?? godot_project/scripts/forensic_hud.gd.pre_poll_fix.20260801193558
+?? godot_project/scripts/forensic_hud.gd.pre_v2.20260801194217
+?? godot_project/scripts/forensic_hud.gd.pre_v3.20260801194432
+?? godot_project/simulate_input.gd
+?? godot_project/test_hud.gd
+?? godot_project/test_minimal.gd
+?? godot_project/test_minimal.png
+?? godot_project/tools/setup_input_map.gd
+?? minimal_0002.gd
+?? observability/
+?? parachute_cfd_handoff_20260802.docx
+?? parachute_cfd_handoff_20260802B.md
+?? parachute_controller_0002.gd
+?? pip_draggable_0002.gd
+?? pip_draggable_v2_0002.gd
+?? plane_0002.gd
+?? rotor_visualizer_0002.gd
+?? scratch_aeropropeller_fix/
+?? scratch_formatting_test/
+?? scratch_inline_tab_diag/
+?? scratch_iterative_test/
+?? scratch_reconstruct_test/
+?? scratch_upstream_compare/
+?? screenshot.png
+?? screenshot_20260607T140645.png
+?? screenshot_20260607T141131.png
+?? screenshot_20260607T142005.png
+?? scripts/
+?? splash_0002.gd
+?? temp_check.gd
+?? test_extract_20260711_002400/
+?? tmp_candidate.gd
+?? toggle_arm_animator_0002.gd
+?? validate_scene_0002.gd
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] build_terrain.gd IDENTITY ---
+sha256: fea43f602f02540a1caf71d33289e16d535a1ac5dc9aadf2063c25b42a2e00cc
+lines : 3766
+bytes : 150464
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] build_terrain.gd TERRAIN-RELEVANT LINES ---
+2:# build_terrain.gd – final, fully gated, citation‑backed parachute malfunction trainer
+126:var _canopy_material: StandardMaterial3D
+247:# _ready() – initialises terrain, character, camera, HUD, canopy, and environment
+264:	# Terrain generation (full – uses heightmap and baked colours) with fallback
+267:	var file = FileAccess.open("res://assets/terrain/heightmap_4096.raw", FileAccess.READ)
+269:		# --- Heightmap exists: generate detailed terrain ---
+274:		var _bf = FileAccess.open("res://assets/terrain/baked_colours_4096.bin", FileAccess.READ)
+284:		# Elevation: heightmap_4096.raw (NED 0.98m/px -- real elevation data).
+285:		const W = 1024
+286:		const H = 1024
+287:		const HM_SRC = 4096
+311:		var st := SurfaceTool.new()
+326:		var terrain_mesh = st.commit()
+327:		var terrain_inst := MeshInstance3D.new()
+328:		terrain_inst.mesh = terrain_mesh
+329:		var terrain_mat := StandardMaterial3D.new()
+330:		terrain_mat.vertex_color_use_as_albedo = true
+331:		terrain_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+332:		terrain_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+333:		terrain_inst.material_override = terrain_mat
+334:		add_child(terrain_inst)
+337:		# --- Heightmap missing: flat terrain fallback ---
+338:		print("[VERBATIM] WARNING: heightmap_512.raw not found – using flat terrain fallback")
+339:		var flat_mesh := PlaneMesh.new()
+341:		flat_mesh.subdivide_width = 64
+342:		flat_mesh.subdivide_depth = 64
+345:		var flat_mat := StandardMaterial3D.new()
+346:		flat_mat.albedo_color = Color(0.2, 0.5, 0.15)
+350:		print("[VERBATIM] Flat terrain fallback created")
+422:	var dz_mat := StandardMaterial3D.new()
+423:	dz_mat.albedo_color = Color(1.0, 0.8, 0.0, 0.85)
+435:	# if true: return  # REMOVED: was disabling _hud_labels population. Caused _poll_controls() gate (_hud_labels.size()<8) to block all controls. build_terrain.gd:418 fix_hud_gate.py
+532:				_canopy_material = StandardMaterial3D.new()
+647:	var mat := StandardMaterial3D.new()
+648:	mat.albedo_color = color
+838:		var mat: StandardMaterial3D = StandardMaterial3D.new()
+840:			mat.albedo_color = Color(0.8, 0.8, 0.8)
+842:			mat.albedo_color = Color(0.6, 0.5, 0.3)
+898:	_canopy_material = StandardMaterial3D.new()
+899:	_canopy_material.albedo_color = Color(0.0, 0.6, 1.0)
+998:			_canopy_material.albedo_color = Color(0.2, 0.8, 0.2)
+1003:			_canopy_material.albedo_color = Color(0.9, 0.5, 0.1)
+1007:			_canopy_material.albedo_color = Color(0.9, 0.2, 0.2)
+1011:			_canopy_material.albedo_color = Color(0.9, 0.6, 0.0)
+1013:			_canopy_material.albedo_color = Color(0.7, 0.2, 0.7)
+1107:			_canopy_material.albedo_color = Color(0.95, 0.95, 0.95)
+1923:	print("[DEBUG] _input (build_terrain) called, event=", event)
+2516:	var image = get_viewport().get_texture().get_image()
+2526:	var img = viewport.get_texture().get_image()
+2575:				var tex = ImageTexture.create_from_image(img)
+2582:					print("[VERBATIM] WARNING: ImageTexture creation failed: ", _ss_path)
+2851:# found in build_terrain.gd, so nothing is being changed blind. This walks the
+3169:# (0716.txt: six MISSING BONE lines, then ABORT). build_terrain.gd L649
+3600:# own canopy model and light (build_terrain.gd 2180-2226), so it shows a prop,
+3637:		# Walk children generically - build_terrain.gd 2195-2219 is unread.
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] GRID CONSTANTS (H1/H6 discriminator) ---
+285:		const W = 1024
+286:		const H = 1024
+340:		flat_mesh.size = Vector2(8000, 8000)
+341:		flat_mesh.subdivide_width = 64
+342:		flat_mesh.subdivide_depth = 64
+455:		lbl.custom_minimum_size = Vector2(220, 20)
+462:	_hud_bg_panel.size = Vector2(280, 210)
+646:	box.size = Vector3(width, 0.5, length)
+2269:	container.size = Vector2(320, 240)
+2289:	_pip_viewport.size = Vector2i(320, 240)
+2637:	plane_collision.shape.size = Vector3(3, 1, 10)
+2645:	trigger_collision.shape.size = Vector3(2, 2, 2)
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] project.godot RENDER SETTINGS (H4) ---
+276:renderer/rendering_method="gl_compatibility"
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] SHADER FILES (H5) ---
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/addons/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/addons/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/upstream_aero_check/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/upstream_aero_check/utils/vector_3d/vector_3d.gdshader
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] MATERIAL + ENVIRONMENT RESOURCES (H5) ---
+       111  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/black_env.tres
+       164  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/default_material.tres
+       141  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/green_mat.tres
+       119  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/sphere_mat.tres
+        84  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/default_bus_layout.tres
+       170  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/default_env.tres
+      3321  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/flight_assist/flight_assist.tres
+       362  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/altitude_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/bank_angle_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_pitch_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_roll_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_yaw_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/heading_pid.tres
+       359  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/pitch.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/roll_pid.tres
+       358  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/speed_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/pids/yaw_pid.tres
+       319  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/default_drag_aoa_curve.tres
+       250  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/default_drag_at_mach_curve.tres
+       505  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/default_lift_aoa_curve.tres
+       285  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/core/resources/default_sweep_drag_multiplier.tres
+       209  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/demo/aircraft_examples/cessna172/Material.tres
+       237  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/demo/aircraft_examples/f14/Material.tres
+      3321  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/flight_assist/flight_assist.tres
+       362  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/altitude_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/bank_angle_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/direction_pitch_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/direction_roll_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/direction_yaw_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/heading_pid.tres
+       359  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/pitch.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/roll_pid.tres
+       358  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/speed_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/pids/yaw_pid.tres
+       319  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/default_drag_aoa_curve.tres
+       250  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/default_drag_at_mach_curve.tres
+       505  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/default_lift_aoa_curve.tres
+       285  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/core/resources/default_sweep_drag_multiplier.tres
+       209  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/demo/aircraft_examples/cessna172/Material.tres
+       237  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/demo/aircraft_examples/f14/Material.tres
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] TEXTURE .import FLAGS (H3) ---
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/Aircraft/Aircraft_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_Node_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_Spatial_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_icon.png.import ==
+17:compress/mode=0
+21:compress/normal_map=0
+27:process/fix_alpha_border=true
+28:process/premult_alpha=false
+29:process/HDR_as_SRGB=false
+30:process/invert_color=false
+31:process/normal_map_invert_y=false
+34:detect_3d=true
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/faux_asphalt/ground_asphalt_synth_12.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=true
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=0
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_01.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_02.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_03.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_04.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_05.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_06.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_07.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_08.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_09.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_10.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_11.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_12.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_13.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_01.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_02.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_03.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_04.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_05.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_06.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_07.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_08.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_09.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_10.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_11.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_12.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070] IMAGE ASSET RESOLUTIONS (H2 discriminator) ---
+    18019146 bytes  3840x2160     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/assets/terrain/naip_texture.png
+     7532405 bytes  3840x2160     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/assets/terrain/naip_texture.png
+     1063072 bytes  1275x4910     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/Screenshot 2026-07-11 at 11-33-26 Parachute-CFD Forensic Hub v2.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/screenshots/v314_20260630T230849.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/screenshots/v314_20260630T224811.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/screenshots/v314_20260630T224308.png
+      788070 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/assets/terrain/satellite.png
+      788070 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/assets/terrain/satellite.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/upstream_aero_check/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/addons/godot_aerodynamic_physics/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/icon.png
+      701317 bytes  1152x648      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/assets/boot_splash.png
+      701317 bytes  1152x648      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/assets/boot_splash.png
+      647834 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/faux_asphalt/ground_asphalt_synth_12.png
+      627280 bytes  1256x400      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/planets/1/NormalMap.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/upstream_aero_check/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/addons/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      582817 bytes  1256x400      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot-simplified-flightsim/example/textures/planets/2/NormalMap.png
+      537106 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/assets/aircraft/cesna_airplane_1.png
+      537106 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/assets/aircraft/cesna_airplane_1.png
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/upstream_aero_check/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/addons/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/upstream_aero_check/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/addons/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_aerodynamic_physics_cache/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/external_repos/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      380575 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project/assets/aircraft/cesna_airplane_2.png
+      380575 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/godot_project.backup.20260730210753/assets/aircraft/cesna_airplane_2.png
+      379431 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/screenshots/v314_20260701T140801.png
+      374386 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/screenshots/v314_20260701T131235.png
+      374386 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0070/audit_logs/screenshots/v314_20260701T130801.png
+(total image assets: 767; showing largest 40)
+
+############################################################
+### REPO: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062
+############################################################
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] GIT HEAD ---
+a7a33cafae4a20aca69525cf4bbd6ff4cb0ba97e
+main
+./diag_terrain_quality.sh: line 247: printf: --: invalid option
+printf: usage: printf [-v var] format [arguments]
+ M forensic_hub_server.py
+ M gate_log.txt
+ M godot_project/autoloads/HealthChecker.gd
+ M godot_project/autoloads/forensic_panel.gd
+ M godot_project/project.godot
+ M godot_project/scenes/forensic_hud.gd
+ M godot_project/scripts/FlightTrack.gd
+ M godot_project/scripts/InputManager.gd
+ M godot_project/scripts/SqliteDb.gd
+ M godot_project/scripts/audit.gd
+ M godot_project/scripts/build_terrain.gd
+ M godot_project/scripts/draggable_control.gd
+ M godot_project/scripts/forensic_hud.gd
+ M godot_project/scripts/screenshot_library.gd
+ M godot_project/scripts/splash.gd
+ M godot_project/scripts/test_orbit.gd
+ M godot_project/scripts/toggle_arm_animator.gd
+ M notes/diagnose_imports_20260803214805.txt
+ M run_summary.json
+ M stall_report.json
+?? .quarantine/
+?? 02.gd
+?? 1
+?? 1.
+?? =
+?? GameIntegrity_0002.gd
+?? GameIntegrity_2606201818.gd
+?? InputManager_0003.gd
+?? PerformanceMonitor_0002.gd
+?? SqliteDb_0002.gd
+?? SqliteWatchdog_0002.gd
+?? StructuredLogger.gd
+?? TelemetryLogger.gd
+?? [owner@192.168.1.152-20260616-173650parachute-cfd-game]$
+?? alembic.ini
+?? altimeter_hud_0002.gd
+?? apply_v5_repairs.sh.bad
+?? argparse
+?? autostall_post_revert.txtclear
+?? autostall_summary.json
+?? blosm/
+?? build_terrain_0123.gd
+?? build_terrain_patch.gd
+?? check_inputmap.gd
+?? combined_edits.json
+?? context_20260619T143131.zip
+?? debug_components_0002.gd
+?? difflib
+?? eof
+?? fu
+?? game_manager_0002.gd
+?? godot_aerodynamic_physics.zip
+?? godot_project/TelemetryLogger.gd
+?? godot_project/add_input_actions.gd
+?? godot_project/assets/aircraft/Cessna.glb
+?? godot_project/assets/aircraft/cesna_airplane_0.png
+?? godot_project/assets/aircraft/cesna_airplane_1.png
+?? godot_project/assets/aircraft/cesna_airplane_2.png
+?? godot_project/assets/aircraft/cessna172.glb
+?? godot_project/assets/aircraft/cessna172_Image.png
+?? godot_project/assets/canopy/clean.glb
+?? godot_project/assets/canopy/parachute.glb
+?? godot_project/assets/canopy/parachute_clean.glb
+?? godot_project/assets/canopy/parachute_cleaned.glb
+?? godot_project/assets/canopy/parachute_fixed.fbx
+?? godot_project/assets/canopy/parachute_fixed.glb
+?? godot_project/assets/canopy/parachute_fixed_0001.glb
+?? godot_project/assets/canopy/parachute_sanitized.glb
+?? godot_project/assets/canopy/temp.bin
+?? "godot_project/assets/characters/Hanging under canopy.fbx"
+?? godot_project/assets/characters/parachutist.fbx
+?? godot_project/assets/characters/parachutist.glb
+?? godot_project/assets/terrain/baked_colours.bin
+?? godot_project/assets/terrain/earth_mesh.glb
+?? godot_project/assets/terrain/heightmap.png
+?? godot_project/assets/terrain/naip_texture.png
+?? godot_project/assets/terrain/satellite.png
+?? godot_project/assets/terrain/terrain_data.npz
+?? godot_project/capture.gd
+?? godot_project/final_screenshot.png
+?? godot_project/scripts/build_terrain_0100.gd
+?? godot_project/scripts/chunked_lod_terrain.gd
+?? godot_project/simulate_input.gd
+?? godot_project/test_hud.gd
+?? godot_project/test_minimal.gd
+?? godot_project/test_minimal.png
+?? godot_project/tools/setup_input_map.gd
+?? minimal_0002.gd
+?? observability/
+?? parachute_controller_0002.gd
+?? pip_draggable_0002.gd
+?? pip_draggable_v2_0002.gd
+?? plane_0002.gd
+?? rotor_visualizer_0002.gd
+?? scratch_aeropropeller_fix/
+?? scratch_formatting_test/
+?? scratch_inline_tab_diag/
+?? scratch_iterative_test/
+?? scratch_reconstruct_test/
+?? scratch_upstream_compare/
+?? screenshot.png
+?? screenshot_20260607T140645.png
+?? screenshot_20260607T141131.png
+?? screenshot_20260607T142005.png
+?? scripts/
+?? splash_0002.gd
+?? temp_check.gd
+?? test_extract_20260711_002400/
+?? tmp_candidate.gd
+?? toggle_arm_animator_0002.gd
+?? validate_scene_0002.gd
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] build_terrain.gd IDENTITY ---
+sha256: ca69e00354a448077387d5e6325f5d8ab1f9d696ec9f73eee2ac3878aac3edcf
+lines : 3547
+bytes : 139353
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] build_terrain.gd TERRAIN-RELEVANT LINES ---
+2:# build_terrain.gd – final, fully gated, citation‑backed parachute malfunction trainer
+126:var _canopy_material: StandardMaterial3D
+247:# _ready() – initialises terrain, character, camera, HUD, canopy, and environment
+264:	# Terrain generation (full – uses heightmap and baked colours) with fallback
+267:	var file = FileAccess.open("res://assets/terrain/heightmap_1024_hd.raw", FileAccess.READ)
+269:		# --- Heightmap exists: generate detailed terrain ---
+274:		var _bf = FileAccess.open("res://assets/terrain/baked_colours_1024.bin", FileAccess.READ)
+284:		const W = 1024
+285:		const H = 1024
+292:								# heightmap_512.raw is 512x512; mesh is 1024x1024.
+295:				# Fix: map vertex UV to heightmap pixel coords (nearest-neighbour).
+311:		var st := SurfaceTool.new()
+326:		var terrain_mesh = st.commit()
+327:		var terrain_inst := MeshInstance3D.new()
+328:		terrain_inst.mesh = terrain_mesh
+329:		var terrain_mat := StandardMaterial3D.new()
+330:		terrain_mat.vertex_color_use_as_albedo = true
+331:		terrain_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+332:		terrain_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+333:		terrain_inst.material_override = terrain_mat
+334:		add_child(terrain_inst)
+337:		# --- Heightmap missing: flat terrain fallback ---
+338:		print("[VERBATIM] WARNING: heightmap_512.raw not found – using flat terrain fallback")
+339:		var flat_mesh := PlaneMesh.new()
+341:		flat_mesh.subdivide_width = 64
+342:		flat_mesh.subdivide_depth = 64
+345:		var flat_mat := StandardMaterial3D.new()
+346:		flat_mat.albedo_color = Color(0.2, 0.5, 0.15)
+350:		print("[VERBATIM] Flat terrain fallback created")
+426:	var dz_mat := StandardMaterial3D.new()
+427:	dz_mat.albedo_color = Color(1.0, 0.8, 0.0, 0.85)
+439:	# if true: return  # REMOVED: was disabling _hud_labels population. Caused _poll_controls() gate (_hud_labels.size()<8) to block all controls. build_terrain.gd:418 fix_hud_gate.py
+536:				_canopy_material = StandardMaterial3D.new()
+616:	var mat := StandardMaterial3D.new()
+617:	mat.albedo_color = color
+806:		var mat: StandardMaterial3D = StandardMaterial3D.new()
+808:			mat.albedo_color = Color(0.8, 0.8, 0.8)
+810:			mat.albedo_color = Color(0.6, 0.5, 0.3)
+866:	_canopy_material = StandardMaterial3D.new()
+867:	_canopy_material.albedo_color = Color(0.0, 0.6, 1.0)
+963:			_canopy_material.albedo_color = Color(0.2, 0.8, 0.2)
+968:			_canopy_material.albedo_color = Color(0.9, 0.5, 0.1)
+972:			_canopy_material.albedo_color = Color(0.9, 0.2, 0.2)
+976:			_canopy_material.albedo_color = Color(0.9, 0.6, 0.0)
+978:			_canopy_material.albedo_color = Color(0.7, 0.2, 0.7)
+1840:	print("[DEBUG] _input (build_terrain) called, event=", event)
+2414:	var image = get_viewport().get_texture().get_image()
+2424:	var img = viewport.get_texture().get_image()
+2473:				var tex = ImageTexture.create_from_image(img)
+2480:					print("[VERBATIM] WARNING: ImageTexture creation failed: ", _ss_path)
+2956:# (0716.txt: six MISSING BONE lines, then ABORT). build_terrain.gd L649
+3387:# own canopy model and light (build_terrain.gd 2180-2226), so it shows a prop,
+3424:		# Walk children generically - build_terrain.gd 2195-2219 is unread.
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] GRID CONSTANTS (H1/H6 discriminator) ---
+284:		const W = 1024
+285:		const H = 1024
+340:		flat_mesh.size = Vector2(8000, 8000)
+341:		flat_mesh.subdivide_width = 64
+342:		flat_mesh.subdivide_depth = 64
+459:		lbl.custom_minimum_size = Vector2(220, 20)
+466:	_hud_bg_panel.size = Vector2(280, 210)
+615:	box.size = Vector3(width, 0.5, length)
+2167:	container.size = Vector2(320, 240)
+2187:	_pip_viewport.size = Vector2i(320, 240)
+2535:	plane_collision.shape.size = Vector3(3, 1, 10)
+2543:	trigger_collision.shape.size = Vector3(2, 2, 2)
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] project.godot RENDER SETTINGS (H4) ---
+276:renderer/rendering_method="gl_compatibility"
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] SHADER FILES (H5) ---
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/addons/godot_aerodynamic_physics/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/addons/godot_aerodynamic_physics/utils/vector_3d/vector_3d.gdshader
+       427  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/upstream_aero_check/utils/point_3d/point_3d.gdshader
+       497  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/upstream_aero_check/utils/vector_3d/vector_3d.gdshader
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] MATERIAL + ENVIRONMENT RESOURCES (H5) ---
+       111  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/black_env.tres
+       164  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/default_material.tres
+       141  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/green_mat.tres
+       119  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/sphere_mat.tres
+        84  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/default_bus_layout.tres
+       170  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/default_env.tres
+      3321  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/flight_assist/flight_assist.tres
+       362  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/altitude_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/bank_angle_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_pitch_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_roll_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/direction_yaw_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/heading_pid.tres
+       359  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/pitch.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/roll_pid.tres
+       358  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/speed_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/pids/yaw_pid.tres
+       319  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/default_drag_aoa_curve.tres
+       250  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/default_drag_at_mach_curve.tres
+       505  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/default_lift_aoa_curve.tres
+       285  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/core/resources/default_sweep_drag_multiplier.tres
+       209  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/demo/aircraft_examples/cessna172/Material.tres
+       237  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/demo/aircraft_examples/f14/Material.tres
+      3321  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/flight_assist/flight_assist.tres
+       362  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/altitude_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/bank_angle_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/direction_pitch_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/direction_roll_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/direction_yaw_pid.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/heading_pid.tres
+       359  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/pitch.tres
+       361  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/roll_pid.tres
+       358  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/speed_pid.tres
+       360  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/pids/yaw_pid.tres
+       319  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/default_drag_aoa_curve.tres
+       250  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/default_drag_at_mach_curve.tres
+       505  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/default_lift_aoa_curve.tres
+       285  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/core/resources/default_sweep_drag_multiplier.tres
+       209  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/demo/aircraft_examples/cessna172/Material.tres
+       237  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/demo/aircraft_examples/f14/Material.tres
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] TEXTURE .import FLAGS (H3) ---
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/Aircraft/Aircraft_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_Node_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_Spatial_icon.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/addons/simplified_flightsim/aircraft_modules/AircraftModule_icon.png.import ==
+17:compress/mode=0
+21:compress/normal_map=0
+27:process/fix_alpha_border=true
+28:process/premult_alpha=false
+29:process/HDR_as_SRGB=false
+30:process/invert_color=false
+31:process/normal_map_invert_y=false
+34:detect_3d=true
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/faux_asphalt/ground_asphalt_synth_12.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=true
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=0
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_01.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_02.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_03.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_04.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_05.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_06.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_07.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_08.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_09.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_10.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_11.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_12.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Dark/texture_13.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_01.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_02.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_03.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_04.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_05.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_06.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_07.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_08.png.import ==
+19:compress/mode=2
+23:compress/normal_map=0
+25:mipmaps/generate=false
+27:roughness/mode=0
+28:roughness/src_normal=""
+29:process/fix_alpha_border=true
+30:process/premult_alpha=false
+31:process/normal_map_invert_y=false
+32:process/hdr_as_srgb=false
+33:process/hdr_clamp_exposure=false
+34:process/size_limit=0
+35:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_09.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_10.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_11.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/kenney_prototypetextures/PNG/Green/texture_12.png.import ==
+18:compress/mode=0
+22:compress/normal_map=0
+24:mipmaps/generate=false
+26:roughness/mode=0
+27:roughness/src_normal=""
+28:process/fix_alpha_border=true
+29:process/premult_alpha=false
+30:process/normal_map_invert_y=false
+31:process/hdr_as_srgb=false
+32:process/hdr_clamp_exposure=false
+33:process/size_limit=0
+34:detect_3d/compress_to=1
+
+--- [/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062] IMAGE ASSET RESOLUTIONS (H2 discriminator) ---
+    18019146 bytes  3840x2160     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/assets/terrain/naip_texture.png
+    18019146 bytes  3840x2160     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/assets/terrain/naip_texture.png
+     1063072 bytes  1275x4910     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/Screenshot 2026-07-11 at 11-33-26 Parachute-CFD Forensic Hub v2.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/screenshots/v314_20260630T230849.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/screenshots/v314_20260630T224811.png
+      904111 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/screenshots/v314_20260630T224308.png
+      788070 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/assets/terrain/satellite.png
+      788070 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/assets/terrain/satellite.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/upstream_aero_check/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/addons/godot_aerodynamic_physics/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/icon.png
+      703982 bytes  784x784       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/icon.png
+      701317 bytes  1152x648      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/assets/boot_splash.png
+      701317 bytes  1152x648      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/assets/boot_splash.png
+      647834 bytes  512x512       /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/faux_asphalt/ground_asphalt_synth_12.png
+      627280 bytes  1256x400      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/planets/1/NormalMap.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/upstream_aero_check/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/addons/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/docs/getting_started/getting_started_assets/dihedral.png
+      590761 bytes  1171x556      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/docs/getting_started/getting_started_assets/dihedral.png
+      582817 bytes  1256x400      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot-simplified-flightsim/example/textures/planets/2/NormalMap.png
+      537106 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/assets/aircraft/cesna_airplane_1.png
+      537106 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/assets/aircraft/cesna_airplane_1.png
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/upstream_aero_check/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/addons/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/docs/screenshots/tomcat.jpg
+      497409 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/docs/screenshots/tomcat.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/upstream_aero_check/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/addons/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/addons/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_aerodynamic_physics_cache/docs/screenshots/quadcopter.jpg
+      409601 bytes  2346x1320     /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/external_repos/godot_aerodynamic_physics/docs/screenshots/quadcopter.jpg
+      380575 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project/assets/aircraft/cesna_airplane_2.png
+      380575 bytes  1024x512      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/godot_project.backup.20260730210753/assets/aircraft/cesna_airplane_2.png
+      379431 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/screenshots/v314_20260701T140801.png
+      374386 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/screenshots/v314_20260701T131235.png
+      374386 bytes  1280x749      /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game_0062/audit_logs/screenshots/v314_20260701T130801.png
+(total image assets: 767; showing largest 40)
+
+
+############################################################
+### CROSS-REPO TERRAIN DIFF (baseline = _0062, reported OK)
+############################################################
+projection main : 55 terrain-relevant lines
+projection 0070 : 55 terrain-relevant lines
+projection 0062 : 53 terrain-relevant lines
+
+--- DIFF: _0062 (baseline) vs main ---
+--- /tmp/tmp.jySxRaNKsn/0062.txt	2026-08-10 18:40:15.081338202 -0400
++++ /tmp/tmp.jySxRaNKsn/main.txt	2026-08-10 18:40:15.065338467 -0400
+@@ -2,13 +2,13 @@
+ var _canopy_material: StandardMaterial3D
+ # _ready() – initialises terrain, character, camera, HUD, canopy, and environment
+ 	# Terrain generation (full – uses heightmap and baked colours) with fallback
+-	var file = FileAccess.open("res://assets/terrain/heightmap_1024_hd.raw", FileAccess.READ)
++	var file = FileAccess.open("res://assets/terrain/heightmap_4096.raw", FileAccess.READ)
+ 		# --- Heightmap exists: generate detailed terrain ---
+-		var _bf = FileAccess.open("res://assets/terrain/baked_colours_1024.bin", FileAccess.READ)
++		var _bf = FileAccess.open("res://assets/terrain/baked_colours_4096.bin", FileAccess.READ)
++		# Elevation: heightmap_4096.raw (NED 0.98m/px -- real elevation data).
+ 		const W = 1024
+ 		const H = 1024
+-								# heightmap_512.raw is 512x512; mesh is 1024x1024.
+-				# Fix: map vertex UV to heightmap pixel coords (nearest-neighbour).
++		const HM_SRC = 4096
+ 		var st := SurfaceTool.new()
+ 		var terrain_mesh = st.commit()
+ 		var terrain_inst := MeshInstance3D.new()
+@@ -43,11 +43,13 @@
+ 			_canopy_material.albedo_color = Color(0.9, 0.2, 0.2)
+ 			_canopy_material.albedo_color = Color(0.9, 0.6, 0.0)
+ 			_canopy_material.albedo_color = Color(0.7, 0.2, 0.7)
++			_canopy_material.albedo_color = Color(0.95, 0.95, 0.95)
+ 	print("[DEBUG] _input (build_terrain) called, event=", event)
+ 	var image = get_viewport().get_texture().get_image()
+ 	var img = viewport.get_texture().get_image()
+ 				var tex = ImageTexture.create_from_image(img)
+ 					print("[VERBATIM] WARNING: ImageTexture creation failed: ", _ss_path)
++# found in build_terrain.gd, so nothing is being changed blind. This walks the
+ # (0716.txt: six MISSING BONE lines, then ABORT). build_terrain.gd L649
+ # own canopy model and light (build_terrain.gd 2180-2226), so it shows a prop,
+ 		# Walk children generically - build_terrain.gd 2195-2219 is unread.
+(differences shown above; exit 1 from diff means "files differ")
+
+--- DIFF: _0062 (baseline) vs _0070 ---
+--- /tmp/tmp.jySxRaNKsn/0062.txt	2026-08-10 18:40:15.081338202 -0400
++++ /tmp/tmp.jySxRaNKsn/0070.txt	2026-08-10 18:40:15.074338318 -0400
+@@ -2,13 +2,13 @@
+ var _canopy_material: StandardMaterial3D
+ # _ready() – initialises terrain, character, camera, HUD, canopy, and environment
+ 	# Terrain generation (full – uses heightmap and baked colours) with fallback
+-	var file = FileAccess.open("res://assets/terrain/heightmap_1024_hd.raw", FileAccess.READ)
++	var file = FileAccess.open("res://assets/terrain/heightmap_4096.raw", FileAccess.READ)
+ 		# --- Heightmap exists: generate detailed terrain ---
+-		var _bf = FileAccess.open("res://assets/terrain/baked_colours_1024.bin", FileAccess.READ)
++		var _bf = FileAccess.open("res://assets/terrain/baked_colours_4096.bin", FileAccess.READ)
++		# Elevation: heightmap_4096.raw (NED 0.98m/px -- real elevation data).
+ 		const W = 1024
+ 		const H = 1024
+-								# heightmap_512.raw is 512x512; mesh is 1024x1024.
+-				# Fix: map vertex UV to heightmap pixel coords (nearest-neighbour).
++		const HM_SRC = 4096
+ 		var st := SurfaceTool.new()
+ 		var terrain_mesh = st.commit()
+ 		var terrain_inst := MeshInstance3D.new()
+@@ -43,11 +43,13 @@
+ 			_canopy_material.albedo_color = Color(0.9, 0.2, 0.2)
+ 			_canopy_material.albedo_color = Color(0.9, 0.6, 0.0)
+ 			_canopy_material.albedo_color = Color(0.7, 0.2, 0.7)
++			_canopy_material.albedo_color = Color(0.95, 0.95, 0.95)
+ 	print("[DEBUG] _input (build_terrain) called, event=", event)
+ 	var image = get_viewport().get_texture().get_image()
+ 	var img = viewport.get_texture().get_image()
+ 				var tex = ImageTexture.create_from_image(img)
+ 					print("[VERBATIM] WARNING: ImageTexture creation failed: ", _ss_path)
++# found in build_terrain.gd, so nothing is being changed blind. This walks the
+ # (0716.txt: six MISSING BONE lines, then ABORT). build_terrain.gd L649
+ # own canopy model and light (build_terrain.gd 2180-2226), so it shows a prop,
+ 		# Walk children generically - build_terrain.gd 2195-2219 is unread.
+(differences shown above; exit 1 from diff means "files differ")
+
+--- DIFF: project.godot render settings, _0062 vs main ---
+
+
+=== HYPOTHESIS KEY FOR THE REVIEWING LLM ===
+H1 mesh/heightmap discretisation (const W/H, subdivide_*)
+H2 texture magnification: low-res albedo over large mesh; worsens on descent
+H3 sampler state (.import: mipmaps/generate, compress/mode, detect_3d)
+H4 project.godot renderer (scaling_3d_scale, msaa, taa, anisotropic)
+H5 material class (ShaderMaterial+triplanar vs StandardMaterial3D)
+H6 prior LOD patch halved const W/H 1024->512 in main only
+NONE of H1..H6 is confirmed by this script alone. The diffs above are
+the discriminator. Rule #14: do not patch until one hypothesis stands.
+
+=== END DIAGNOSTIC ===
