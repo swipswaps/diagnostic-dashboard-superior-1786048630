@@ -1,0 +1,15 @@
+=== fix_all_blockers.py run — 20260810175423 UTC ===
+
+Traceback (most recent call last):
+  File "/home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/fix_all_blockers.py", line 178, in <module>
+    DASH_ROOT, GAME_ROOT = _discover_roots()
+                           ~~~~~~~~~~~~~~~^^
+  File "/home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/fix_all_blockers.py", line 148, in _discover_roots
+    log_result("discover_dash_root", True, str(dash_root))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/fix_all_blockers.py", line 127, in log_result
+    print(f"[{_now_iso()}] [{status}] {operation}: {detail}", file=sys.stderr)
+                                                                   ^^^
+NameError: name 'sys' is not defined. Did you mean: '_sys'? Or did you forget to import 'sys'?
+
+=== END RUN — 2026-08-10T17:54:24Z UTC ===
