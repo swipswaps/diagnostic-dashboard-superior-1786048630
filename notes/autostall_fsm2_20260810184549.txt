@@ -1,0 +1,23 @@
+=== autostall FSM2 verification — 20260810184549 UTC ===
+Script: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_patched.py
+Timeout: 120s
+
+  File "/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_patched.py", line 182
+    def # apply_auto_start_patch() -> Tuple[bool, str]:
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: invalid syntax
+
+=== END RUN — 2026-08-10T18:45:49Z UTC ===
+
+=== FSM STATE SUMMARY ===
+OPENING_ANIM emissions: 0
+0
+DIAGNOSIS emissions: 0
+0
+LANDED emissions: 0
+0
+GAME_OVER emissions: 0
+0
+
+=== FSM TRANSITION LINES ===
+none found
