@@ -1,0 +1,476 @@
+=== fix_terrain_colour_index.sh — 20260810230413 UTC ===
+target: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd
+backup: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd.bak.20260810230413
+sha256 after patch: 7677034c1e33e633cbec192149d1bbd5532a55bf09eb30b9b4daa8d8bf52c8fe
+
+--- DIFF (backup -> patched) ---
+--- /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd.bak.20260810230413	2026-08-10 14:40:06.976307508 -0400
++++ /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd	2026-08-10 19:04:13.484482603 -0400
+@@ -311,14 +311,52 @@
+ 		var st := SurfaceTool.new()
+ 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
+ 		st.set_color(Color(1.0, 1.0, 1.0, 1.0))
++		# Rule #46/#56 FIX (20260810): the colour lookup below previously read
++		# _baked at ci = i * 3, indexing a 4096-wide source raster with a
++		# 1024-wide mesh index.  That addressed only bytes 0..3,145,725 of
++		# the 50,331,648-byte bake — the first 256 rows, 6.25% of the image —
++		# and smeared a quarter of each source row across a whole mesh row.
++		# The heightmap path at the vertex loop above already does the
++		# correct stride conversion via HM_SRC; this ports the same mapping
++		# to the colour path, and area-averages the COLOUR_BOX x COLOUR_BOX
++		# source footprint so the 4:1 reduction is prefiltered rather than
++		# point-sampled (Nyquist).  COLOUR_BOX is the single tuning knob:
++		# 4 = full area average (correct, slowest), 2 = partial, 1 = nearest.
++		# Ref: https://docs.godotengine.org/en/stable/classes/class_surfacetool.html
++		# Ref: https://docs.godotengine.org/en/stable/classes/class_packedbytearray.html
++		const COLOUR_BOX = 4
++		var _colour_t0 := Time.get_ticks_msec()
+ 		for i in range(verts.size()):
+-			var ci = i * 3
+-			var cr = float(_baked[ci]) / 255.0 if ci < _baked.size() else 0.5
+-			var cg = float(_baked[ci + 1]) / 255.0 if ci + 1 < _baked.size() else 0.5
+-			var cb = float(_baked[ci + 2]) / 255.0 if ci + 2 < _baked.size() else 0.5
++			# Recover the mesh lattice coordinates from the flat vertex index.
++			var vx := i % W
++			var vz := i / W
++			# Same mapping the elevation lookup uses: mesh space -> source space.
++			var sx0 := int(float(vx) / float(W - 1) * float(HM_SRC - 1))
++			var sz0 := int(float(vz) / float(H - 1) * float(HM_SRC - 1))
++			var acc_r := 0.0
++			var acc_g := 0.0
++			var acc_b := 0.0
++			var n := 0
++			for dz in range(COLOUR_BOX):
++				for dx in range(COLOUR_BOX):
++					# mini() clamps the footprint at the source edge.
++					var sx := mini(sx0 + dx, HM_SRC - 1)
++					var sz := mini(sz0 + dz, HM_SRC - 1)
++					var ci := (sz * HM_SRC + sx) * 3
++					if ci + 2 < _baked.size():
++						acc_r += float(_baked[ci])
++						acc_g += float(_baked[ci + 1])
++						acc_b += float(_baked[ci + 2])
++						n += 1
++			# n == 0 only if the bake is short; 0.5 grey keeps the old behaviour.
++			var cr := acc_r / (255.0 * float(n)) if n > 0 else 0.5
++			var cg := acc_g / (255.0 * float(n)) if n > 0 else 0.5
++			var cb := acc_b / (255.0 * float(n)) if n > 0 else 0.5
++			# set_color applies to the NEXT vertex added — order matters here.
+ 			st.set_color(Color(cr, cg, cb, 1.0))
+ 			st.set_uv(uvs[i])
+ 			st.add_vertex(verts[i])
++		print("[VERBATIM] Terrain colour pass ms: ", Time.get_ticks_msec() - _colour_t0, " box=", COLOUR_BOX, " bake_bytes=", _baked.size())
+ 		for idx in indices:
+ 			st.add_index(idx)
+ 		st.generate_normals()
+(diff exit 1: 0 = identical, 1 = differs as expected)
+
+--- PATCHED REGION VERBATIM ---
+  305| 			for x in range(W - 1):
+  306| 				var a = z * W + x
+  307| 				var b = a + 1
+  308| 				var c = a + W
+  309| 				var d = c + 1
+  310| 				indices.append_array([a, c, b, b, c, d])
+  311| 		var st := SurfaceTool.new()
+  312| 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
+  313| 		st.set_color(Color(1.0, 1.0, 1.0, 1.0))
+  314| 		# Rule #46/#56 FIX (20260810): the colour lookup below previously read
+  315| 		# _baked at ci = i * 3, indexing a 4096-wide source raster with a
+  316| 		# 1024-wide mesh index.  That addressed only bytes 0..3,145,725 of
+  317| 		# the 50,331,648-byte bake — the first 256 rows, 6.25% of the image —
+  318| 		# and smeared a quarter of each source row across a whole mesh row.
+  319| 		# The heightmap path at the vertex loop above already does the
+  320| 		# correct stride conversion via HM_SRC; this ports the same mapping
+  321| 		# to the colour path, and area-averages the COLOUR_BOX x COLOUR_BOX
+  322| 		# source footprint so the 4:1 reduction is prefiltered rather than
+  323| 		# point-sampled (Nyquist).  COLOUR_BOX is the single tuning knob:
+  324| 		# 4 = full area average (correct, slowest), 2 = partial, 1 = nearest.
+  325| 		# Ref: https://docs.godotengine.org/en/stable/classes/class_surfacetool.html
+  326| 		# Ref: https://docs.godotengine.org/en/stable/classes/class_packedbytearray.html
+  327| 		const COLOUR_BOX = 4
+  328| 		var _colour_t0 := Time.get_ticks_msec()
+  329| 		for i in range(verts.size()):
+  330| 			# Recover the mesh lattice coordinates from the flat vertex index.
+  331| 			var vx := i % W
+  332| 			var vz := i / W
+  333| 			# Same mapping the elevation lookup uses: mesh space -> source space.
+  334| 			var sx0 := int(float(vx) / float(W - 1) * float(HM_SRC - 1))
+  335| 			var sz0 := int(float(vz) / float(H - 1) * float(HM_SRC - 1))
+  336| 			var acc_r := 0.0
+  337| 			var acc_g := 0.0
+  338| 			var acc_b := 0.0
+  339| 			var n := 0
+  340| 			for dz in range(COLOUR_BOX):
+  341| 				for dx in range(COLOUR_BOX):
+  342| 					# mini() clamps the footprint at the source edge.
+  343| 					var sx := mini(sx0 + dx, HM_SRC - 1)
+  344| 					var sz := mini(sz0 + dz, HM_SRC - 1)
+  345| 					var ci := (sz * HM_SRC + sx) * 3
+  346| 					if ci + 2 < _baked.size():
+  347| 						acc_r += float(_baked[ci])
+  348| 						acc_g += float(_baked[ci + 1])
+  349| 						acc_b += float(_baked[ci + 2])
+  350| 						n += 1
+  351| 			# n == 0 only if the bake is short; 0.5 grey keeps the old behaviour.
+  352| 			var cr := acc_r / (255.0 * float(n)) if n > 0 else 0.5
+  353| 			var cg := acc_g / (255.0 * float(n)) if n > 0 else 0.5
+  354| 			var cb := acc_b / (255.0 * float(n)) if n > 0 else 0.5
+  355| 			# set_color applies to the NEXT vertex added — order matters here.
+  356| 			st.set_color(Color(cr, cg, cb, 1.0))
+  357| 			st.set_uv(uvs[i])
+  358| 			st.add_vertex(verts[i])
+  359| 		print("[VERBATIM] Terrain colour pass ms: ", Time.get_ticks_msec() - _colour_t0, " box=", COLOUR_BOX, " bake_bytes=", _baked.size())
+  360| 		for idx in indices:
+  361| 			st.add_index(idx)
+  362| 		st.generate_normals()
+  363| 		st.generate_tangents()
+  364| 		var terrain_mesh = st.commit()
+  365| 		var terrain_inst := MeshInstance3D.new()
+  366| 		terrain_inst.mesh = terrain_mesh
+  367| 		var terrain_mat := StandardMaterial3D.new()
+  368| 		terrain_mat.vertex_color_use_as_albedo = true
+  369| 		terrain_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+  370| 		terrain_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+  371| 		terrain_inst.material_override = terrain_mat
+  372| 		add_child(terrain_inst)
+  373| 		print("[VERBATIM] Terrain: 1024 vertex-colour, colour=baked_colours_4096.bin, verts: ", verts.size())
+  374| 	else:
+  375| 		# --- Heightmap missing: flat terrain fallback ---
+
+--- GDSCRIPT PARSE GATE (Rule #35) ---
+Godot Engine v4.6.3.stable.fedora.7d41c59c4 - https://godotengine.org
+
+SCRIPT ERROR: Compile Error: Identifier not found: ForensicHUD
+          at: GDScript::reload (res://scripts/build_terrain.gd:2022)
+ERROR: Failed to load script "res://scripts/build_terrain.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+parse gate exit: 0
+
+
+############################################################
+### DATABASE AUDIT (control_events lock triage)
+############################################################
+
+--- DB FILES (maxdepth 2) ---
+   469508096  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/forensics.db
+   469499904  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_audit_20260720_140829/forensics.db.snapshot.20260720_140829.db
+   141041664  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db
+   107802624  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations_backup.db
+   107802624  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_audit_20260720_140829/parachute_mutations_backup.db.snapshot.20260720_140829.db
+    26996736  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/diagnostics.db
+    23973888  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/gd_backup_index.db
+    23973888  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_audit_20260720_140829/gd_backup_index.db.snapshot.20260720_140829.db
+     5873664  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/pipeline_audit.db
+     5873664  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_audit_20260720_140829/pipeline_audit.db.snapshot.20260720_140829.db
+     5861376  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/repair.db
+     5861376  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_maintain_20260720_142013/repair.db.pre_mend.20260720_142013.db
+     5861376  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_audit_20260720_140829/repair.db.snapshot.20260720_140829.db
+      860160  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/ab_test.db
+      851968  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_maintain_20260720_142013/ab_test.db.pre_mend.20260720_142013.db
+      851968  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_audit_20260720_140829/ab_test.db.snapshot.20260720_140829.db
+      737280  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/code_index.db
+      733184  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_maintain_20260720_142013/code_index.db.pre_mend.20260720_142013.db
+      733184  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/db_audit_20260720_140829/code_index.db.snapshot.20260720_140829.db
+      647168  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/recovery_engine.db
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_arms.db ==
+  journal_mode : delete
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : arm_funcs        rule_compliance 
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/backup_audit.db ==
+  journal_mode : delete
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : backup_audit 
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/code_index.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : files            rule_compliance  symbols         
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/diagnostics.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : diagnosis_log      diagnostics        repair_strategies  rule_compliance   
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/fixes.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : errors           files_to_fix     fixes            rule_compliance 
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/fix_state.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : fixes            history          rule_compliance 
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/forensics.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : 
+  tables       : _schema_version      files_to_fix         repair_strategies   diagnostic_findings  fix_attempts         rule_compliance     events               migration_report    events_hardened      remediation_queue   
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/gate_control.db ==
+  journal_mode : delete
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : compliance_summary  flagged             gate_log           fix_history         gate_assertions     rule_compliance    
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/gd_backup_index.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : files  refs  
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/gd_patterns.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : fix_log          fix_patterns     rule_compliance 
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/indent_if_scan.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : errors           rule_compliance 
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/multi_tool_audit.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : citation_checks  gd2py_bridge     rule_compliance  tool_runs       db_snapshot      git_evidence     runs            
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parac1ute_mutations.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : auto_heal_actions   parse_error_log     rule_compliance    error_fingerprints  repair_attempts     strategy_rewards   known_repairs       repair_rules        tool_audit         
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations_backup.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : applied_fixes            parse_checks             schema_migrations       asset_validation         parse_error_log          screenshots             auto_heal_actions        parse_errors             source_mutations        autohealactions          pipeline_metadata        source_snapshots        error_fingerprints       pipeline_runs            strategy_rewards        error_patterns           pipelineruns             syntax_errors           file_splits              repair_attempts          syntax_fixes            files_to_fix             repair_evidence          throttle_log            game_state_log           repair_metrics           tool_audit              gd_patch_registry        repair_rules             verbatim_logs           issues                   replay_api_tests         verificationresults     known_repairs            resource_contention_log omissions                runtime_failures        
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : applied_fixes               merge_attempts             arm_physics_baseline        missing_function_fixes     arm_rig_audit               mouse_events               asset_validation            omissions                  audit_findings              parse_checks               auto_heal_actions           parse_error_log            autohealactions             parse_errors               blocking_errors_v1          patch_history              code_patterns               pilot_career               component_audit_log         pilot_category_fixes       component_evidence          pilot_ratings              component_health_tests      pipeline_metadata          component_registry          pipeline_runs              component_relationships     pipelineruns               component_status            project_config             control_baseline            ratings                    control_events              remediation_queue          control_info                repair_attempts            debug_capture               repair_evidence            diag_findings               repair_metrics             diagnostic_context          repair_rules               diagnostic_log              replay_api_tests           diagnostic_logs             resource_contention_log    environment_fixes           restore_log                error_fingerprints          rule_compliance            error_patterns              runtime_failures           event_evidence              schema_migrations          events_hardened             screenshots                file_splits                 source_mutations           files_to_fix                source_snapshots           fix_actions                 steering_telemetry         fix_log                     strategy_rewards           fixes                       syntax_errors              flight_controller_recon     syntax_fixes               flight_controller_recon_v2  terrain_upgrades           flights                     test_runs                  function_index              throttle_log               game_state_log              tool_audit                 gamification                user_preferences           gd_patch_registry           verbatim_logs              gdeye_diag                  verificationresults        hud_state                   version_features           issues                      visibility_evidence        key_presses                 visibility_test            known_repairs              
+  WAL sidecar  : present (716912 bytes)
+  SHM sidecar  : present (32768 bytes)
+  control_events rows : 1002
+  control_events schema:
+    CREATE TABLE control_events(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,ts TEXT,action TEXT,key TEXT,
+            state_num INTEGER,result TEXT,reason TEXT,pull_l REAL DEFAULT 0.0,pull_r REAL DEFAULT 0.0);
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/patterns_mined.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : failure_sites   mined_patterns  mining_runs    
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/patterns_mined_focused.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : failure_sites   mined_patterns  mining_runs    
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/patterns_mined_v2.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : failure_sites   mined_patterns  mining_runs     pending_fixes  
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/pipeline_audit.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : actions  files   
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/pipeline_forensics.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : save_png_hits  snapshots      strip_tests   
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/repair.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : errors        fix_patterns  repair_log   
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/repair_log.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : repairs 
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/syntax_errors.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : backup_audit       errors             fix_log            project_diffs     cache_clear_log    file_diffs         fixes              repair_strategies 
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/test_results.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : parser_tests 
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+  == /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/tool_coverage.db ==
+  journal_mode : wal
+  busy_timeout : 0
+  synchronous  : 2
+  quick_check  : ok
+  tables       : bridge_demo  coverage     probes       runs        
+  WAL sidecar  : present (0 bytes)
+  SHM sidecar  : present (32768 bytes)
+
+--- SqliteDb.gd PRAGMA / OPEN-PATH EVIDENCE ---
+12:const DB_PATH := "/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db"
+31:	if not _db.open_db():
+37:		var dir = DirAccess.open(DB_PATH.get_base_dir())
+43:		# Try to reopen with a fresh connection
+49:		if _db.open_db():
+55:			print("[VERBATIM] SqliteDb: open_db() failed for ", DB_PATH)
+59:	_db.query("PRAGMA busy_timeout = 5000;")
+60:	_db.query("PRAGMA journal_mode = WAL;")
+61:	_db.query("PRAGMA busy_timeout = 5000;")
+62:	_db.query("PRAGMA journal_mode = WAL;")
+63:	_db.query("PRAGMA busy_timeout = 5000;")
+64:	_db.query("PRAGMA journal_mode = WAL;")
+65:	_db.query("PRAGMA busy_timeout = 5000;")
+66:	_db.query("PRAGMA journal_mode = WAL;")
+67:	_db.query("PRAGMA busy_timeout = 5000;")
+68:	_db.query("PRAGMA journal_mode = WAL;")
+69:	_db.query("PRAGMA busy_timeout = 5000;")
+70:	_db.query("PRAGMA journal_mode = WAL;")
+71:	_db.query("PRAGMA busy_timeout = 5000;")
+72:	_db.query("PRAGMA journal_mode = WAL;")
+73:	_db.query("PRAGMA busy_timeout = 5000;")
+74:	_db.query("PRAGMA journal_mode = WAL;")
+75:	_db.query("PRAGMA busy_timeout = 5000;")
+76:	_db.query("PRAGMA journal_mode = WAL;")
+77:	_db.query("PRAGMA busy_timeout = 5000;")
+78:	_db.query("PRAGMA journal_mode = WAL;")
+79:	_db.query("PRAGMA busy_timeout = 5000;")
+80:	_db.query("PRAGMA journal_mode = WAL;")
+81:	_db.query("PRAGMA busy_timeout = 5000;")
+82:	_db.query("PRAGMA journal_mode = WAL;")
+83:	_db.query("PRAGMA busy_timeout = 5000;")
+84:	_db.query("PRAGMA journal_mode = WAL;")
+85:	_db.query("PRAGMA busy_timeout = 5000;")
+86:	_db.query("PRAGMA journal_mode = WAL;")
+87:	_db.query("PRAGMA busy_timeout = 5000;")
+88:	_db.query("PRAGMA journal_mode = WAL;")
+89:	_db.query("PRAGMA busy_timeout = 5000;")
+90:	_db.query("PRAGMA journal_mode = WAL;")
+91:	_db.query("PRAGMA busy_timeout = 5000;")
+92:	_db.query("PRAGMA journal_mode = WAL;")
+
+--- SqliteDb INSTANTIATION SITES (bounded scan) ---
+
+--- CONTROL_EVENTS WRITE SITES (bounded scan) ---
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd:3815:			# DB: persist confirmed keypress to control_events
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd:3818:				var _sql = ('INSERT INTO control_events(ts,action,key,state_num,result,reason)' + " VALUES(datetime('now'),'" + action + "','" + action + "'," + str(_game_state) + ",'pressed','')")
+
+--- FALLBACK-BRANCH EVIDENCE (bounded — this is what hung last round) ---
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/fix_terrain_texture_20260802112524.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/bake_naip_restore_20260802123500.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/reimport_assets_20260803200533.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/reimport_assets_20260803200628.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/diagnose_camera_20260804233720.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/diag_ready_diff_20260805004207.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/audit_arms_0070_20260805015636.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/arm_files_0070_20260805015812.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/diagnose_baked_colours_20260805223648.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/fix_baked_colours_and_altitude_20260805223818.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/restore_terrain_and_fix_altitude_safe_20260805224448.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/restore_terrain_and_fix_altitude_final_20260805224605.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/diagnose_after_fix_20260806031152.txt
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/verify_canopy.log
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/verify_canopy_v2.log
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/canopy_test.log
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/canopy_live_test.log
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/canopy_correct_test.log
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/notes/file2_fixed_test.log
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/diagnostic_20260804_145905.txt
+
+=== NEXT STEP FOR THE USER ===
+Run the game and watch for: [VERBATIM] Terrain colour pass ms: <n> box=4
+If that number is unacceptably large, edit const COLOUR_BOX = 4 -> 2 -> 1.
+Rollback if needed:  cp <backup> <target>   (backup path printed above)
+
+=== END REPORT ===
