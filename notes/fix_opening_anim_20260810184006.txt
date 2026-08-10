@@ -1,0 +1,38 @@
+=== fix_opening_anim — 20260810184006 UTC ===
+
+backup: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/build_terrain.gd.bak.20260810184006
+bytes: 150258 → 151364
+
+=== DIFF ===
+--- build_terrain.gd.bak.20260810184006
++++ build_terrain.gd
+@@ -2139,6 +2139,27 @@
+ 			ScreenshotLibrary.save_flight_screenshot()
+ 			_screenshot_save_timer = 5.0
+ 	if _game_state == GameState.OPENING_ANIM or _game_state == GameState.DIAGNOSIS:
++		# ================================================================
++		# OPENING_ANIM -> DIAGNOSIS transition
++		# Inserted by fix_opening_anim.sh
++		# Root cause: _deployment_timer set to 2.0 in _deploy_canopy()
++		# (line 872) but never decremented. State stuck at OPENING_ANIM
++		# for entire run (4896 emissions, 90s confirmed in diagnostics).
++		# Grounded: diag_physics2_20260810183511.txt (RETRIEVED)
++		#           diag_opening_anim_20260810181736.txt (RETRIEVED)
++		# Ref (Node3D): https://docs.godotengine.org/en/stable/classes/class_node3d.html
++		# ================================================================
++		if _game_state == GameState.OPENING_ANIM:
++			_deployment_timer -= delta
++			if _canopy_instance:
++				var target_scale := Vector3(0.18, 0.12, 0.18)
++				_canopy_instance.scale = _canopy_instance.scale.move_toward(
++					target_scale, delta / maxf(_deployment_timer + delta, 0.001)
++				)
++			if _deployment_timer <= 0.0:
++				_game_state = GameState.DIAGNOSIS
++				print("[FSM] OPENING_ANIM -> DIAGNOSIS (timer expired, canopy open)")
++		# --- Turning (shared by OPENING_ANIM and DIAGNOSIS) ---
+ 		print("[VERBATIM] DIAGNOSIS turning block executed")
+ 		print("[DIAG] _turn_input = ", _turn_input)
+ 		var turn_dir = Vector3.RIGHT * _turn_input * _turn_force
+
+=== END — 2026-08-10T18:40:07.008331+00:00 ===
