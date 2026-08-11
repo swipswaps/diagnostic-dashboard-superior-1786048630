@@ -1,0 +1,323 @@
+=== extract_q2_q3_and_screenshot.sh — 20260811210849 UTC ===
+source: /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/notes/parse_control_db_20260811200307.txt (4635 lines)
+=== READ-ONLY. Extraction only — no diagnostic is re-run. ===
+
+############################################################
+### Q2 SECTION (extracted verbatim from the 200307 report)
+############################################################
+### Q2: HEADLESS AUTO-START TRIGGER STATE
+############################################################
+
+grep with context in build_terrain.gd:
+587-	_randomize_malfunction()
+588-	print("[VERBATIM] Initial malfunction: ", _malfunction_name())
+589-	print("[VERBATIM] Game ready – press SPACE at ~4000 ft to deploy")
+590-	# Headless auto‑start: simulate SPACE press
+591:	if OS.get_environment("GODOT_HEADLESS") == "1":
+592-		Input.action_press("ui_accept")
+593-		Input.action_release("ui_accept")
+594-		print("[VERBATIM] Headless auto‑start triggered.")
+595-	# Headless auto-start: simulate SPACE/deploy press
+596-	# Ref: OS.get_environment (general knowledge, not retrieved this session)
+597:	if OS.get_environment("GODOT_HEADLESS") == "1" or "--headless" in OS.get_cmdline_args():  # was: GODOT_HEADLESS env var — set by autostall in ALL runs. Now requires actual --headless CLI flag (not set by autostall). Restores _0036 behavior: user sees plane, presses SPACE/J manually. Ref: https://docs.godotengine.org/en/stable/classes/class_os.html
+598-		_headless_auto_jump = true  # timing-safe flag; checked in _poll_controls (_process)
+599-		# Input.action_release("deploy") removed — flag-based now
+600-		print("[VERBATIM] Headless auto‑start triggered.")
+601-	_check_arm_pose_safe()
+--
+618-	# PAUSETEL lines are emitted and the tree is never LEFT paused --
+619-	# autostall's 30 s stall detector cannot trip on it.
+620-	# Ref: https://docs.godotengine.org/en/stable/classes/class_scenetree.html
+621-	# (general knowledge - not retrieved this session)
+622:	if OS.get_environment("GODOT_HEADLESS") == "1" \
+623:			or "--headless" in OS.get_cmdline_args():
+624-		var _pause_timer := Timer.new()
+625-		_pause_timer.wait_time = 8.0
+626-		_pause_timer.one_shot = true
+627-		_pause_timer.process_mode = Node.PROCESS_MODE_ALWAYS
+--
+632-	print("[VERBATIM] ... EXIT _ready ok=true")
+633-	print("[DIAG] _ready: EXIT")
+634-
+635-	# Self-test if --run-tests is passed (timer-based, robust in headless)
+636:	var args = OS.get_cmdline_args()
+637-	if "--run-tests" in args:
+638-		print("[VERBATIM] Running self-tests (timer-based)...")
+639-		var timer := Timer.new()
+640-		timer.wait_time = 1.5
+--
+2054-			_plane_node.rotation.y = _plane_angle + PI / 2.0
+2055-			# Headless auto-start: fire SPACE on first IN_PLANE frame
+2056-			# (Rule #1 grounded: this is the first rendered frame, confirmed
+2057-			#  by _0283.txt showing plane position update before stall)
+2058:			if OS.get_environment("GODOT_HEADLESS") == "1" or "--headless" in OS.get_cmdline_args():  # was: GODOT_HEADLESS env var — set by autostall in ALL runs. Now requires actual --headless CLI flag (not set by autostall). Restores _0036 behavior: user sees plane, presses SPACE/J manually. Ref: https://docs.godotengine.org/en/stable/classes/class_os.html
+2059-				if not ProjectSettings.has_setting("_headless_space_fired"):
+2060-					ProjectSettings.set_setting("_headless_space_fired", true)
+2061-					Input.action_press("deploy")
+2062-					Input.action_release("deploy")
+
+what autostall_fixed.py puts in the environment:
+83:        os.environ["GODOT_HUB_ALREADY_RUNNING"] = "1"
+93:                os.environ["GODOT_HUB_ALREADY_RUNNING"] = "1"
+115:            os.environ["GODOT_HUB_ALREADY_RUNNING"] = "1"
+172:    display = os.environ.get("DISPLAY")
+307:        f"{indent}if OS.get_environment(\"GODOT_HEADLESS\") == \"1\":\n",
+734:        os.environ["DISPLAY"] = display
+747:# os.environ["GODOT_HEADLESS"] = "1"   # Still used for auto‑start trigger
+753:    print("[ENV] GODOT_HEADLESS=1 (for auto‑start detection only)")
+756:    cmd = [GODOT_BIN, "--path", PROJECT_DIR, "--verbose", "--headless"]
+765:        env=os.environ
+
+
+############################################################
+
+
+############################################################
+### Q3 SECTION (extracted verbatim from the 200307 report)
+############################################################
+### Q3: PYTHON WRITERS AND WAL CHECKPOINT STATE
+############################################################
+
+--- WAL sidecar sizes NOW (716,912 B last round = checkpoints not completing) ---
+     141041664  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db
+        716912  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db-wal
+         32768  /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db-shm
+
+--- LIVE HOLDERS of parachute_mutations.db (a pinned reader blocks checkpoint) ---
+lsof: WARNING: can't stat() overlay file system /var/lib/docker/rootfs/overlayfs/7b39887660a97e7c6f0fc7daafc6c854a3a828ed7b6c9f072b59d7b5d8671af2
+      Output information may be incomplete.
+lsof: WARNING: can't stat() nsfs file system /run/docker/netns/faf5ce7d0a2e
+      Output information may be incomplete.
+COMMAND     PID  USER   FD   TYPE DEVICE  SIZE/OFF     NODE NAME
+python3 1853679 owner    6u   REG   0,45 141041664 22393197 /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db
+python3 1853679 owner    7u   REG   0,45    716912 24687949 /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db-wal
+python3 1853679 owner    8u   REG   0,45     32768 24687950 /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db-shm
+python3 1853679 owner    9u   REG   0,45 141041664 22393197 /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/parachute_mutations.db
+
+--- PYTHON / GODOT PROCESSES CURRENTLY RUNNING ---
+   8367 32-07:40:47 /usr/bin/python3 -Es /usr/sbin/setroubleshootd -f
+  30841 32-05:52:56 /usr/bin/python3 /usr/bin/wsdd --no-host --discovery --listen /run/user/1000/gvfsd/wsdd
+ 108328 31-21:17:28 /usr/bin/python3 -Es /usr/bin/seapplet
+1853679  2-01:21:19 python3 /home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo/diagnostic-dashboard-1786040134/app.py
+
+--- EVERY PYTHON FILE THAT OPENS THE MUTATIONS DB ---
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/store_fix_script_in_db.py:19:con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/run_fix_from_db.py:20:    con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/store_fix_all_duplicates.py:17:con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/store_fix_indentation.py:17:con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/repair_runner.py:26:    con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/repair_runner.py:35:    con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/repair_runner.py:59:    con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/store_fix_scripts.py:17:    con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/pre_validate_and_repair.py:15:    con = sqlite3.connect(str(db_path))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/repair_and_validate.py:31:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/seed_fix_patterns.py:14:con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/repair_with_engine.py:60:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/store_engine_repair_script.py:13:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/apply_db_fixes.py:22:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/store_backup_in_db.py:15:con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/fix_gdscript_errors_from_backup.py:20:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/run_game_audit.py:28:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/run_game_audit.py:130:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/diagnose_game_state_enum.py:22:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/diagnose_game_state_enum.py:88:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/fix_game_state_enum_final.py:26:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/fix_game_state_enum_final.py:111:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/init_database.py:19:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/init_database.py:101:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/smart_game_audit.py:26:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/smart_game_audit.py:106:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/generate_summary_report.py:20:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/game_ready_gate.py:31:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/game_ready_gate.py:67:    con = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/repair_with_db.py:11:DB_PATH = Path("godot_project/parachute_mutations.db")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/scripts/repair_with_db.py:57:    conn = sqlite3.connect(str(DB_PATH))
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/fix_indent.py:100:db_path = "parachute_mutations.db"
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/fix_indent.py:101:conn = sqlite3.connect(db_path)
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/evaluate_game_status.py:38:#   https://docs.python.org/3/library/sqlite3.html#sqlite3.connect
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/evaluate_game_status.py:223:    # Source (Tier 2): Python sqlite3.connect(":memory:") — in-memory database:
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/evaluate_game_status.py:224:    #   https://docs.python.org/3/library/sqlite3.html#sqlite3.connect
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/evaluate_game_status.py:226:    conn = sqlite3.connect(":memory:")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/evaluate_game_status.py:552:    #   https://docs.python.org/3/library/sqlite3.html#sqlite3.connect
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/fix_final.py:60:DB_PATH       = os.path.join(PROJECT_ROOT, "godot_project/parachute_mutations.db")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/fix_final.py:79:        conn = sqlite3.connect(DB_PATH)
+
+--- DO THOSE WRITERS SET busy_timeout? (the suspected root cause) ---
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/apply_fixes_v2.py:29:    conn.execute("PRAGMA journal_mode=WAL;")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0207.py:132:    conn.execute("PRAGMA journal_mode=WAL")   # WAL mode — concurrent read safety
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0208.py:136:    conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0210.py:708:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0211.py:578:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0212.py:629:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0213.py:411:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0215.py:581:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0214.py:353:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0216.py:439:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0217.py:489:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0218.py:733:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0219.py:595:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0220_0001.py:28:    conn.execute("PRAGMA journal_mode = WAL")  # Gray & Reuter 1992
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0220.py:31:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0220_v2.py:32:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/recover_and_fix_0220.py:541:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0221.py:459:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0222.py:388:conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0223.py:156:PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0223.py:536:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0224.py:102:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0225.py:192:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0226.py:146:PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0226.py:246:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0227.py:151:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0227.py:788:        PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0228.py:183:PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0228.py:464:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0229.py:73:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0229.py:81:PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0230.py:102:    conn.execute("PRAGMA journal_mode = WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0245.py:48:        PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0249.py:53:        PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0255.py:65:        PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0266.py:56:        PRAGMA journal_mode = WAL;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/observability/analytics.py:84:        conn = sqlite3.connect(str(db_path), timeout=5)
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/observability/analytics.py:146:        conn = sqlite3.connect(str(db_path), timeout=5)
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0240.py:303:    conn.execute("PRAGMA journal_mode=WAL")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/generate_fix_0240.py:958:    conn = sqlite3.connect(str(DB_PATH), timeout=10)
+
+--- forensic_hub_server.py DB CONFIGURATION ---
+7:#   TCP connection immediately after receiving the response headers/body
+42:import sys, os, json, sqlite3, shutil, datetime, threading, subprocess, math
+55:DB_REL      = "godot_project/parachute_mutations.db"
+64:    missing = [c for c in ["python3", "sqlite3"] if shutil.which(c) is None]
+80:    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+93:    except sqlite3.DatabaseError as e:
+104:        except sqlite3.OperationalError:
+113:        except sqlite3.OperationalError:
+121:        except sqlite3.OperationalError:
+131:        except sqlite3.OperationalError:
+138:    except sqlite3.DatabaseError as e:
+161:    except sqlite3.DatabaseError as e:
+177:        except sqlite3.OperationalError:
+185:             "verbatim": "Use Python text.count(old)==1 guard or sqlite3 module.",
+195:    except sqlite3.DatabaseError as e:
+211:        TCP connection as soon as it receives the complete HTTP response.
+221:            # Client (Godot HTTPRequest) closed connection — data was sent.
+266:        """Control baseline + recent events from parachute_mutations.db."""
+268:            conn = sqlite3.connect(self.db_path)
+308:            self._json(query_gamification(self.db_path))
+310:            self._json(query_leaderboard(self.db_path))
+312:            self._json(query_citations(self.db_path))
+314:            ic = integrity_check(self.db_path)
+315:            self._json({"quick_check": ic, "db": self.db_path,
+320:                         "port": HUB_PORT, "db": self.db_path,
+345:    ForensicHubHandler.db_path = db_path
+348:    # before this process competes for SQLite connections.
+
+--- WHO CREATED THE TYPO DATABASE parac1ute_mutations.db? ---
+
+--- forensics.db INTEGRITY, RETRIED PROPERLY (last round this TIMED OUT and I printed it blank) ---
+size: 469508096 bytes
+ok
+quick_check exit: 0
+
+--- control_events RECENT ROWS (are pull_l/pull_r dead, as predicted?) ---
+1002|2026-08-10 20:02:29|turnleft|2|0.0|0.0
+1001|2026-08-10 20:02:28|turnright|2|0.0|0.0
+1000|2026-08-10 20:02:27|turnleft|2|0.0|0.0
+999|2026-08-10 20:02:25|reserve|2|0.0|0.0
+998|2026-08-10 20:02:23|turnleft|2|0.0|0.0
+997|2026-08-10 20:02:22|cutaway|2|0.0|0.0
+996|2026-08-10 20:02:19|turnleft|2|0.0|0.0
+995|2026-08-10 20:02:04|turnleft|2|0.0|0.0
+994|2026-08-10 20:01:59|deploy|0|0.0|0.0
+993|2026-08-10 19:46:54|deploy|0|0.0|0.0
+query exit: 0
+1002|0|0
+
+
+
+
+--- WHY SqliteDb._ready() RAN 3x AND OPENED THE DB 2x ---
+[autoload] section of project.godot:
+[autoload]
+
+TelemetryLogger="*res://TelemetryLogger.gd"
+SqliteDb="*res://scripts/SqliteDb.gd"
+HealthChecker="*res://autoloads/HealthChecker.gd"
+HubManager="*res://scripts/HubManager.gd"
+DatabaseGuard="*res://scripts/DatabaseGuard.gd"
+ResourceThrottle="*res://scripts/ResourceThrottle.gd"
+PerformanceMonitor="*res://scripts/PerformanceMonitor.gd"
+aero_units="*res://addons/godot_aerodynamic_physics/core/singletons/aero_units.gd"
+SqliteWatchdog="*res://scripts/SqliteWatchdog.gd"
+StructuredLogger="*res://scripts/StructuredLogger.gd"
+InputManager="*res://scripts/InputManager.gd"
+GameIntegrity="*res://scripts/GameIntegrity.gd"
+AltimeterHUD="*res://scripts/altimeter_hud.gd"
+ForensicHUD="*res://scripts/forensic_hud.gd"
+Audit="*res://scripts/audit.gd"
+WindField="*res://scripts/wind_field.gd"
+ErrorLogger="*res://autoloads/ErrorLogger.gd"
+CursorManager="*res://autoloads/CursorManager.gd"
+Gamification="*res://autoloads/Gamification.gd"
+ErrorBus="*res://autoloads/ErrorBus.gd"
+ForensicPanel="*res://autoloads/forensic_panel.gd"
+
+
+SqliteDb references in scenes and scripts:
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/autoloads/ErrorLogger.gd:21:	var db = SqliteDb
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/autoloads/HealthChecker.gd:135:	var db = get_node("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/autoloads/HealthChecker.gd:164:		# vHC4: removed close call — SqliteDb.gd exports no close method;
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/autoloads/HealthChecker.gd:206:	_db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/autoloads/HealthChecker.gd:208:		print("[HealthChecker] SqliteDb not available – cannot log tests.")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/autoloads/forensic_panel.gd:6:#   - SqliteDb API is _query(), not query()
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/autoloads/forensic_panel.gd:33:	_db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/DatabaseGuard.gd:42:	_db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/DatabaseGuard.gd:47:		_last_error = "SqliteDb not found"
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/DatabaseGuard.gd:48:		print("[VERBATIM] DatabaseGuard: SqliteDb not found, will retry")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/DatabaseGuard.gd:126:		_db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/DatabaseGuard.gd:128:			_last_error = "SqliteDb not available"
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/DatabaseGuard.gd:143:		_last_error = "SqliteDb._query method not found"
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/DatabaseGuard.gd:170:	_db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/HUDManager.gd:4:## State is stored in the database via SqliteDb (if available).
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/HUDManager.gd:51:	var db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/HUDManager.gd:64:	var db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/ResourceThrottle.gd:15:	_db = get_node_or_null("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/ResourceThrottle.gd:23:		print("[VERBATIM] ResourceThrottle: SqliteDb not available")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteWatchdog.gd:3:# Safe version – skips if SqliteDb not available.:
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteWatchdog.gd:11:	if not has_node("/root/SqliteDb"):
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteWatchdog.gd:12:		print("[VERBATIM] Watchdog: SqliteDb not available; skipping scan.")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteWatchdog.gd:14:	var sqlite := get_node("/root/SqliteDb")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteWatchdog.gd:16:		print("[VERBATIM] Watchdog: SqliteDb not ready; skipping scan.")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/PerformanceMonitor.gd:13:	if ClassDB.class_exists("SQLite") and has_node("/root/SqliteDb"):
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteDb.gd:1:# PATH: godot_project/scripts/SqliteDb.gd
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteDb.gd:18:	print("[VERBATIM] SqliteDb.gd _ready() called")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteDb.gd:19:	print("[VERBATIM] SqliteDb.gd _ready() called")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteDb.gd:20:	print("[VERBATIM] SqliteDb.gd _ready() called")
+/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/scripts/SqliteDb.gd:21:	print("[VERBATIM] SqliteDb: _ready started")
+
+
+--- SCREENSHOT FROM THE PATCHED RUN (visual proof of the fix) ---
+newest 5 screenshots:
+total 9520
+-rw-r--r--. 1 owner owner  38025 Jul  1 21:57 v314_20260701T215756.png
+-rw-r--r--. 1 owner owner  38788 Jul  1 21:49 v314_20260701T214904.png
+-rw-r--r--. 1 owner owner  37928 Jul  1 21:47 v314_20260701T214751.png
+-rw-r--r--. 1 owner owner 218549 Jul  1 21:34 v314_20260701T213434.png
+-rw-r--r--. 1 owner owner 210199 Jul  1 21:27 v314_20260701T212722.png
+
+newest: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/screenshots/v314_20260701T215756.png
+size: 38025 bytes
+fatal: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/screenshots/v314_20260701T215756.png: '/home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/audit_logs/screenshots/v314_20260701T215756.png' is outside repository at '/home/owner/Documents/cec2ebe8-3579-47fd-8e26-903ffb974f97/repo'
+copied to: notes/terrain_after_fix_20260811210849.png
+
+
+=== STATUS AFTER THIS ROUND ===
+TERRAIN COLOUR FIX ... VERIFIED EXECUTING (8719 ms, full 50 MB bake read)
+ForensicHUD .......... PRE-EXISTING + isolation artifact; game unaffected
+HEADLESS TRIGGER ..... STILL NOT FIRING (state=0 held through the boot)
+DB MULTI-WRITER ...... 3x SqliteDb._ready(), 2x DB OPEN OK — hypothesis
+                       for the SQLITE_BUSY + unshrinking WAL. Not yet fixed.
+Rule #14: no further patch until the sections above are read.
+
+=== END REPORT ===
