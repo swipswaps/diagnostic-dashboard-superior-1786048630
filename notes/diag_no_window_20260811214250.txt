@@ -1,0 +1,303 @@
+=== diag_no_window.sh — 20260811214250 UTC ===
+godot: godot
+
+############################################################
+### W1/W2: IS THE DISPLAY REAL?
+############################################################
+DISPLAY in this shell : :0.0
+WAYLAND_DISPLAY       : <UNSET>
+XDG_SESSION_TYPE      : x11
+SSH_CONNECTION        : <UNSET (local session)>
+XDG_RUNTIME_DIR       : /run/user/1000
+
+-- X / Wayland servers actually running (Xvfb here means W1 is TRUE) --
+ 107562 31-22:59:32 /usr/libexec/Xorg -core -noreset :0 -seat seat0 -auth /run/lightdm/root/:0 -nolisten tcp vt1 -novtswitch
+
+-- can :0.0 actually be opened? --
+name of display:    :0.0
+version number:    11.0
+vendor string:    The X.Org Foundation
+vendor release number:    12101022
+X.Org version: 21.1.22
+maximum request size:  16777212 bytes
+motion buffer size:  256
+bitmap unit, bit order, padding:    32, LSBFirst, 32
+image byte order:    LSBFirst
+number of supported pixmap formats:    7
+supported pixmap formats:
+    depth 1, bits_per_pixel 1, scanline_pad 32
+xdpyinfo exit: 0  (0 = display opened OK)
+
+vendor/dimensions (Xvfb identifies itself in the vendor string):
+name of display:    :0.0
+vendor string:    The X.Org Foundation
+screen #0:
+  dimensions:    1280x800 pixels (338x211 millimeters)
+
+
+############################################################
+### W5: EDIT (a) STATE AND EXECUTION ORDER
+############################################################
+autostall_fixed.py sha256: e937a7f3e87ab609e34e44ad725c3bf7c6c317f4fbc604ec65ab43a2c3ae964e
+
+-- every GODOT_HEADLESS / DISPLAY / Popen / env line, with line numbers --
+53:XVFB_DISPLAY = ":99"
+60:    cmd = [
+66:        proc = subprocess.Popen(
+68:            stdout=subprocess.PIPE,
+69:            stderr=subprocess.PIPE,
+83:        os.environ["GODOT_HUB_ALREADY_RUNNING"] = "1"
+89:            subprocess.run([sys.executable, HUB_GUARDIAN], check=True, timeout=None)
+93:                os.environ["GODOT_HUB_ALREADY_RUNNING"] = "1"
+104:            proc = subprocess.Popen(
+108:                stdin=subprocess.DEVNULL,
+115:            os.environ["GODOT_HUB_ALREADY_RUNNING"] = "1"
+149:        proc = subprocess.Popen(
+151:            stdout=subprocess.PIPE,
+152:            stderr=subprocess.PIPE,
+158:    except subprocess.TimeoutExpired:
+171:def ensure_display() -> Tuple[bool, Optional[subprocess.Popen], str]:
+172:    display = os.environ.get("DISPLAY")
+175:            subprocess.check_call(["xdpyinfo", "-display", display], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+176:            print(f"[DISPLAY] Using existing display: {display}")
+178:        except (subprocess.CalledProcessError, FileNotFoundError):
+179:            print(f"[DISPLAY] DISPLAY={display} is set but not usable. Will try to start Xvfb.")
+181:        print("[DISPLAY] DISPLAY not set. Will try to start Xvfb.")
+184:        print("[DISPLAY] Xvfb not installed. Falling back to headless.")
+190:            print(f"[DISPLAY] Display {disp} appears to be in use. Trying next.")
+193:            proc = subprocess.Popen(
+195:                stdout=subprocess.DEVNULL,
+196:                stderr=subprocess.DEVNULL
+200:                print(f"[DISPLAY] Started Xvfb on {disp}")
+203:                print(f"[DISPLAY] Xvfb on {disp} exited unexpectedly.")
+205:            print(f"[DISPLAY] Failed to start Xvfb on {disp}: {e}")
+208:    print("[DISPLAY] Could not start Xvfb. Falling back to headless.")
+307:        f"{indent}if OS.get_environment(\"GODOT_HEADLESS\") == \"1\":\n",
+528:        record_cmd = ["perf", "record", "-g", "-p", str(pid), "-o", "/tmp/perf.data", "--", "sleep", str(TOOL_TIMEOUT)]
+530:        report_cmd = ["perf", "report", "-i", "/tmp/perf.data", "--stdio", "--max-stack", "10", "-n"]
+734:        os.environ["DISPLAY"] = display
+735:        print(f"[ENV] Using DISPLAY={display}")
+747:# os.environ["GODOT_HEADLESS"] = "1"   # Still used for auto‑start trigger
+753:    print("[ENV] GODOT_HEADLESS=1 (for auto‑start detection only)")
+756:    cmd = [GODOT_BIN, "--path", PROJECT_DIR, "--verbose", "--headless"]
+758:    proc = subprocess.Popen(
+760:        stdout=subprocess.PIPE,
+761:        stderr=subprocess.STDOUT,
+765:        env=os.environ
+834:                        out = subprocess.check_output(["pgrep", "-f", "godot"], text=True).strip()
+851:                        out = subprocess.check_output(["pgrep", "-f", "godot"], text=True).strip()
+
+-- lines 700-790 verbatim (the launch region) --
+  700|         f, l = bt.group(1), int(bt.group(2))
+  701|         fp = f.replace("res://", "godot_project/")
+  702|         print(f"\n[DIAG] Backtrace: {f} at line {l}:")
+  703|         print_source_block(fp, l)
+  704|         return
+  705|     if ("ERROR" in line or "SCRIPT ERROR" in line) and ".gd" in line:
+  706|         print(f"\n[DIAG] Godot error:\n  {line.strip()}")
+  707| def main():
+  708|     # Connect to database early for logging
+  709|     db_conn = None
+  710|     try:
+  711|         db_conn = sqlite3.connect(DB_PATH, timeout=999999)
+  712|         cursor = db_conn.cursor()
+  713|         cursor.execute("PRAGMA table_info(diagnostic_log)")
+  714|         if not cursor.fetchone():
+  715|             cursor.execute("""
+  716|                 CREATE TABLE IF NOT EXISTS diagnostic_log (
+  717|                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+  718|                     timestamp TEXT,
+  719|                     event_type TEXT,
+  720|                     status TEXT,
+  721|                     detail TEXT
+  722|                 )
+  723|             """)
+  724|             db_conn.commit()
+  725|     except Exception as e:
+  726|         print(f"[DB] Could not connect: {e}", file=sys.stderr)
+  727| 
+  728|     # Ensure hub is healthy before launching Godot (Rule #29, #32)
+  729|     ensure_hub_healthy(db_conn)
+  730| 
+  731|     # Ensure a valid display
+  732|     display_ok, xvfb_proc, display = ensure_display()
+  733|     if display_ok:
+  734|         os.environ["DISPLAY"] = display
+  735|         print(f"[ENV] Using DISPLAY={display}")
+  736|     else:
+  737|         print("[ENV] No valid display – Godot will likely use dummy renderer.")
+  738|         print("[ENV] Diagnostics may be limited, but the script will continue.")
+  739| 
+  740|     # Apply auto-start patch before launching Godot
+  741|     success, msg = apply_auto_start_patch()
+  742|     if success:
+  743|         print(f"[PATCH] {msg}")
+  744|     else:
+  745|         print(f"[PATCH] Failed: {msg} (continuing anyway)")
+  746| 
+  747| # os.environ["GODOT_HEADLESS"] = "1"   # Still used for auto‑start trigger
+  748| 
+  749|     print("[SETUP] godot binary:", GODOT_BIN)
+  750|     print("[SETUP] project dir: ", os.path.abspath(PROJECT_DIR))
+  751|     print("[RUN] /usr/bin/godot --path godot_project --verbose")
+  752|     print("[RUN] stall threshold: {}s   timeout: {}s".format(STALL_THRESHOLD, TIMEOUT))
+  753|     print("[ENV] GODOT_HEADLESS=1 (for auto‑start detection only)")
+  754|     print("="*72)
+  755| 
+  756|     cmd = [GODOT_BIN, "--path", PROJECT_DIR, "--verbose", "--headless"]
+  757| 
+  758|     proc = subprocess.Popen(
+  759|         cmd,
+  760|         stdout=subprocess.PIPE,
+  761|         stderr=subprocess.STDOUT,
+  762|         text=True,
+  763|         bufsize=1,
+  764|         universal_newlines=True,
+  765|         env=os.environ
+  766|     )
+  767| 
+  768|     fd = proc.stdout.fileno()
+  769|     flags = fcntl.fcntl(fd, fcntl.F_GETFL)
+  770|     fcntl.fcntl(fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+  771| 
+  772|     start_time = time.time()
+  773|     last_output_time = time.time()
+  774|     stall_reported = False
+  775|     output_buffer = []
+  776|     partial_line = b''
+  777|     godot_pid = None
+  778| 
+  779|     last_heartbeat = time.time()
+  780|     stall_handled = False
+  781|     fix_attempted_this_run = False
+  782|     game_completed = False
+  783|     grace_until = 0.0
+  784| 
+  785|     error_table = get_error_table()
+  786|     print(f"[DB] Using table: {error_table}")
+  787| 
+  788|     while True:
+  789|         elapsed = time.time() - start_time
+  790|         if TIMEOUT > 0 and elapsed > TIMEOUT:
+
+-- the fix script's own report, if it was run --
+ls: cannot access 'notes/fix_autostall_*.txt': No such file or directory
+(no fix_autostall report on disk — the fix script may not have been run,
+ yet --headless IS gone from the launch line, so something applied it)
+
+
+############################################################
+### W4: ENVIRONMENT AS THE CHILD WOULD SEE IT
+############################################################
+shell-level GODOT_* and DISPLAY:
+DISPLAY=:0.0
+XDG_SESSION_CLASS=user
+XDG_SESSION_DESKTOP=xfce
+XDG_SESSION_ID=22
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
+XDG_SESSION_TYPE=x11
+
+
+############################################################
+### DISCRIMINATOR: DIRECT GODOT RUN (watch your screen now)
+############################################################
+running: godot --path /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project --verbose --quit-after 200
+(200 frames is a few seconds; a window SHOULD flash up)
+
+./diag_no_window.sh: line 306: 2282502 Killed                     timeout 90 "$GODOT_BIN" --path "$GP" --verbose --quit-after 200 > "${TMPD}/direct.txt" 2>&1
+direct run exit: 137
+
+-- first 60 lines (the driver banner lives here) --
+WorkerThreadPool: 4 threads, 1 max low-priority.
+Godot Engine v4.6.3.stable.fedora.7d41c59c4 - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+Unrecognized output string "misc2" in mapping:
+030000008a2e0000dd10000011010000,Hand Held Legend GC Ultimate,a:b0,b:b2,back:b17,dpdown:b5,dpleft:b6,dpright:b7,dpup:b4,guide:b18,leftshoulder:b10,leftstick:b8,lefttrigger:a3,leftx:a0,lefty:a1,misc1:b19,misc2:b24,paddle1:b13,paddle2:b12,rightshoulder:b11,rightstick:b9,righttrigger:a4,rightx:a2,righty:a5,start:b16,x:b1,y:b3,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+030000000d0f0000ab01000011010000,Horipad Steam,a:b0,b:b1,back:b10,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b6,leftstick:b13,lefttrigger:a5,leftx:a0,lefty:a1,misc2:b2,paddle1:b19,paddle2:b18,paddle3:b15,paddle4:b5,rightshoulder:b7,rightstick:b14,righttrigger:a4,rightx:a2,righty:a3,start:b11,x:b3,y:b4,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+050000000d0f00009601000091000000,Horipad Steam,a:b0,b:b1,back:b10,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b6,leftstick:b13,lefttrigger:a5,leftx:a0,lefty:a1,misc2:b2,paddle1:b19,paddle2:b18,paddle3:b15,paddle4:b5,rightshoulder:b7,rightstick:b14,righttrigger:a4,rightx:a2,righty:a3,start:b11,x:b3,y:b4,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+030000007e0500006920000011010000,Nintendo Switch 2 Pro Controller,a:b0,b:b1,back:b14,dpdown:b8,dpleft:b10,dpright:b9,dpup:b11,guide:b16,leftshoulder:b12,leftstick:b15,lefttrigger:b13,leftx:a0,lefty:a1~,misc1:b17,misc2:b20,paddle1:b18,paddle2:b19,rightshoulder:b4,rightstick:b7,righttrigger:b5,rightx:a2,righty:a3~,start:b6,x:b2,y:b3,platform:Linux,
+SDL: Init OK!
+Xshape 1.1 detected.
+Xinerama 1.1 detected.
+Xrandr 1.6 detected.
+Xrender 0.11 detected.
+Xinput 2.2 detected.
+XInput: Refreshing devices.
+XInput: No touch devices found.
+Detecting GPUs, set DRI_PRIME in the environment to override GPU detection logic.
+Only one GPU found, using default.
+Failed loading custom cursor: crossed_circle
+DBus 1.16.2 detected.
+Using "default" pen tablet driver...
+Shader 'CanvasSdfShaderGLES3' SHA256: 4178a370fca21ad6216db6f7823dc24d65f8d4ad71442bbaa5d6f9a230a081ea
+Shader 'SkeletonShaderGLES3' SHA256: 8bc0ec35c83978cd6d65ef8fc16df8e916ba1e2a9d5a98423fd53815bae40b65
+Shader 'ParticlesShaderGLES3' SHA256: 6afaaf25f8938f1e43e69699472011afc51b674c0df4cd381d188953d85ec5a3
+Shader 'ParticlesCopyShaderGLES3' SHA256: 39392086598b90ead64d3323c81c8ade94c690b12d308ef31d5b9690c172fb22
+Shader 'CopyShaderGLES3' SHA256: 997ec09347cd52d2f6dc09d2a1ab366d3ba8485a46f43f593451013172c4c0ad
+Shader 'CubemapFilterShaderGLES3' SHA256: 32dcf4d8e16f18e32b807a2d1406cca20c37a1e6fcccf8420addb836c4d08aa5
+Shader 'GlowShaderGLES3' SHA256: a6700f3ac665fc4867995c9fcc2052c36df9c7d4909f0d5b8d1092726671dbd0
+Shader 'PostShaderGLES3' SHA256: 6eedbef0b87035bc14ebaf4f413c9e32fa64d5e88a36f1d51dbd0c2be5e54df3
+Shader 'FeedShaderGLES3' SHA256: bddb9e1271cb1ff96bb0f53b92f2724c49e525ede46d8de0d776819eca048a2d
+Shader 'CanvasShaderGLES3' SHA256: f4ec43ced4296bc56a0508da1fd428b360690cb08bcc44b1135a42a01b3844af
+Shader 'CanvasOcclusionShaderGLES3' SHA256: 578a45ce760a0ed6361559f46e9aedf93aa4cc3580d835d6dbc5ae8e4265557c
+Shader 'SceneShaderGLES3' SHA256: 23ab6aea89cc6db38dee15711362af8e7ad9c08bbe99cb758445c4ca6f910f83
+Shader 'SkyShaderGLES3' SHA256: 5d5d48528e786bc9445620d0ef25bddc8d0c7ce6aa74df01c30eb96e7c51f67e
+OpenGL API 4.2 (Core Profile) Mesa 25.3.6 - Compatibility - Using Device: Intel - Mesa Intel(R) HD Graphics 4000 (IVB GT2)
+PulseAudio 17.0.0 detected.
+PulseAudio: context other
+PulseAudio: context other
+PulseAudio: context other
+PulseAudio: context ready
+PulseAudio: Detecting channels for device: alsa_output.pci-0000_00_1b.0.analog-stereo
+PulseAudio: detected 2 output channels
+PulseAudio: audio buffer frames: 512 calculated output latency: 11ms
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+CORE API HASH: 2475187701
+EDITOR API HASH: 3867286884
+SceneTreeFTI: traversal method DEFAULT
+Loading resource: res://TelemetryLogger.gd
+Loading resource: res://scripts/SqliteDb.gd
+Loading resource: res://autoloads/HealthChecker.gd
+Loading resource: res://scripts/HubManager.gd
+Loading resource: res://scripts/DatabaseGuard.gd
+Loading resource: res://scripts/ResourceThrottle.gd
+Loading resource: res://scripts/PerformanceMonitor.gd
+Loading resource: res://addons/godot_aerodynamic_physics/core/singletons/aero_units.gd
+
+-- DRIVER BANNER SEARCH (this is the whole question) --
+  OpenGL API       : 1
+  Vulkan API       : 0
+  Using Device     : 1
+  DisplayServer    : 0
+  X11              : 0
+  wayland          : 0
+  headless         : 0
+  Xlib             : 0
+  GLES             : 13
+
+-- any error or warning lines --
+23:Failed loading custom cursor: crossed_circle
+
+
+############################################################
+### W3: PROJECT DISPLAY / RENDERING SETTINGS
+############################################################
+
+override.cfg present? (it would silently win over project.godot)
+-rwxr-xr-x. 1 owner owner 109 Jun 17 14:16 /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/godot_project/override.cfg
+
+
+=== WHAT THIS DECIDES ===
+If the direct run above printed a driver banner and you SAW a window:
+  -> the game and project are fine; autostall's environment is the fault.
+If the direct run printed NO driver banner and no window appeared:
+  -> the fault is the display itself (Xvfb / unreachable :0.0) or a
+     project/override setting. The W1/W2/W3 sections above name which.
+No fix is proposed here — Rule #14, one hypothesis must stand first.
+
+=== END REPORT ===
