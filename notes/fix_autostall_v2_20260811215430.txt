@@ -1,0 +1,130 @@
+=== fix_autostall_v2.sh — 20260811215430 UTC ===
+target: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_fixed.py
+backup: /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_fixed.py.bak.20260811215431
+sha256 after patch: 7ff417a300717f17dea0f5f4e4ee9cf41307ae1e53371d7bbea9e606fb85988c
+
+--- DIFF (backup -> patched) ---
+--- /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_fixed.py.bak.20260811215431	2026-08-10 17:32:29.230584935 -0400
++++ /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_fixed.py	2026-08-11 17:54:31.361597135 -0400
+@@ -744,16 +744,16 @@
+     else:
+         print(f"[PATCH] Failed: {msg} (continuing anyway)")
+ 
+-# os.environ["GODOT_HEADLESS"] = "1"   # Still used for auto‑start trigger
++    os.environ["GODOT_HEADLESS"] = "1"   # Still used for auto‑start trigger
+ 
+     print("[SETUP] godot binary:", GODOT_BIN)
+     print("[SETUP] project dir: ", os.path.abspath(PROJECT_DIR))
+-    print("[RUN] /usr/bin/godot --path godot_project --verbose")
+     print("[RUN] stall threshold: {}s   timeout: {}s".format(STALL_THRESHOLD, TIMEOUT))
+     print("[ENV] GODOT_HEADLESS=1 (for auto‑start detection only)")
+     print("="*72)
+ 
+-    cmd = [GODOT_BIN, "--path", PROJECT_DIR, "--verbose", "--headless"]
++    cmd = [GODOT_BIN, "--path", PROJECT_DIR, "--verbose"]
++    print("[RUN]", " ".join(cmd))
+ 
+     proc = subprocess.Popen(
+         cmd,
+(diff exit above: 1 = differs, as expected)
+
+--- PATCHED REGION VERBATIM ---
+  740|     # Apply auto-start patch before launching Godot
+  741|     success, msg = apply_auto_start_patch()
+  742|     if success:
+  743|         print(f"[PATCH] {msg}")
+  744|     else:
+  745|         print(f"[PATCH] Failed: {msg} (continuing anyway)")
+  746| 
+  747|     os.environ["GODOT_HEADLESS"] = "1"   # Still used for auto‑start trigger
+  748| 
+  749|     print("[SETUP] godot binary:", GODOT_BIN)
+  750|     print("[SETUP] project dir: ", os.path.abspath(PROJECT_DIR))
+  751|     print("[RUN] stall threshold: {}s   timeout: {}s".format(STALL_THRESHOLD, TIMEOUT))
+  752|     print("[ENV] GODOT_HEADLESS=1 (for auto‑start detection only)")
+  753|     print("="*72)
+  754| 
+  755|     cmd = [GODOT_BIN, "--path", PROJECT_DIR, "--verbose"]
+  756|     print("[RUN]", " ".join(cmd))
+  757| 
+  758|     proc = subprocess.Popen(
+  759|         cmd,
+  760|         stdout=subprocess.PIPE,
+  761|         stderr=subprocess.STDOUT,
+  762|         text=True,
+  763|         bufsize=1,
+  764|         universal_newlines=True,
+  765|         env=os.environ
+  766|     )
+  767| 
+  768|     fd = proc.stdout.fileno()
+  769|     flags = fcntl.fcntl(fd, fcntl.F_GETFL)
+  770|     fcntl.fcntl(fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+  771| 
+  772|     start_time = time.time()
+
+
+--- override.cfg CONTENTS (109 bytes; last round I only ls'd it) ---
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+--- project.godot display / renderer keys (WIDENED pattern) ---
+43:[display]
+261:"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":74,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+266:"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":82,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+274:[rendering]
+276:renderer/rendering_method="gl_compatibility"
+
+
+############################################################
+### SIGKILL (exit 137) EVIDENCE — hypothesis only, not a fix
+############################################################
+memory:
+               total        used        free      shared  buff/cache   available
+Mem:           5.7Gi       2.7Gi       1.6Gi       304Mi       1.6Gi       2.9Gi
+Swap:          8.0Gi       1.6Gi       6.4Gi
+
+swap:
+NAME       TYPE      SIZE USED PRIO
+/dev/zram0 partition   8G 1.6G  100
+
+kernel OOM records (last 40 matching lines):
+Jul 30 20:16:59 Linux.attlocal.net kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=user.slice,mems_allowed=0,global_oom,task_memcg=/user.slice/user-1000.slice/session-22.scope,task=godot,pid=3751188,uid=1000
+Jul 30 20:16:59 Linux.attlocal.net kernel: Out of memory: Killed process 3751188 (godot) total-vm:8878120kB, anon-rss:2525476kB, file-rss:8kB, shmem-rss:8kB, UID:1000 pgtables:12436kB oom_score_adj:0
+Jul 30 20:16:59 Linux.attlocal.net kernel: oom_reaper: reaped process 3751188 (godot), now anon-rss:0kB, file-rss:0kB, shmem-rss:8kB
+Jul 30 20:20:11 Linux.attlocal.net kernel: gmain invoked oom-killer: gfp_mask=0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), order=0, oom_score_adj=0
+Jul 30 20:20:11 Linux.attlocal.net kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=polkit.service,mems_allowed=0,global_oom,task_memcg=/user.slice/user-1000.slice/session-22.scope,task=godot,pid=3751646,uid=1000
+Jul 30 20:20:11 Linux.attlocal.net kernel: Out of memory: Killed process 3751646 (godot) total-vm:8878128kB, anon-rss:2931700kB, file-rss:8kB, shmem-rss:4kB, UID:1000 pgtables:12316kB oom_score_adj:0
+Jul 30 20:20:11 Linux.attlocal.net kernel: oom_reaper: reaped process 3751646 (godot), now anon-rss:0kB, file-rss:0kB, shmem-rss:4kB
+Jul 30 20:23:27 Linux.attlocal.net kernel: gvfsd-wsdd invoked oom-killer: gfp_mask=0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), order=0, oom_score_adj=200
+Jul 30 20:23:48 Linux.attlocal.net kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=user.slice,mems_allowed=0,global_oom,task_memcg=/user.slice/user-1000.slice/session-22.scope,task=godot,pid=3752074,uid=1000
+Jul 30 20:23:48 Linux.attlocal.net kernel: Out of memory: Killed process 3752074 (godot) total-vm:8878120kB, anon-rss:2827568kB, file-rss:8kB, shmem-rss:4kB, UID:1000 pgtables:12252kB oom_score_adj:0
+Jul 30 20:23:48 Linux.attlocal.net kernel: oom_reaper: reaped process 3752074 (godot), now anon-rss:0kB, file-rss:0kB, shmem-rss:4kB
+Aug 02 07:14:14 Linux.attlocal.net kernel: systemd-journal invoked oom-killer: gfp_mask=0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), order=0, oom_score_adj=-250
+Aug 02 07:14:18 Linux.attlocal.net kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=systemd-journald.service,mems_allowed=0,global_oom,task_memcg=/user.slice/user-1000.slice/session-22.scope,task=godot,pid=53674,uid=1000
+Aug 02 07:14:18 Linux.attlocal.net kernel: Out of memory: Killed process 53674 (godot) total-vm:7804064kB, anon-rss:2295388kB, file-rss:8kB, shmem-rss:8kB, UID:1000 pgtables:11312kB oom_score_adj:0
+Aug 02 07:14:18 Linux.attlocal.net kernel: oom_reaper: reaped process 53674 (godot), now anon-rss:0kB, file-rss:0kB, shmem-rss:8kB
+
+GPU / renderer in use (from the direct run that DID open a window):
+  OpenGL API 4.2 (Core Profile) Mesa 25.3.6 - Intel HD Graphics 4000 (IVB GT2)
+  Terrain build holds ~83 MB of source buffers plus untyped Arrays of
+  1,048,576 Vector3 + 1,048,576 Vector2 + ~6.3M indices simultaneously.
+  UNVERIFIED HYPOTHESIS for the SIGKILL. Next round decides it.
+
+
+=== NOW RUN IT — THIS IS THE /goal VERIFICATION ===
+cd /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game && python3 autostall_fixed.py 2>&1 | tee /tmp/goal_run.log
+
+The [RUN] line will now print the REAL command. Confirm it has no
+--headless, then watch for a window and this sequence:
+  [VERBATIM] Headless auto-start triggered.
+  [VERBATIM] EXIT AIRCRAFT - transitioning FREEFALL
+  [VERBATIM] Parachute deployment started — state=OPENING_ANIM
+  [FSM] OPENING_ANIM -> DIAGNOSIS (timer expired, canopy open)
+If the window appears then dies with exit 137 again, that is the
+memory issue above, NOT the patch — say so and it gets its own round.
+
+Rollback:  cp /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_fixed.py.bak.20260811215431 /home/owner/Documents/69f7bcc6-1f68-83ea-b9b2-95a4db8629ac/parachute-cfd-game/autostall_fixed.py
+
+=== END REPORT ===
